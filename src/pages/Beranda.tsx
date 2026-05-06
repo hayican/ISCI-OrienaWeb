@@ -1,7 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { 
-  ShoppingBag, 
   ArrowRight, 
   Coffee, 
   MonitorPlay, 
@@ -389,7 +388,7 @@ export default function Beranda({ setCurrentView, setCartCount }: BerandaProps) 
               Tanpa Pengawet.<br/><span className="text-[#D97736]">Penuh Proses.</span>
             </motion.h2>
             <motion.p 
-              initial={{ opacity: 0, opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 1 }}
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 1 }}
               className="text-[#FAF5E9]/80 font-jakarta text-lg max-w-md leading-relaxed"
             >
               Kami percaya bahwa rasa terbaik datang dari bahan yang jujur. Mentega pilihan, keju asli, dan proses panggangan artisan yang dijaga suhunya secara presisi.
