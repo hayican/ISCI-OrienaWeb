@@ -14,10 +14,6 @@ import {
 // ==========================================
 // TYPES & INTERFACES (TypeScript)
 // ==========================================
-interface KolaborasiProps {
-  setCurrentView?: (view: string) => void;
-}
-
 interface FormDataState {
   name: string;
   company: string;
@@ -36,7 +32,8 @@ interface CollabOption {
 // ==========================================
 // COMPONENT UTAMA: KOLABORASI
 // ==========================================
-export default function Kolaborasi({ setCurrentView }: KolaborasiProps) {
+// Props setCurrentView dihapus karena tidak dipakai di halaman ini
+export default function Kolaborasi() {
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string>('');
   const [formData, setFormData] = useState<FormDataState>({

@@ -10,7 +10,7 @@ import Footer from './components/layout/Footer';
 import Beranda from './pages/Beranda';
 import Tentang from './pages/Tentang';
 import Katalog from './pages/Katalog';
-import HampersBuilder from './pages/HampersBuilder'; // <-- UDAH DI IMPORT
+import HampersBuilder from './pages/HampersBuilder';
 
 export default function App() {
   const [currentView, setCurrentView] = useState<string>('beranda');
@@ -18,6 +18,8 @@ export default function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+  // Catatan: Kalau LoadingScreen sudah punya timer sendiri dan memanggil onComplete, 
+  // useEffect setTimeout ini sebenarnya opsional. Tapi kita biarkan saja sebagai fallback.
   useEffect(() => {
     const timer = setTimeout(() => { setIsLoading(false); }, 2500);
     return () => clearTimeout(timer);
@@ -28,7 +30,7 @@ export default function App() {
       case 'beranda': return <Beranda key="beranda" setCurrentView={setCurrentView} setCartCount={setCartCount} />;
       case 'tentang': return <Tentang key="tentang" />;
       case 'katalog': return <Katalog key="katalog" setCartCount={setCartCount} />;
-      case 'hampers': return <HampersBuilder key="hampers" setCartCount={setCartCount} />; // <-- UDAH DIPANGGIL
+      case 'hampers': return <HampersBuilder key="hampers" setCartCount={setCartCount} />;
       
       // Placeholder sisa
       case 'kolaborasi': return <motion.div key="kolaborasi" initial={{opacity: 0}} animate={{opacity: 1}} className="p-8 text-center text-2xl mt-20 font-playfair font-black min-h-[50vh]">Halaman Kolaborasi (Segera Hadir) 🤝</motion.div>;
@@ -53,7 +55,8 @@ export default function App() {
       `}</style>
 
       <AnimatePresence mode="wait">
-        {isLoading && <LoadingScreen />}
+        {/* INI YANG DITAMBAHKAN: onComplete prop */}
+        {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
       </AnimatePresence>
 
       {!isLoading && (
