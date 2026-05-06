@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Filter, ArrowRight, ShoppingBag, Cookie, Tag, Coffee, ChevronDown, X, Star } from 'lucide-react';
+import { Search, ShoppingBag, Cookie, Tag, Coffee, X, Star } from 'lucide-react';
 
 interface KatalogProps {
   setCartCount: React.Dispatch<React.SetStateAction<number>>;
@@ -38,7 +38,6 @@ export default function Katalog({ setCartCount }: KatalogProps) {
   const [activeFilter, setActiveFilter] = useState('Semua');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
   const filters = ['Semua', 'Kering', 'Basah', 'Hampers'];
 
@@ -55,14 +54,6 @@ export default function Katalog({ setCartCount }: KatalogProps) {
     { id: 7, name: "Sagu Keju Lumer", category: "Kering", price: 75000, desc: "Tekstur ngeprul yang ngangenin, lumer begitu masuk mulut.", gridClass: "md:col-span-1 md:row-span-1 h-[300px]", image: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&q=80&w=600" },
   ];
 
-  const regularProducts: Product[] = [
-    { id: 11, name: "Palm Cheese Cookies", category: "Kering", price: 85000, desc: "Balutan gula aren asli dan gurihnya keju.", image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&q=80&w=400" },
-    { id: 14, name: "Croissant Butter", category: "Basah", price: 25000, desc: "Flaky dan buttery, cocok disandingkan dengan teh.", image: "https://images.unsplash.com/photo-1555507036-ab1f40ce88cb?auto=format&fit=crop&q=80&w=400" },
-    { id: 16, name: "Hampers Mini", category: "Hampers", price: 150000, desc: "Paket ekonomis isi 2 toples kecil.", image: "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&q=80&w=400" },
-    { id: 17, name: "Oatmeal Raisin", category: "Kering", price: 65000, desc: "Cookies gandum sehat dengan kismis manis.", image: "https://images.unsplash.com/photo-1600431562217-1563e41c4a04?auto=format&fit=crop&q=80&w=400" },
-    { id: 20, name: "Brownie Bites", category: "Basah", price: 50000, desc: "Potongan brownies fudgy sekali hap.", image: "https://images.unsplash.com/photo-1606822819825-f370ee1c1b18?auto=format&fit=crop&q=80&w=400" },
-  ];
-
   const filterLogic = (product: Product) => {
     const matchCategory = activeFilter === 'Semua' || product.category === activeFilter;
     const matchSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -70,7 +61,6 @@ export default function Katalog({ setCartCount }: KatalogProps) {
   };
 
   const filteredBento = bentoProducts.filter(filterLogic);
-  const filteredRegular = regularProducts.filter(filterLogic);
   const heroImage = "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=2000";
 
   return (
@@ -129,9 +119,10 @@ export default function Katalog({ setCartCount }: KatalogProps) {
               </div>
             </motion.div>
 
+            {/* ERROR BERADA DI SINI - KINI SUDAH DIGABUNG TRANISITON-NYA */}
             <motion.div 
-              initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
-              onMouseMove={tiltPromo2.handleMouseMove} onMouseLeave={tiltPromo2.handleMouseLeave} animate={{ rotateX: tiltPromo2.tilt.x, rotateY: tiltPromo2.tilt.y }} transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+              onMouseMove={tiltPromo2.handleMouseMove} onMouseLeave={tiltPromo2.handleMouseLeave} animate={{ rotateX: tiltPromo2.tilt.x, rotateY: tiltPromo2.tilt.y }} transition={{ delay: 0.2, type: "spring", stiffness: 400, damping: 30 }}
               className="bg-gradient-to-br from-[#4A3022] to-[#2d1d14] rounded-[2.5rem] p-8 text-white relative group shadow-xl preserve-3d cursor-pointer"
             >
               <div className="absolute -right-8 -top-8 opacity-20 group-hover:scale-110 transition-transform duration-700 pointer-events-none" style={{ transform: 'translateZ(-50px)' }}><Coffee size={200} /></div>
@@ -148,7 +139,7 @@ export default function Katalog({ setCartCount }: KatalogProps) {
         {filteredBento.length > 0 && (
           <motion.div layout className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-16">
             <AnimatePresence>
-              {filteredBento.map((product, idx) => (
+              {filteredBento.map((product) => (
                 <motion.div
                   layout initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }} transition={{ duration: 0.4 }} key={product.id} onClick={() => setSelectedProduct(product)}
                   className={`group cursor-pointer relative rounded-[2rem] overflow-hidden bg-black shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 ${product.gridClass}`}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, ArrowRight, Package, CheckCircle, Trash2, Plus, Star } from 'lucide-react';
+import { ShoppingBag, Package, CheckCircle, Trash2, Plus } from 'lucide-react';
 
 interface CookieItem {
   id: string;
@@ -305,11 +305,6 @@ export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
           </div>
         </div>
       </div>
-      
-      {/* (Opsional) Rekomendasi Hampers di bawahnya jika mau ditambahkan kembali, 
-          tapi biar kodenya fokus ke core feature builder, gw cut sampe sini biar ngga kepanjangan. 
-          Kalo mau ditaruh section rekomendasi kayak yang lama juga aman. */}
-
     </motion.div>
   );
-}
+}0
