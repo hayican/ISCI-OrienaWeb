@@ -465,6 +465,7 @@ export default function Beranda({ setCurrentView, setCartCount }: BerandaProps) 
                 <div className="w-12 h-12 bg-[#D97736] border-2 border-[#4A3022] text-[#FAF5E9] rounded-full flex items-center justify-center font-playfair font-black text-xl shadow-[2px_2px_0px_#4A3022]">
                   {review.name.charAt(0)}
                 </div>
+                
                 <div>
                   <h4 className="font-black font-jakarta text-[#4A3022]">{review.name}</h4>
                   <p className="text-xs font-jakarta text-[#4A3022]/70 font-bold uppercase tracking-wider mt-1">{review.role}</p>
