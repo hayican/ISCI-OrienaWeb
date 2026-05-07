@@ -1,122 +1,77 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState, useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 
-function App() {
-  const [count, setCount] = useState(0)
+// Import Layout & UI
+import LoadingScreen from './components/ui/LoadingScreen'; 
+import Navbar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
+
+// Import Pages
+import Beranda from './pages/Beranda';
+import Tentang from './pages/Tentang';
+import Katalog from './pages/Katalog';
+import HampersBuilder from './pages/HampersBuilder';
+import Kolaborasi from './pages/Kolaborasi';
+import Cart from './pages/Cart';
+
+export default function App() {
+  const [currentView, setCurrentView] = useState<string>('beranda');
+  const [cartCount, setCartCount] = useState<number>(0);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  // Catatan: Kalau LoadingScreen sudah punya timer sendiri dan memanggil onComplete, 
+  // useEffect setTimeout ini sebenarnya opsional. Tapi kita biarkan saja sebagai fallback.
+  useEffect(() => {
+    const timer = setTimeout(() => { setIsLoading(false); }, 2500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const renderView = () => {
+    switch(currentView) {
+      case 'beranda': return <Beranda key="beranda" setCurrentView={setCurrentView} setCartCount={setCartCount} />;
+      case 'tentang': return <Tentang key="tentang" />;
+      case 'katalog': return <Katalog key="katalog" setCartCount={setCartCount} />;
+      case 'hampers': return <HampersBuilder key="hampers" setCartCount={setCartCount} />
+      
+      // Placeholder sisa
+      case 'kolaborasi': return <Kolaborasi key="kolaborasi" />;
+      case 'cart': return <Cart key="cart" cartCount={cartCount} setCartCount={setCartCount} />;
+      
+      default: return <Beranda key="default" setCurrentView={setCurrentView} setCartCount={setCartCount} />;
+    }
+  };
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className="min-h-screen bg-[#FAF5E9] text-[#4A3022] font-jakarta selection:bg-[#D97736] selection:text-[#FAF5E9] overflow-x-hidden relative flex flex-col">
+      <style>{`
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .perspective-1000 { perspective: 1000px; }
+        .preserve-3d { transform-style: preserve-3d; }
+        
+        /* Style buat custom scrollbar list kue */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #D97736; border-radius: 10px; }
+      `}</style>
 
-      <div className="ticks"></div>
+      <AnimatePresence mode="wait">
+        {/* INI YANG DITAMBAHKAN: onComplete prop */}
+        {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
+      </AnimatePresence>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      {!isLoading && (
+        <>
+          <Navbar currentView={currentView} setCurrentView={setCurrentView} cartCount={cartCount} isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen} />
+          <main className="pt-20 flex-grow">
+            <AnimatePresence mode="wait">
+              {renderView()}
+            </AnimatePresence>
+          </main>
+          <Footer setCurrentView={setCurrentView} />
+        </>
+      )}
+    </div>
+  );
 }
-
-export default App
