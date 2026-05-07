@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { AnimatePresence, motion} from 'framer-motion';
+import { AnimatePresence } from 'framer-motion'; // <-- 'motion' sudah dihapus dari sini
 
 // Import Layout & UI
 import LoadingScreen from './components/ui/LoadingScreen'; 
@@ -34,7 +34,6 @@ export default function App() {
       case 'katalog': return <Katalog key="katalog" setCartCount={setCartCount} />;
       case 'hampers': return <HampersBuilder key="hampers" setCartCount={setCartCount} />
       
-      // Placeholder sisa
       case 'kolaborasi': return <Kolaborasi key="kolaborasi" />;
       case 'cart': return <Cart key="cart" cartCount={cartCount} setCartCount={setCartCount} />;
       
