@@ -11,6 +11,8 @@ import Beranda from './pages/Beranda';
 import Tentang from './pages/Tentang';
 import Katalog from './pages/Katalog';
 import HampersBuilder from './pages/HampersBuilder';
+import Kolaborasi from './pages/Kolaborasi';
+import Cart from './pages/Cart';
 
 export default function App() {
   const [currentView, setCurrentView] = useState<string>('beranda');
@@ -30,11 +32,11 @@ export default function App() {
       case 'beranda': return <Beranda key="beranda" setCurrentView={setCurrentView} setCartCount={setCartCount} />;
       case 'tentang': return <Tentang key="tentang" />;
       case 'katalog': return <Katalog key="katalog" setCartCount={setCartCount} />;
-      case 'hampers': return <HampersBuilder key="hampers" setCartCount={setCartCount} />;
+      case 'hampers': return <HampersBuilder key="hampers" setCartCount={setCartCount} />
       
       // Placeholder sisa
-      case 'kolaborasi': return <motion.div key="kolaborasi" initial={{opacity: 0}} animate={{opacity: 1}} className="p-8 text-center text-2xl mt-20 font-playfair font-black min-h-[50vh]">Halaman Kolaborasi (Segera Hadir) 🤝</motion.div>;
-      case 'cart': return <motion.div key="cart" initial={{opacity: 0}} animate={{opacity: 1}} className="p-8 text-center text-2xl mt-20 font-playfair font-black min-h-[50vh]">Halaman Keranjang (Segera Hadir) 🛒</motion.div>;
+      case 'kolaborasi': return <Kolaborasi key="kolaborasi" />;
+      case 'cart': return <Cart key="cart" cartCount={cartCount} setCartCount={setCartCount} />;
       
       default: return <Beranda key="default" setCurrentView={setCurrentView} setCartCount={setCartCount} />;
     }

@@ -267,7 +267,7 @@ export default function Tentang() {
       </section>
 
       {/* 6. DRAGGABLE GALLERY (Physics Slider) */}
-     <section className="max-w-full mx-auto pt-24 pb-12 overflow-hidden bg-[#4A3022] mt-12 rounded-t-[4rem]">
+     <section className="max-w-full mx-auto pt-24 pb-12 overflow-hidden bg-[#4A3022] mt-12 ">
         <div className="text-center mb-12 px-4">
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-4xl md:text-5xl font-playfair font-black text-[#FAF5E9] mb-4">
             Mengintip Dapur Oriena
