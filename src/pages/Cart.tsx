@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ShoppingBag, ArrowRight, MessageSquare, Printer } from 'lucide-react';
+// Tambahan: Import Trash2 dari lucide-react
+import { ShoppingBag, ArrowRight, MessageSquare, Printer, Trash2 } from 'lucide-react';
 
 interface CartProps {
   cartCount: number;
@@ -39,6 +40,11 @@ export default function Cart({ cartCount, setCartCount }: CartProps) {
     price: 85000 // Harga dummy rata-rata
   }));
   const subtotal = receiptItems.reduce((acc, curr) => acc + curr.price, 0);
+
+  // Fungsi untuk hapus item
+  const handleDeleteItem = () => {
+    setCartCount(prev => Math.max(0, prev - 1));
+  };
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-24 font-jakarta">
@@ -89,12 +95,22 @@ export default function Cart({ cartCount, setCartCount }: CartProps) {
 
                 <div className="space-y-3 mb-6 text-sm">
                   {receiptItems.map((item) => (
-                    <div key={item.id} className="flex justify-between items-start">
+                    <div key={item.id} className="flex justify-between items-start group">
                       <div className="flex-1 pr-4">
                         <p className="uppercase">{item.name}</p>
                         <p className="text-xs text-gray-500">1x @85.000</p>
                       </div>
-                      <p>85.000</p>
+                      <div className="flex items-center gap-3">
+                        <p>85.000</p>
+                        {/* FITUR DELETE DITAMBAHKAN DI SINI */}
+                        <button 
+                          onClick={handleDeleteItem}
+                          className="text-gray-400 hover:text-red-500 transition-colors"
+                          title="Hapus produk"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>
