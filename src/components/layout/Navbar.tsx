@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingBag, Menu, X } from 'lucide-react';
 
@@ -75,14 +75,14 @@ export default function Navbar({
               
               {/* LOGO */}
               <div 
-                className="text-2xl font-playfair font-black tracking-tighter text-[#D97736] cursor-pointer hover:scale-105 transition-transform"
+                className="text-3xl font-playfair font-black tracking-tighter text-[#D97736] cursor-pointer hover:scale-105 transition-transform"
                 onClick={() => handleNavigate('beranda')}
               >
                 ORIENA.
               </div>
 
               {/* DESKTOP MENU */}
-              <div className="hidden md:flex space-x-8 items-center font-jakarta font-bold text-sm uppercase tracking-wider">
+              <div className="hidden md:flex space-x-8 items-center font-jakarta font-bold text-lg uppercase tracking-wider">
                 {navLinks.map((link) => (
                   <button 
                     key={link.id}

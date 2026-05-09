@@ -366,9 +366,8 @@ export default function Beranda({ setCurrentView, setCartCount }: BerandaProps) 
       </section>
 
       {/* 3. STORY SECTION (Tema Solid Kopi Tuku dengan Foto) */}
-      <section className="bg-[#E0D0BB] py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden border-y-8 border-[#4A3022]">
-        {/* Pattern Garis ala Tuku */}
-        <div className="absolute inset-0 z-0 opacity-5" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #4A3022 25%, transparent 25%, transparent 75%, #4A3022 75%, #4A3022), repeating-linear-gradient(45deg, #4A3022 25%, transparent 25%, transparent 75%, #4A3022 75%, #4A3022)', backgroundSize: '20px 20px', backgroundPosition: '0 0, 10px 10px' }}></div>
+      <section className="bg-[#D2C5B3] py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden border-y-8 border-[#4A3022]">
+        {/* Pattern dihapus agar warna solid dan lebih clean */}
         
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16 relative z-10">
           <div className="w-full md:w-1/2 space-y-6">
@@ -380,13 +379,13 @@ export default function Beranda({ setCurrentView, setCartCount }: BerandaProps) 
             </motion.div>
             <motion.h2 
               initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1, duration: 0.6 }}
-              className="text-4xl md:text-6xl font-playfair font-black text-[#4A3022] leading-tight"
+              className="text-4xl md:text-6xl font-playfair font-black text-[#4A3022] leading-tight drop-shadow-[2px_2px_0px_#FAF5E9]"
             >
-              Tanpa Pengawet.<br/><span className="text-[#D97736]">Penuh Proses.</span>
+              Tanpa Pengawet.<br/><span className="text-[#D97736]">Penuh Perasaan.</span>
             </motion.h2>
             <motion.p 
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 1 }}
-              className="text-[#4A3022]/80 font-jakarta font-bold text-lg max-w-md leading-relaxed"
+              className="text-[#4A3022]/90 font-jakarta font-bold text-lg max-w-md leading-relaxed"
             >
               Kami percaya bahwa rasa terbaik datang dari bahan yang jujur. Mentega pilihan, keju asli, dan proses panggangan artisan yang dijaga suhunya secara presisi.
             </motion.p>
@@ -397,7 +396,7 @@ export default function Beranda({ setCurrentView, setCartCount }: BerandaProps) 
             <motion.div style={{ y: yParallax1 }} className="pt-20">
               <div className="bg-white rounded-[2rem] flex flex-col overflow-hidden border-4 border-[#4A3022] shadow-[8px_8px_0px_#4A3022] hover:-translate-y-2 transition-transform cursor-pointer">
                 <div className="h-40 sm:h-48 w-full border-b-4 border-[#4A3022]">
-                  <img src="https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?auto=format&fit=crop&q=80&w=400" alt="Premium Butter" className="w-full h-full object-cover" />
+                  <img src="https://i.pinimg.com/1200x/8b/ca/86/8bca86af3169e15ef1dcb7a5ffd150b6.jpg" alt="Premium Butter" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-4 text-center bg-[#FAF5E9]">
                   <p className="font-jakarta font-black text-[#4A3022] tracking-wide uppercase text-sm">Premium Butter</p>
@@ -409,7 +408,7 @@ export default function Beranda({ setCurrentView, setCartCount }: BerandaProps) 
             <motion.div style={{ y: yParallax2 }}>
               <div className="bg-white rounded-[2rem] flex flex-col overflow-hidden border-4 border-[#4A3022] shadow-[8px_8px_0px_#4A3022] hover:-translate-y-2 transition-transform cursor-pointer">
                 <div className="h-40 sm:h-48 w-full border-b-4 border-[#4A3022]">
-                  <img src="https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?auto=format&fit=crop&q=80&w=400" alt="Keju Edam Asli" className="w-full h-full object-cover" />
+                  <img src="https://i.pinimg.com/736x/06/a5/25/06a525f631c5e2d058b06c15228eb296.jpg" alt="Keju Edam Asli" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-4 text-center bg-[#D97736]">
                   <p className="font-jakarta font-black text-white tracking-wide uppercase text-sm">Keju Edam Asli</p>
