@@ -31,8 +31,8 @@ export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
   ];
 
   const recommendedHampers = [
-    { id: 'r1', name: "Paket Hampers Lebaran", desc: "Kastengel, Lidah Kucing, Putri Salju, Sagu Keju. Termasuk box eksklusif.", price: 370000, image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&q=80&w=600" },
-    { id: 'r2', name: "Sweet Treats Box", desc: "Almond Crispy, Kastengel, Lidah Kucing, Putri Salju. Kado manis untuk sahabat.", price: 330000, image: "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&q=80&w=600" },
+    { id: 'r1', name: "Paket Hampers Lebaran", desc: "Kastengel, Lidah Kucing, Putri Salju, Sagu Keju. Termasuk box eksklusif.", price: 370000, image: "https://i.pinimg.com/1200x/be/68/12/be6812585ccb5b55a88d3ebac26e5cb1.jpg" },
+    { id: 'r2', name: "Sweet Treats Box", desc: "Almond Crispy, Kastengel, Lidah Kucing, Putri Salju. Kado manis untuk sahabat.", price: 330000, image: "https://i.pinimg.com/736x/07/98/88/079888dae1e172b609b3ff8a47159ba0.jpg" },
     // Foto Premium Artisan diupdate
     { id: 'r3', name: "Premium Artisan", desc: "Double Kastengel + Double Almond Crispy. Kombinasi juara yang nggak pernah salah.", price: 395000, image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&q=80&w=600" },
   ];
@@ -100,23 +100,32 @@ export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
         {/* Background Kayu dengan mix-blend agar teksturnya menyatu dengan warna dasar & terlihat flat */}
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1550605178-55afec08a135?auto=format&fit=crop&q=80&w=2000" 
+            src="https://i.pinimg.com/1200x/08/0d/f7/080df7c037e92fcf48fefc60b35f637f.jpg" 
             alt="Lantai Kayu" 
-            className="w-full h-full object-cover mix-blend-multiply opacity-25" 
+            className="w-full h-full object-cover mix-blend-multiply opacity-80" 
           />
         </div>
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <motion.h1 initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} className="text-4xl md:text-6xl font-playfair font-black text-[#4A3022] mb-4">
+          <div className="text-center mb-20">
+            <motion.h1 
+              initial={{ opacity: 0, y: -30 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              className="text-4xl md:text-6xl font-playfair font-black text-[#FAF5E9] [-webkit-text-stroke:1px_#4A3022] drop-shadow-[4px_4px_0px_#4A3022] mb-4"
+            >
               Rakit Hampersmu.
             </motion.h1>
-            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-lg font-jakarta text-[#4A3022]/80 max-w-2xl mx-auto font-bold">
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              transition={{ delay: 0.1 }} 
+              className="text-lg font-jakarta text-[#FAF5E9]/90 max-w-2xl mx-auto font-bold"
+            >
               Pilih varian kue, atau <span className="bg-[#D97736] text-white px-2 py-0.5 rounded-md border-2 border-[#4A3022]">Tarik & Lepas</span> toples langsung ke dalam box.
             </motion.p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
             
             {/* KIRI: KOTAK PARCEL (Flat & Bold) */}
             <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, type: "spring" }} className="lg:col-span-7 flex flex-col items-center">
