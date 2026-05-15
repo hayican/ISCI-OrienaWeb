@@ -16,12 +16,12 @@ interface HampersBuilderProps {
 }
 
 export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
-  const [boxItems, setBoxItems] = useState<(CookieItem | null)[]>([null, null, null, null]);
+  // 1. STATE DIUBAH JADI 3 SLOT
+  const [boxItems, setBoxItems] = useState<(CookieItem | null)[]>([null, null, null]);
   const [greeting, setGreeting] = useState('');
   const [isDone, setIsDone] = useState(false);
   const [draggedItem, setDraggedItem] = useState<CookieItem | null>(null);
 
-  // Data Cookies (Nastar Lumer sudah dihapus)
   const availableCookies: CookieItem[] = [
     { id: 'h2', name: "Kastengel Royal", price: 95000, color: "#eab308", image: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&q=80&w=400" },
     { id: 'h3', name: "Putri Salju", price: 80000, color: "#829079", image: "https://images.unsplash.com/photo-1509365465985-25d11c17e812?auto=format&fit=crop&q=80&w=400" },
@@ -30,14 +30,15 @@ export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
     { id: 'h6', name: "Lidah Kucing", price: 60000, color: "#eab308", image: "https://images.unsplash.com/photo-1557310717-d6bea9f36682?auto=format&fit=crop&q=80&w=400" },
   ];
 
-  const recommendedHampers = [
-    { id: 'r1', name: "Paket Hampers Lebaran", desc: "Kastengel, Lidah Kucing, Putri Salju, Sagu Keju. Termasuk box eksklusif.", price: 370000, image: "https://i.pinimg.com/1200x/be/68/12/be6812585ccb5b55a88d3ebac26e5cb1.jpg" },
-    { id: 'r2', name: "Sweet Treats Box", desc: "Almond Crispy, Kastengel, Lidah Kucing, Putri Salju. Kado manis untuk sahabat.", price: 330000, image: "https://i.pinimg.com/736x/07/98/88/079888dae1e172b609b3ff8a47159ba0.jpg" },
-    // Foto Premium Artisan diupdate
-    { id: 'r3', name: "Premium Artisan", desc: "Double Kastengel + Double Almond Crispy. Kombinasi juara yang nggak pernah salah.", price: 395000, image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&q=80&w=600" },
+const recommendedHampers = [
+    // GANTI DATA r1 JADI GINI:
+    { id: 'r1', name: "Hampers Seasonal (Lebaran & Natal)", desc: "Edisi spesial hari raya! Isi Kastengel, Lidah Kucing, Putri Salju. Termasuk box tematik eksklusif.", price: 370000, image: "https://i.pinimg.com/1200x/be/68/12/be6812585ccb5b55a88d3ebac26e5cb1.jpg" },
+    { id: 'r2', name: "Sweet Treats Box", desc: "Almond Crispy, Kastengel, Lidah Kucing. Kado manis untuk sahabat.", price: 330000, image: "https://i.pinimg.com/736x/07/98/88/079888dae1e172b609b3ff8a47159ba0.jpg" },
+    { id: 'r3', name: "Premium Artisan", desc: "Kastengel + Double Almond Crispy. Kombinasi juara yang nggak pernah salah.", price: 395000, image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&q=80&w=600" },
   ];
 
-  const baseBoxPrice = 35000;
+  // 2. HARGA DASAR BOX DIUBAH JADI RP 15.000
+  const baseBoxPrice = 15000;
   const currentTotal = boxItems.reduce((total, item) => total + (item ? item.price : 0), baseBoxPrice);
   const filledCount = boxItems.filter(item => item !== null).length;
 
@@ -84,7 +85,8 @@ export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
 
   const handleFinish = () => {
     setCartCount(prev => prev + 1);
-    setBoxItems([null, null, null, null]);
+    // RESET JADI 3 SLOT SAAT SELESAI
+    setBoxItems([null, null, null]);
     setGreeting('');
     setIsDone(false);
     alert("Hampers custom berhasil dimasukkan ke keranjang!");
@@ -94,10 +96,7 @@ export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="w-full bg-[#F7F3EB]">
       
-      {/* SECTION 1: AREA RAKIT (Background Lantai Kayu Kopi Tuku Style) */}
       <div className="relative pt-12 pb-16 md:pt-20 md:pb-24 border-b-8 border-[#4A3022] min-h-[90vh] flex items-center bg-[#E0D0BB]">
-        
-        {/* Background Kayu dengan mix-blend agar teksturnya menyatu dengan warna dasar & terlihat flat */}
         <div className="absolute inset-0 z-0">
           <img 
             src="https://i.pinimg.com/1200x/08/0d/f7/080df7c037e92fcf48fefc60b35f637f.jpg" 
@@ -127,22 +126,21 @@ export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
             
-            {/* KIRI: KOTAK PARCEL (Flat & Bold) */}
             <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, type: "spring" }} className="lg:col-span-7 flex flex-col items-center">
               <div className="w-full max-w-lg flex justify-between items-center mb-6 px-2">
                 <h3 className="text-2xl font-playfair font-black text-[#4A3022] bg-[#FAF5E9] px-3 py-1 rounded-lg border-2 border-[#4A3022]">Box Pengemasan</h3>
                 <span className="bg-[#FAF5E9] text-[#4A3022] border-2 border-[#4A3022] px-4 py-1.5 rounded-full font-jakarta font-black text-sm tracking-wider shadow-[4px_4px_0px_#4A3022]">
-                  {filledCount} / 4 TERISI
+                  {filledCount} / 3 TERISI
                 </span>
               </div>
 
-              {/* Box Container - Solid Colors & Hard Borders */}
               <div className="w-full max-w-lg aspect-square bg-[#E0D0BB] border-4 border-[#4A3022] rounded-[3rem] p-6 md:p-8 relative shadow-[12px_12px_0px_rgba(74,48,34,1)]">
-                <div className="grid grid-cols-2 gap-4 md:gap-6 h-full relative z-10 place-items-center">
-                  {[0, 1, 2, 3].map((slotIdx) => (
+                {/* 3. LAYOUT GRID DIUBAH AGAR 3 TOPLES TERLIHAT RAPI DI TENGAH */}
+                <div className="flex flex-wrap justify-center content-center gap-4 md:gap-6 h-full relative z-10">
+                  {[0, 1, 2].map((slotIdx) => (
                     <div 
                       key={slotIdx} onDragOver={handleDragOver} onDrop={(e) => handleDrop(e, slotIdx)}
-                      className={`relative rounded-full flex items-center justify-center overflow-hidden transition-all duration-300 w-full aspect-square max-w-[160px] md:max-w-[180px] ${
+                      className={`relative rounded-full flex items-center justify-center overflow-hidden transition-all duration-300 w-[140px] h-[140px] md:w-[170px] md:h-[170px] ${
                         boxItems[slotIdx] ? 'bg-transparent' : 'bg-[#FAF5E9] border-4 border-dashed border-[#4A3022] hover:border-[#D97736] hover:bg-white'
                       } ${draggedItem && !boxItems[slotIdx] ? 'border-[#D97736] bg-[#D97736]/20 border-solid animate-pulse' : ''}`}
                     >
@@ -154,7 +152,6 @@ export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
                               <span className="font-bold font-jakarta text-[#FAF5E9] text-[10px] md:text-sm text-center leading-tight">{boxItems[slotIdx]!.name}</span>
                             </div>
                             
-                            {/* OVERLAY HAPUS: Gelap transparan tanpa blur, smooth transisi */}
                             <div onClick={() => handleRemoveCookie(slotIdx)} className="absolute inset-0 bg-[#4A3022]/80 opacity-0 group-hover:opacity-100 flex items-center justify-center cursor-pointer transition-opacity duration-300">
                               <Trash2 className="text-[#FAF5E9]" size={36} />
                             </div>
@@ -169,7 +166,6 @@ export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
                   ))}
                 </div>
 
-                {/* OVERLAY KETIKA SELESAI */}
                 <AnimatePresence>
                   {isDone && (
                     <motion.div 
@@ -188,7 +184,7 @@ export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
               <div className="mt-10 w-full max-w-lg flex items-center justify-between bg-white border-4 border-[#4A3022] py-4 px-6 rounded-2xl shadow-[6px_6px_0px_#4A3022]">
                 <div>
                   <p className="text-[#4A3022] font-jakarta font-black text-sm mb-1 uppercase tracking-wider">Total Estimasi</p>
-                  <p className="text-xs font-jakarta text-[#4A3022]/70 font-bold">*Termasuk box Rp35.000</p>
+                  <p className="text-xs font-jakarta text-[#4A3022]/70 font-bold">*Tersedia box tematik edisi Lebaran & Natal (Rp15.000)</p>
                 </div>
                 <motion.p key={currentTotal} initial={{ scale: 1.2 }} animate={{ scale: 1 }} className="text-2xl md:text-3xl font-jakarta font-black text-[#D97736]">
                   Rp {currentTotal.toLocaleString('id-ID')}
@@ -196,7 +192,6 @@ export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
               </div>
             </motion.div>
 
-            {/* KANAN: PILIHAN ISIAN (Tema Flat & Bold) */}
             <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2, type: "spring" }} className="lg:col-span-5 space-y-6">
               <AnimatePresence mode="wait">
                 {!isDone ? (
@@ -211,7 +206,8 @@ export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
 
                     <div className="space-y-4 max-h-[460px] overflow-y-auto pr-2 custom-scrollbar">
                       {availableCookies.map((cookie) => {
-                        const isFull = filledCount === 4;
+                        // 4. BATAS MAKSIMAL DRAG JUGA DIUBAH JADI 3
+                        const isFull = filledCount === 3;
                         return (
                           <motion.div
                             whileHover={!isFull ? { scale: 1.02 } : {}} whileTap={!isFull ? { scale: 0.98 } : {}}
@@ -247,7 +243,7 @@ export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
 
                     <div className="space-y-4 mb-8 relative z-10">
                       <label className="block text-sm font-jakarta font-black text-[#4A3022]">Tulis Kartu Ucapan (Opsional):</label>
-                      <textarea rows={4} value={greeting} onChange={(e) => setGreeting(e.target.value)} placeholder="Contoh: Selamat Lebaran ya bro! Mohon maaf lahir batin..." className="w-full bg-white border-4 border-[#4A3022] focus:border-[#D97736] rounded-2xl p-5 outline-none font-jakarta text-[#4A3022] font-bold resize-none transition-colors"></textarea>
+                      <textarea rows={4} value={greeting} onChange={(e) => setGreeting(e.target.value)} placeholder="Contoh: Selamat Lebaran / Merry Christmas ya bro! Semoga sehat selalu..." className="w-full bg-white border-4 border-[#4A3022] focus:border-[#D97736] rounded-2xl p-5 outline-none font-jakarta text-[#4A3022] font-bold resize-none transition-colors"></textarea>
                     </div>
 
                     <div className="relative z-10 space-y-4">
@@ -266,7 +262,6 @@ export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
         </div>
       </div>
 
-      {/* SECTION 2: CARA KERJA (Solid Style) */}
       <section className="py-24 bg-[#F7F3EB] px-4 sm:px-6 lg:px-8 border-b-8 border-[#4A3022]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -278,7 +273,8 @@ export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
             <div className="hidden md:block absolute top-10 left-0 w-full h-1 bg-[#4A3022] z-0"></div>
 
             {[
-              { title: "Pilih Kue", desc: "Tarik 4 varian kue favoritmu ke dalam box pengemasan.", icon: <Cookie size={32} /> },
+              // 5. TEKS "TARIK 4 VARIAN" UBAH JADI 3
+              { title: "Pilih Kue", desc: "Tarik 3 varian kue favoritmu ke dalam box pengemasan.", icon: <Cookie size={32} /> },
               { title: "Tulis Pesan", desc: "Sematkan kartu ucapan gratis dengan pesan personalmu.", icon: <PenLine size={32} /> },
               { title: "Kami Rakit", desc: "Tim artisan kami akan menyusunnya dengan pita elegan.", icon: <Gift size={32} /> },
               { title: "Dikirim Aman", desc: "Packing berlapis bubble wrap menjamin kue sampai dengan utuh.", icon: <Truck size={32} /> }
@@ -295,7 +291,6 @@ export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
         </div>
       </section>
 
-      {/* SECTION 3: REKOMENDASI HAMPERS (Flat & Bold) */}
       <section className="py-24 bg-white px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">

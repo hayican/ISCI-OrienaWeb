@@ -23,19 +23,19 @@ export default function Kolaborasi() {
     message: ''
   });
 
-  // Data Kolaborasi dengan gaya "Tetangga"
+  // Data Kolaborasi diupdate pakai data asli G-Form
   const collabOptions = [
     { 
       id: 'corporate', 
       title: 'Hampers Kantor', 
-      desc: 'Bikin HRD tenang, karyawan seneng. Pesenan partai besar buat event atau klien.', 
+      desc: 'Bikin HRD tenang, karyawan seneng. Tanpa minimal order, bebas kirim ke seluruh Indonesia!', 
       icon: <Building2 size={40} strokeWidth={1.5} />,
       color: "bg-[#D97736]"
     },
     { 
       id: 'cafe', 
-      title: 'Suplai Temen Ngopi', 
-      desc: 'Punya coffee shop? Sini kita pasokin pastry fresh tiap pagi buat nemenin kopimu.', 
+      title: 'Suplai Temen Ngopi (B2B)', 
+      desc: 'Punya cafe atau toko? Kita siap suplai pastry fresh buat nemenin menu kopimu secara rutin.', 
       icon: <Coffee size={40} strokeWidth={1.5} />,
       color: "bg-[#829079]"
     },
@@ -68,7 +68,8 @@ export default function Kolaborasi() {
 
   const handleSendWA = (e: React.FormEvent) => {
     e.preventDefault();
-    const phoneNumber = "6281234567890";
+    // Nomor WA asli Kak Sarah
+    const phoneNumber = "628126120165";
     let text = `Halo Tetangga Oriena! 👋\n\n`;
 
     if (selectedType === 'corporate') {

@@ -40,9 +40,9 @@ const LinkedinIcon = ({ size = 24 }: { size?: number }) => (
 export default function Tentang() {
   // Data Timeline
   const timeline = [
-    { year: "2020", title: "Resep Pertama", desc: "Berawal dari hobi membuatkan kue kering untuk keluarga, sebuah resep nastar turun temurun mulai disempurnakan di dapur kecil berukuran 3x3 meter.", icon: <Clock size={24} strokeWidth={3} /> },
-    { year: "2023", title: "Pintu Toko Terbuka", desc: "Oriena akhirnya membuka toko fisik pertama dengan konsep open-kitchen agar pelanggan bisa mencium wangi panggangan.", icon: <Store size={24} strokeWidth={3} /> },
-    { year: "2026", title: "Langkah Digital", desc: "Oriena berevolusi. Menghadirkan pengalaman interaktif bagi pelanggan untuk merakit hampers mereka sendiri secara digital.", icon: <MonitorPlay size={24} strokeWidth={3} /> }
+    { year: "2008", title: "Resep Pertama", desc: "mulai berjualan sebagai pengisi waktu", icon: <Clock size={24} strokeWidth={3} /> },
+    { year: "2016", title: "Pintu Toko Terbuka", desc: "mulai fokus dan jadi pekerjaan utama,", icon: <Store size={24} strokeWidth={3} /> },
+    { year: "2026", title: "Rebranding oriena", desc: "Oriena berkembang menjadi usaha yang banyak diinginkan oleh pelanggan", icon: <MonitorPlay size={24} strokeWidth={3} /> }
   ];
 
   // Data Gallery Drag
@@ -84,6 +84,49 @@ export default function Tentang() {
         >
           Lebih dari sekadar bahan baku premium, Oriena adalah tentang merawat tradisi dan menciptakan momen manis di setiap gigitan.
         </motion.p>
+      </section>
+
+      {/* 1.5 SEJARAH SECTION (Neo-Brutalism Story Block) */}
+      <section className="max-w-5xl mx-auto px-4 mb-32">
+        <motion.div 
+          initial={{ opacity: 0, y: 50 }} 
+          whileInView={{ opacity: 1, y: 0 }} 
+          viewport={{ once: true, margin: "-100px" }} 
+          transition={{ duration: 0.6, type: "spring" }}
+          className="bg-white border-4 border-[#4A3022] shadow-[12px_12px_0px_#D97736] rounded-[2rem] p-8 md:p-12 relative"
+        >
+          {/* Aksen Pin/Pita di pojok */}
+          <div className="absolute -top-6 -right-6 w-16 h-16 bg-[#F7F3EB] border-4 border-[#4A3022] rounded-full flex items-center justify-center shadow-[4px_4px_0px_#4A3022] z-10 rotate-12">
+            <span className="text-2xl"></span>
+          </div>
+
+          <div className="flex flex-col md:flex-row gap-8 items-start">
+            <div className="w-full md:w-1/3">
+              <div className="inline-block px-4 py-1.5 bg-[#D97736] text-[#FAF5E9] border-2 border-[#4A3022] rounded-full text-xs font-jakarta font-black tracking-widest uppercase shadow-[4px_4px_0px_#4A3022] mb-4">
+                AWAL MULA
+              </div>
+              <h2 className="text-3xl md:text-4xl font-playfair font-black text-[#4A3022] leading-tight">
+                Bagaimana <br/>Dapur Ini <br/>Bermula.
+              </h2>
+            </div>
+            
+            <div className="w-full md:w-2/3 border-l-0 md:border-l-4 border-[#4A3022] md:pl-8 pt-4 md:pt-0 space-y-4">
+              {/* BROSUR: PASTE JAWABAN G-FORM KAK SARAH DI SINI 👇 */}
+  
+              <p className="text-[#4A3022]/90 font-jakarta font-bold text-lg leading-relaxed">
+                "Sebelum dikenal dengan nama Oriena, kami memulai langkah dengan nama PasPastry. Filosofinya sederhana: menyajikan produk dengan cita rasa yang 'Pas' dan harga yang juga pas di kantong."
+              </p>
+              <p className="text-[#4A3022]/90 font-jakarta font-bold text-lg leading-relaxed">
+                "Seiring berjalannya waktu, kami melakukan rebranding menjadi Oriena yang bermakna 'Original' dan 'Enak'. Semua kreasi kami adalah produk original buatan tangan kami sendiri dengan kualitas rasa yang sudah pasti enak."
+              </p>
+              <p className="text-[#4A3022]/90 font-jakarta font-bold text-lg leading-relaxed">
+                "Banyak yang bertanya apa senjata rahasia kami. Jawabannya ada pada komposisi rasa yang pas dan tidak berlebihan, dipadukan dengan harga yang tetap terjangkau. Agar kehangatan oven kami bisa dinikmati oleh siapa saja."
+              </p>
+           
+              {/* BROSUR: PASTE JAWABAN G-FORM KAK SARAH DI SINI 👆 */}
+            </div>
+          </div>
+        </motion.div>
       </section>
 
       {/* 2. FOUNDER SECTION (Flat Bold Style) */}

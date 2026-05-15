@@ -22,26 +22,28 @@ export default function Katalog({ setCartCount }: KatalogProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  const filters = ['Semua', 'Kering', 'Basah', 'Hampers'];
+  // KATEGORI UDAH DIUPDATE SESUAI G-FORM
+  const filters = ['Semua', 'Cookies', 'Bakery', 'Snack', 'Hampers'];
 
-  // Data Produk Bento (7 Item agar Grid 3 Kolom Presisi dan Sempurna)
+  // DATA HIGHLIGHT (BENTO GRID) - BEST SELLER DARI G-FORM
   const bentoProducts: Product[] = [
-    { id: 1, name: "Kastengel Royal", category: "Kering", price: 95000, desc: "Keju edam asli, full butter. Garing di luar, keju edam yang pecah dan lumer di gigitan pertama.", gridClass: "md:col-span-2 md:row-span-2 h-[300px] md:h-[624px]", badge: "BEST SELLER", image: "https://i.pinimg.com/1200x/60/7c/65/607c65fd7335952a1fea9a65500a2eb4.jpg" },
-    { id: 2, name: "Nastar Classic", category: "Kering", price: 85000, desc: "Selai nanas homemade lumer yang dibuat perlahan dengan rempah pilihan.", gridClass: "md:col-span-1 md:row-span-1 h-[300px]", image: "https://i.pinimg.com/736x/7b/d6/a2/7bd6a29f089ee2c4fe42b84f6a9f9b0a.jpg" },
-    { id: 3, name: "Almond Crispy", category: "Kering", price: 65000, desc: "Tipis, renyah, manis pas. Cocok banget buat nemenin ngopi sore.", gridClass: "md:col-span-1 md:row-span-1 h-[300px]", image: "https://images.unsplash.com/photo-1600431562968-ef337c8733ed?auto=format&fit=crop&q=80&w=600" },
-    { id: 4, name: "Choco Cheese Pastry", category: "Basah", price: 45000, desc: "Flaky pastry dengan isian lumer cokelat Belgia dan keju gurih.", gridClass: "md:col-span-2 md:row-span-1 h-[300px]", badge: "NEW", image: "https://i.pinimg.com/1200x/94/fe/23/94fe23608be4b1c3eaec25fc1f1d9afe.jpg" },
-    { id: 6, name: "Paket Hampers Lebaran", category: "Hampers", price: 250000, desc: "Isi 3 toples bebas pilih. Packaging hardbox eksklusif dengan kartu ucapan.", gridClass: "md:col-span-1 md:row-span-2 h-[300px] md:h-[624px]", badge: "SPESIAL", image: "https://i.pinimg.com/1200x/be/68/12/be6812585ccb5b55a88d3ebac26e5cb1.jpg" },
-    { id: 7, name: "Sagu Keju Lumer", category: "Kering", price: 75000, desc: "Tekstur ngeprul yang ngangenin, lumer begitu masuk mulut.", gridClass: "md:col-span-1 md:row-span-1 h-[300px]", image: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&q=80&w=600" },
-    { id: 8, name: "Cinnamon Roll", category: "Basah", price: 55000, desc: "Wangi kayu manis premium berpadu dengan cream cheese frosting yang melimpah.", gridClass: "md:col-span-1 md:row-span-1 h-[300px]", image: "https://images.unsplash.com/photo-1509365465985-25d11c17e812?auto=format&fit=crop&q=80&w=600" }
+    { id: 1, name: "Nastar Original", category: "Cookies", price: 85000, desc: "Cookies nastar lumer dengan isian nanas asli buatan sendiri. Best seller nomor 1 Oriena!", gridClass: "md:col-span-2 md:row-span-2 h-[300px] md:h-[624px]", badge: "BEST SELLER", image: "https://images.unsplash.com/photo-1590080874088-eec64895e423?auto=format&fit=crop&q=80&w=800" },
+    { id: 2, name: "Roti Sisir Mentega", category: "Bakery", price: 15000, desc: "Roti sisir klasik yang super lembut dengan olesan mentega manis yang pas di lidah.", gridClass: "md:col-span-1 md:row-span-1 h-[300px]", badge: "BEST SELLER", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=600" },
+    { id: 3, name: "Sustik (Sus Kering)", category: "Snack", price: 20000, desc: "Cemilan sus kering gurih yang renyah banget. Pas buat nemenin nugas atau ngantor.", gridClass: "md:col-span-1 md:row-span-1 h-[300px]", badge: "BEST SELLER", image: "https://images.unsplash.com/photo-1600431562968-ef337c8733ed?auto=format&fit=crop&q=80&w=600" },
+    { id: 4, name: "Bolen Lilit", category: "Bakery", price: 35000, desc: "Kulit bolen yang flaky dengan isian pisang manis dan cokelat lumer di dalam.", gridClass: "md:col-span-2 md:row-span-1 h-[300px]", image: "https://images.unsplash.com/photo-1555507036-ab1f40ce88cb?auto=format&fit=crop&q=80&w=800" },
+   // GANTI DATA ID 6 DI DALAM bentoProducts JADI GINI:
+    { id: 6, name: "Hampers Seasonal (Lebaran & Natal)", category: "Hampers", price: 115000, desc: "Paket eksklusif edisi hari raya. Sempurna untuk hantaran Lebaran atau kado manis saat Natal.", gridClass: "md:col-span-1 md:row-span-2 h-[300px] md:h-[624px]", badge: "SEASONAL", image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&q=80&w=600" },
+    { id: 7, name: "Kastengel Keju", category: "Cookies", price: 95000, desc: "Garing di luar, keju edam yang pecah dan lumer di gigitan pertama. Bikin nagih!", gridClass: "md:col-span-1 md:row-span-1 h-[300px]", image: "https://images.unsplash.com/photo-1605335135706-9076f827a1fc?auto=format&fit=crop&q=80&w=600" },
   ];
 
-  // Data 10 Produk untuk Grid Bawah (5 per baris)
+  // DATA SEMUA PRODUK 
   const allProducts: Product[] = [
-    ...bentoProducts.slice(0, 6), // Ambil 6 dari atas
-    { id: 8, name: "Cinnamon Roll", category: "Basah", price: 55000, desc: "Kayu manis premium.", image: "https://images.unsplash.com/photo-1509365465985-25d11c17e812?auto=format&fit=crop&q=80&w=600" },
-    { id: 9, name: "Lidah Kucing", category: "Kering", price: 60000, desc: "Tipis, renyah, sangat adiktif!", image: "https://images.unsplash.com/photo-1557310717-d6bea9f36682?auto=format&fit=crop&q=80&w=600" },
-    { id: 10, name: "Palm Cheese", category: "Kering", price: 85000, desc: "Balutan gula aren asli.", image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&q=80&w=600" },
-    { id: 11, name: "Putri Salju", category: "Kering", price: 80000, desc: "Lumer dingin dengan kacang mede.", image: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&q=80&w=600" },
+    ...bentoProducts.slice(0, 6), 
+    { id: 11, name: "Lidah Kucing", category: "Cookies", price: 65000, desc: "Tipis, renyah, dan manisnya pas. Cocok banget disandingkan dengan teh hangat.", image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&q=80&w=400" },
+    { id: 14, name: "Pastry Stick", category: "Snack", price: 25000, desc: "Snack pastry panjang renyah dengan taburan keju parmesan yang gurih.", image: "https://images.unsplash.com/photo-1555507036-ab1f40ce88cb?auto=format&fit=crop&q=80&w=400" },
+    { id: 16, name: "Hampers Mini", category: "Hampers", price: 75000, desc: "Paket ekonomis isi 2 toples kecil. Harga ramah di kantong.", image: "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&q=80&w=400" },
+    { id: 17, name: "Nastar Toples Kecil", category: "Cookies", price: 45000, desc: "Versi ekonomis dari nastar original kami.", image: "https://images.unsplash.com/photo-1600431562217-1563e41c4a04?auto=format&fit=crop&q=80&w=400" },
+    { id: 20, name: "Mini Roti Sisir", category: "Bakery", price: 5000, desc: "Roti sisir versi sekali lahap. Harga paling murah!", image: "https://images.unsplash.com/photo-1606822819825-f370ee1c1b18?auto=format&fit=crop&q=80&w=400" },
   ];
 
   const filterLogic = (product: Product) => {
@@ -82,7 +84,7 @@ export default function Katalog({ setCartCount }: KatalogProps) {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="flex flex-col items-center gap-6 mb-16">
           <div className="relative w-full max-w-md">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#4A3022]" size={24} strokeWidth={3} />
-            <input type="text" placeholder="Cari nastar, kastengel..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full font-jakarta font-bold bg-white border-4 border-[#4A3022] focus:border-[#D97736] rounded-2xl py-4 pl-14 pr-4 outline-none text-[#4A3022] shadow-[6px_6px_0px_#4A3022] transition-colors placeholder:text-[#4A3022]/40" />
+            <input type="text" placeholder="Cari nastar, roti sisir..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full font-jakarta font-bold bg-white border-4 border-[#4A3022] focus:border-[#D97736] rounded-2xl py-4 pl-14 pr-4 outline-none text-[#4A3022] shadow-[6px_6px_0px_#4A3022] transition-colors placeholder:text-[#4A3022]/40" />
           </div>
 
           <div className="flex flex-wrap justify-center gap-3">
@@ -94,7 +96,7 @@ export default function Katalog({ setCartCount }: KatalogProps) {
           </div>
         </motion.div>
 
-        {/* PROMO CARDS - TANPA MOTION/GERAK (Static & Flat) */}
+        {/* PROMO CARDS - Static & Flat
         <div className="mb-24">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-12 h-12 bg-[#4A3022] border-2 border-[#4A3022] rounded-xl flex items-center justify-center text-[#FAF5E9] shadow-[4px_4px_0px_#D97736]"><Tag size={24} /></div>
@@ -102,27 +104,25 @@ export default function Katalog({ setCartCount }: KatalogProps) {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Promo 1 */}
             <div className="bg-[#D97736] rounded-[2rem] p-8 text-white relative border-4 border-[#4A3022] shadow-[12px_12px_0px_#4A3022] overflow-hidden">
               <div className="absolute -right-8 -top-8 opacity-20 text-[#4A3022]"><Cookie size={200} /></div>
               <div className="relative z-10 flex flex-col justify-center h-full">
                 <span className="bg-white text-[#4A3022] border-2 border-[#4A3022] px-4 py-1.5 rounded-full text-xs font-jakarta font-black tracking-wider mb-4 w-max shadow-[2px_2px_0px_#4A3022]">BUNDLE SPESIAL</span>
-                <h3 className="text-3xl font-playfair font-black mb-4 leading-tight">Beli 3 Toples Kering,<br/>Gratis Ongkir!</h3>
+                <h3 className="text-3xl font-playfair font-black mb-4 leading-tight">Beli 3 Toples Cookies,<br/>Gratis Ongkir!</h3>
                 <button className="bg-white text-[#D97736] border-4 border-[#4A3022] px-8 py-3.5 rounded-xl font-jakarta font-black text-sm hover:bg-[#FAF5E9] transition-colors shadow-[4px_4px_0px_#4A3022] w-max mt-4 active:translate-y-1 active:shadow-none">Klaim Promo</button>
               </div>
             </div>
 
-            {/* Promo 2 */}
             <div className="bg-[#E0D0BB] rounded-[2rem] p-8 text-[#4A3022] relative border-4 border-[#4A3022] shadow-[12px_12px_0px_#4A3022] overflow-hidden">
               <div className="absolute -right-8 -top-8 opacity-10"><Coffee size={200} /></div>
               <div className="relative z-10 flex flex-col justify-center h-full">
                 <span className="bg-[#4A3022] text-[#FAF5E9] border-2 border-[#4A3022] px-4 py-1.5 rounded-full text-xs font-jakarta font-black tracking-wider mb-4 w-max shadow-[2px_2px_0px_#D97736]">PAKET NGOPI</span>
-                <h3 className="text-3xl font-playfair font-black mb-4 leading-tight">2 Pastry Bebas Pilih <br/>+ 1 Kopi Oriena</h3>
+                <h3 className="text-3xl font-playfair font-black mb-4 leading-tight">2 Roti Bebas Pilih <br/>+ 1 Kopi Oriena</h3>
                 <button className="bg-[#D97736] text-white border-4 border-[#4A3022] px-8 py-3.5 rounded-xl font-jakarta font-black text-sm hover:bg-[#c46a2b] transition-colors shadow-[4px_4px_0px_#4A3022] w-max mt-4 active:translate-y-1 active:shadow-none">Lihat Paket</button>
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* SECTION: BENTO GRID (Koleksi Unggulan) */}
         {filteredBento.length > 0 && (
@@ -141,7 +141,6 @@ export default function Katalog({ setCartCount }: KatalogProps) {
                       <img src={product.image} alt={product.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out" />
                       {product.badge && <div className="absolute top-4 left-4 z-20"><span className="bg-[#D97736] border-2 border-[#4A3022] text-[#FAF5E9] px-3 py-1.5 rounded-full text-xs font-jakarta font-black tracking-widest shadow-[2px_2px_0px_#4A3022]">{product.badge}</span></div>}
                     </div>
-                    {/* Bagian Bawah Teks Solid Flat */}
                     <div className="p-5 bg-white border-t-4 border-[#4A3022] flex flex-col justify-between h-32 md:h-40">
                       <div>
                         <p className="text-[#829079] font-jakarta font-black text-xs tracking-wider uppercase mb-1">{product.category}</p>
@@ -158,7 +157,7 @@ export default function Katalog({ setCartCount }: KatalogProps) {
           </div>
         )}
 
-        {/* SECTION: SEMUA PRODUK (Grid 5 Kolom) */}
+        {/* SECTION: SEMUA PRODUK */}
         {filteredAll.length > 0 && (
           <div className="mb-16">
             <div className="flex items-center justify-between mb-8 border-t-4 border-[#4A3022] pt-8">
@@ -190,15 +189,7 @@ export default function Katalog({ setCartCount }: KatalogProps) {
           </div>
         )}
 
-        {filteredBento.length === 0 && filteredAll.length === 0 && (
-          <div className="text-center py-24 bg-white border-4 border-[#4A3022] rounded-3xl shadow-[8px_8px_0px_#4A3022]">
-            <Cookie size={64} className="mx-auto text-[#4A3022]/30 mb-4" />
-            <h3 className="text-2xl font-playfair font-black text-[#4A3022] mb-2">Waduh, kuenya nggak ketemu!</h3>
-            <p className="text-[#4A3022]/60 font-jakarta font-bold">Coba cari pakai kata kunci lain atau reset filter.</p>
-          </div>
-        )}
-
-        {/* MODAL POP UP PRODUCT (Tema Flat) */}
+        {/* MODAL POP UP PRODUCT */}
         <AnimatePresence>
           {selectedProduct && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#4A3022]/80 backdrop-blur-sm" onClick={() => setSelectedProduct(null)}>

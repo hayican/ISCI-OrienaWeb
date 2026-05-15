@@ -18,7 +18,7 @@ export default function Cart({ cartCount, setCartCount }: CartProps) {
 
   const handleCheckoutWA = (e: React.FormEvent) => {
     e.preventDefault();
-    const phoneNumber = "6281234567890";
+    const phoneNumber = "628126120165";
     let text = `Halo Admin Oriena! 👋\nSaya mau checkout nih:\n\n`;
     text += `🧾 *STRUK PESANAN*\n`;
     text += `Jumlah Item: ${cartCount} Produk\n`;
