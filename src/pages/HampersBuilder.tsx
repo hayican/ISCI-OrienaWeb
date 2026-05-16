@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-// Star dihapus dari sini agar tidak error kuning lagi
 import { ShoppingBag, Package, CheckCircle, Trash2, Plus, Gift, PenLine, Truck, ArrowRight, Cookie } from 'lucide-react';
 
 interface CookieItem {
@@ -11,12 +10,14 @@ interface CookieItem {
   image: string;
 }
 
+// 1. TAMBAHIN INTERFACE addToCart
 interface HampersBuilderProps {
   setCartCount: React.Dispatch<React.SetStateAction<number>>;
+  addToCart?: (product: { id: string | number; name: string; price: number }) => void;
 }
 
-export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
-  // 1. STATE DIUBAH JADI 3 SLOT
+// 2. TANGKAP addToCart
+export default function HampersBuilder({ addToCart }: HampersBuilderProps) {
   const [boxItems, setBoxItems] = useState<(CookieItem | null)[]>([null, null, null]);
   const [greeting, setGreeting] = useState('');
   const [isDone, setIsDone] = useState(false);
@@ -31,13 +32,11 @@ export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
   ];
 
 const recommendedHampers = [
-    // GANTI DATA r1 JADI GINI:
     { id: 'r1', name: "Hampers Seasonal (Lebaran & Natal)", desc: "Edisi spesial hari raya! Isi Kastengel, Lidah Kucing, Putri Salju. Termasuk box tematik eksklusif.", price: 370000, image: "https://i.pinimg.com/1200x/be/68/12/be6812585ccb5b55a88d3ebac26e5cb1.jpg" },
     { id: 'r2', name: "Sweet Treats Box", desc: "Almond Crispy, Kastengel, Lidah Kucing. Kado manis untuk sahabat.", price: 330000, image: "https://i.pinimg.com/736x/07/98/88/079888dae1e172b609b3ff8a47159ba0.jpg" },
     { id: 'r3', name: "Premium Artisan", desc: "Kastengel + Double Almond Crispy. Kombinasi juara yang nggak pernah salah.", price: 395000, image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&q=80&w=600" },
   ];
 
-  // 2. HARGA DASAR BOX DIUBAH JADI RP 15.000
   const baseBoxPrice = 15000;
   const currentTotal = boxItems.reduce((total, item) => total + (item ? item.price : 0), baseBoxPrice);
   const filledCount = boxItems.filter(item => item !== null).length;
@@ -84,8 +83,14 @@ const recommendedHampers = [
   };
 
   const handleFinish = () => {
-    setCartCount(prev => prev + 1);
-    // RESET JADI 3 SLOT SAAT SELESAI
+    // 3. EKSEKUSI addToCart BUAT HAMPERS CUSTOM
+    if (addToCart) {
+      addToCart({
+        id: `custom-hampers-${Math.floor(Math.random() * 10000)}`,
+        name: `Custom Box Hampers (${filledCount} Toples)`,
+        price: currentTotal
+      });
+    }
     setBoxItems([null, null, null]);
     setGreeting('');
     setIsDone(false);
@@ -98,34 +103,20 @@ const recommendedHampers = [
       
       <div className="relative pt-12 pb-16 md:pt-20 md:pb-24 border-b-8 border-[#4A3022] min-h-[90vh] flex items-center bg-[#E0D0BB]">
         <div className="absolute inset-0 z-0">
-          <img 
-            src="https://i.pinimg.com/1200x/08/0d/f7/080df7c037e92fcf48fefc60b35f637f.jpg" 
-            alt="Lantai Kayu" 
-            className="w-full h-full object-cover mix-blend-multiply opacity-80" 
-          />
+          <img src="https://i.pinimg.com/1200x/08/0d/f7/080df7c037e92fcf48fefc60b35f637f.jpg" alt="Lantai Kayu" className="w-full h-full object-cover mix-blend-multiply opacity-80" />
         </div>
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
-            <motion.h1 
-              initial={{ opacity: 0, y: -30 }} 
-              animate={{ opacity: 1, y: 0 }} 
-              className="text-4xl md:text-6xl font-playfair font-black text-[#FAF5E9] [-webkit-text-stroke:1px_#4A3022] drop-shadow-[4px_4px_0px_#4A3022] mb-4"
-            >
+            <motion.h1 initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} className="text-4xl md:text-6xl font-playfair font-black text-[#FAF5E9] [-webkit-text-stroke:1px_#4A3022] drop-shadow-[4px_4px_0px_#4A3022] mb-4">
               Rakit Hampersmu.
             </motion.h1>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }} 
-              animate={{ opacity: 1, y: 0 }} 
-              transition={{ delay: 0.1 }} 
-              className="text-lg font-jakarta text-[#FAF5E9]/90 max-w-2xl mx-auto font-bold"
-            >
+            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-lg font-jakarta text-[#FAF5E9]/90 max-w-2xl mx-auto font-bold">
               Pilih varian kue, atau <span className="bg-[#D97736] text-white px-2 py-0.5 rounded-md border-2 border-[#4A3022]">Tarik & Lepas</span> toples langsung ke dalam box.
             </motion.p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-            
             <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, type: "spring" }} className="lg:col-span-7 flex flex-col items-center">
               <div className="w-full max-w-lg flex justify-between items-center mb-6 px-2">
                 <h3 className="text-2xl font-playfair font-black text-[#4A3022] bg-[#FAF5E9] px-3 py-1 rounded-lg border-2 border-[#4A3022]">Box Pengemasan</h3>
@@ -135,7 +126,6 @@ const recommendedHampers = [
               </div>
 
               <div className="w-full max-w-lg aspect-square bg-[#E0D0BB] border-4 border-[#4A3022] rounded-[3rem] p-6 md:p-8 relative shadow-[12px_12px_0px_rgba(74,48,34,1)]">
-                {/* 3. LAYOUT GRID DIUBAH AGAR 3 TOPLES TERLIHAT RAPI DI TENGAH */}
                 <div className="flex flex-wrap justify-center content-center gap-4 md:gap-6 h-full relative z-10">
                   {[0, 1, 2].map((slotIdx) => (
                     <div 
@@ -151,15 +141,12 @@ const recommendedHampers = [
                             <div className="absolute inset-0 bg-gradient-to-t from-[#4A3022] via-[#4A3022]/40 to-transparent flex flex-col justify-end p-2 md:p-4 opacity-90">
                               <span className="font-bold font-jakarta text-[#FAF5E9] text-[10px] md:text-sm text-center leading-tight">{boxItems[slotIdx]!.name}</span>
                             </div>
-                            
                             <div onClick={() => handleRemoveCookie(slotIdx)} className="absolute inset-0 bg-[#4A3022]/80 opacity-0 group-hover:opacity-100 flex items-center justify-center cursor-pointer transition-opacity duration-300">
                               <Trash2 className="text-[#FAF5E9]" size={36} />
                             </div>
                           </motion.div>
                         ) : (
-                          <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-[#4A3022]/30 font-playfair font-black text-3xl md:text-5xl">
-                            {slotIdx + 1}
-                          </motion.div>
+                          <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-[#4A3022]/30 font-playfair font-black text-3xl md:text-5xl">{slotIdx + 1}</motion.div>
                         )}
                       </AnimatePresence>
                     </div>
@@ -168,10 +155,7 @@ const recommendedHampers = [
 
                 <AnimatePresence>
                   {isDone && (
-                    <motion.div 
-                      initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }}
-                      className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-[#D97736] rounded-[2.5rem] border-4 border-[#4A3022] shadow-[8px_8px_0px_#4A3022]"
-                    >
+                    <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-[#D97736] rounded-[2.5rem] border-4 border-[#4A3022] shadow-[8px_8px_0px_#4A3022]">
                       <motion.div initial={{ y: -10 }} animate={{ y: 0 }} transition={{ repeat: Infinity, duration: 1.5, repeatType: "reverse", ease: "easeInOut" }}>
                         <Package size={100} className="text-white mb-4" strokeWidth={2} />
                       </motion.div>
@@ -206,14 +190,11 @@ const recommendedHampers = [
 
                     <div className="space-y-4 max-h-[460px] overflow-y-auto pr-2 custom-scrollbar">
                       {availableCookies.map((cookie) => {
-                        // 4. BATAS MAKSIMAL DRAG JUGA DIUBAH JADI 3
                         const isFull = filledCount === 3;
                         return (
                           <motion.div
                             whileHover={!isFull ? { scale: 1.02 } : {}} whileTap={!isFull ? { scale: 0.98 } : {}}
-                            key={cookie.id} draggable={!isFull}
-                            onDragStart={(e) => handleDragStart(e as unknown as React.DragEvent, cookie)}
-                            onDragEnd={() => setDraggedItem(null)}
+                            key={cookie.id} draggable={!isFull} onDragStart={(e) => handleDragStart(e as unknown as React.DragEvent, cookie)} onDragEnd={() => setDraggedItem(null)}
                             className={`w-full flex items-center justify-between p-3 rounded-2xl border-4 transition-all ${isFull ? 'opacity-50 cursor-not-allowed border-[#4A3022]/20 bg-[#E0D0BB]' : 'border-[#4A3022] hover:border-[#D97736] bg-white cursor-grab active:cursor-grabbing shadow-[4px_4px_0px_#4A3022] hover:shadow-[2px_2px_0px_#D97736]'}`}
                           >
                             <div className="flex items-center gap-4 pointer-events-none">
@@ -271,9 +252,7 @@ const recommendedHampers = [
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
             <div className="hidden md:block absolute top-10 left-0 w-full h-1 bg-[#4A3022] z-0"></div>
-
             {[
-              // 5. TEKS "TARIK 4 VARIAN" UBAH JADI 3
               { title: "Pilih Kue", desc: "Tarik 3 varian kue favoritmu ke dalam box pengemasan.", icon: <Cookie size={32} /> },
               { title: "Tulis Pesan", desc: "Sematkan kartu ucapan gratis dengan pesan personalmu.", icon: <PenLine size={32} /> },
               { title: "Kami Rakit", desc: "Tim artisan kami akan menyusunnya dengan pita elegan.", icon: <Gift size={32} /> },
@@ -295,9 +274,7 @@ const recommendedHampers = [
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
             <div>
-              <div className="inline-block px-4 py-1.5 bg-[#4A3022] text-[#FAF5E9] rounded-full text-xs font-jakarta font-black tracking-widest uppercase mb-4 border-2 border-[#4A3022]">
-                BINGUNG PILIHNYA?
-              </div>
+              <div className="inline-block px-4 py-1.5 bg-[#4A3022] text-[#FAF5E9] rounded-full text-xs font-jakarta font-black tracking-widest uppercase mb-4 border-2 border-[#4A3022]">BINGUNG PILIHNYA?</div>
               <h2 className="text-3xl md:text-4xl font-playfair font-black text-[#4A3022]">Rekomendasi Siap Kirim</h2>
             </div>
             <button className="text-[#D97736] font-jakarta font-black flex items-center gap-1 hover:text-[#4A3022] transition-colors">
@@ -307,10 +284,7 @@ const recommendedHampers = [
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {recommendedHampers.map((hamper, idx) => (
-              <motion.div 
-                key={hamper.id} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: idx * 0.1 }} whileHover={{ y: -8 }}
-                className="bg-[#FAF5E9] rounded-[2.5rem] overflow-hidden border-4 border-[#4A3022] shadow-[8px_8px_0px_#4A3022] group flex flex-col"
-              >
+              <motion.div key={hamper.id} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: idx * 0.1 }} whileHover={{ y: -8 }} className="bg-[#FAF5E9] rounded-[2.5rem] overflow-hidden border-4 border-[#4A3022] shadow-[8px_8px_0px_#4A3022] group flex flex-col">
                 <div className="aspect-[4/3] overflow-hidden relative border-b-4 border-[#4A3022]">
                   <img src={hamper.image} alt={hamper.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                   <div className="absolute top-4 right-4 bg-white border-2 border-[#4A3022] px-4 py-1.5 rounded-full text-[#D97736] font-jakarta font-black text-xs tracking-wider">TERLARIS</div>
@@ -320,7 +294,16 @@ const recommendedHampers = [
                   <p className="text-[#4A3022]/80 text-sm font-jakarta font-medium leading-relaxed mb-6 flex-1">{hamper.desc}</p>
                   <div className="mt-auto flex items-center justify-between">
                     <span className="text-xl font-jakarta font-black text-[#D97736]">Rp {hamper.price.toLocaleString('id-ID')}</span>
-                    <button onClick={() => { setCartCount(prev => prev + 1); alert(`${hamper.name} masuk keranjang!`); }} className="w-12 h-12 rounded-full bg-white border-2 border-[#4A3022] text-[#4A3022] flex items-center justify-center hover:bg-[#D97736] hover:text-white transition-colors active:scale-95 shadow-[2px_2px_0px_#4A3022]"><Plus size={24} strokeWidth={3} /></button>
+                    <button 
+                      onClick={() => { 
+                        // 4. EKSEKUSI addToCart BUAT HAMPERS REKOMENDASI
+                        if (addToCart) addToCart({ id: hamper.id, name: hamper.name, price: hamper.price });
+                        alert(`${hamper.name} masuk keranjang!`); 
+                      }} 
+                      className="w-12 h-12 rounded-full bg-white border-2 border-[#4A3022] text-[#4A3022] flex items-center justify-center hover:bg-[#D97736] hover:text-white transition-colors active:scale-95 shadow-[2px_2px_0px_#4A3022]"
+                    >
+                      <Plus size={24} strokeWidth={3} />
+                    </button>
                   </div>
                 </div>
               </motion.div>

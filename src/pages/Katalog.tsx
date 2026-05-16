@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, ShoppingBag, X, Star, Plus, Tag, Cookie, Coffee } from 'lucide-react';
 
+// 1. TAMBAHIN addToCart DI SINI BRSKIEE
 interface KatalogProps {
   setCartCount: React.Dispatch<React.SetStateAction<number>>;
+  addToCart?: (product: { id: string | number; name: string; price: number }) => void;
 }
 
 interface Product {
@@ -17,25 +19,22 @@ interface Product {
   gridClass?: string;
 }
 
-export default function Katalog({ setCartCount }: KatalogProps) {
+// 2. TANGKAP addToCart
+export default function Katalog({  addToCart }: KatalogProps) {
   const [activeFilter, setActiveFilter] = useState('Semua');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   
-  // State untuk Carousel
   const [carouselIndex, setCarouselIndex] = useState(0);
 
-  // KATEGORI
   const filters = ['Semua', 'Cookies', 'Bakery', 'Snack'];
 
-  // DATA HIGHLIGHT (CAROUSEL) - CUMA 3 ITEM
   const carouselProducts: Product[] = [
     { id: 1, name: "Nastar Original", category: "Cookies", price: 85000, desc: "Cookies nastar lumer dengan isian nanas asli buatan sendiri. Best seller nomor 1 Oriena!", badge: "BEST SELLER", image: "https://images.unsplash.com/photo-1590080874088-eec64895e423?auto=format&fit=crop&q=80&w=1200" },
     { id: 2, name: "Roti Sisir Mentega", category: "Bakery", price: 15000, desc: "Roti sisir klasik yang super lembut dengan olesan mentega manis yang pas di lidah.", badge: "FAVORIT", image: "https://github.com/user-attachments/assets/f075d205-bb78-42c1-8466-ef803038a700" },
     { id: 3, name: "Sustik (Sus Kering)", category: "Snack", price: 25000, desc: "Cemilan sus kering gurih yang renyah banget. Pas buat nemenin nugas atau ngantor.", badge: "RENYAH", image: "https://github.com/user-attachments/assets/b8e267a8-d73f-401d-8ddc-bef625f21d9d" },
   ];
 
-  // DATA SEMUA PRODUK - 15 ITEM
   const allProducts: Product[] = [
     { id: 1, name: "Sosis Boom", category: "Bakery", price: 15000, desc: "Roti empuk dengan isian sosis gurih dan saus spesial yang meledak di mulut.", image: "https://github.com/user-attachments/assets/04256e46-d329-42f5-9367-bb0b3774b718" },
     { id: 2, name: "Mini Pizza", category: "Bakery", price: 12000, desc: "Pizza ukuran personal dengan topping keju, sosis, dan saus tomat lezat.", image: "https://github.com/user-attachments/assets/993b0a3d-2b50-4b4a-a360-2429736c53ad" },
@@ -63,13 +62,12 @@ export default function Katalog({ setCartCount }: KatalogProps) {
   const filteredCarousel = carouselProducts.filter(filterLogic);
   const filteredAll = allProducts.filter(filterLogic);
 
-  // AUTO SCROLL CAROUSEL (3 Detik)
   useEffect(() => {
     if (filteredCarousel.length <= 1) return;
     
     const timer = setInterval(() => {
       setCarouselIndex((prevIndex) => (prevIndex + 1) % filteredCarousel.length);
-    }, 3000); // 3000 ms = 3 detik
+    }, 3000); 
 
     return () => clearInterval(timer);
   }, [filteredCarousel.length]);
@@ -79,7 +77,6 @@ export default function Katalog({ setCartCount }: KatalogProps) {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="pb-24 bg-[#F7F3EB] min-h-screen">
       
-      {/* HERO BANNER - Solid Border & Tuku Style */}
       <div className="relative w-full h-[300px] md:h-[400px] mb-16 flex items-center justify-center overflow-hidden border-b-8 border-[#4A3022]">
         <div className="absolute inset-0 z-0">
           <img src={heroImage} alt="Katalog Oriena" className="w-full h-full object-cover opacity-90" />
@@ -99,7 +96,6 @@ export default function Katalog({ setCartCount }: KatalogProps) {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* SEARCH & FILTER (Flat Bold) */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="flex flex-col items-center gap-6 mb-16">
           <div className="relative w-full max-w-md">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#4A3022]" size={24} strokeWidth={3} />
@@ -115,7 +111,6 @@ export default function Katalog({ setCartCount }: KatalogProps) {
           </div>
         </motion.div>
 
-        {/* PROMO CARDS - TANPA MOTION/GERAK (Static & Flat) */}
         <div className="mb-24">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-12 h-12 bg-[#4A3022] border-2 border-[#4A3022] rounded-xl flex items-center justify-center text-[#FAF5E9] shadow-[4px_4px_0px_#D97736]"><Tag size={24} /></div>
@@ -123,7 +118,6 @@ export default function Katalog({ setCartCount }: KatalogProps) {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Promo 1 */}
             <div className="bg-[#D97736] rounded-[2rem] p-8 text-white relative border-4 border-[#4A3022] shadow-[12px_12px_0px_#4A3022] overflow-hidden">
               <div className="absolute -right-8 -top-8 opacity-20 text-[#4A3022]"><Cookie size={200} /></div>
               <div className="relative z-10 flex flex-col justify-center h-full">
@@ -133,7 +127,6 @@ export default function Katalog({ setCartCount }: KatalogProps) {
               </div>
             </div>
 
-            {/* Promo 2 */}
             <div className="bg-[#E0D0BB] rounded-[2rem] p-8 text-[#4A3022] relative border-4 border-[#4A3022] shadow-[12px_12px_0px_#4A3022] overflow-hidden">
               <div className="absolute -right-8 -top-8 opacity-10"><Coffee size={200} /></div>
               <div className="relative z-10 flex flex-col justify-center h-full">
@@ -145,7 +138,6 @@ export default function Katalog({ setCartCount }: KatalogProps) {
           </div>
         </div>
 
-        {/* SECTION: CAROUSEL HIGHLIGHT (3 Item Unggulan) */}
         {filteredCarousel.length > 0 && (
           <div className="mb-24">
             <div className="flex items-center gap-3 mb-6">
@@ -156,19 +148,17 @@ export default function Katalog({ setCartCount }: KatalogProps) {
               <AnimatePresence initial={false}>
                 <motion.div
                   key={carouselIndex}
-                  initial={{ x: "100%" }} // Datang dari kanan
-                  animate={{ x: 0 }}      // Ke tengah
-                  exit={{ x: "-100%" }}   // Keluar ke kiri
+                  initial={{ x: "100%" }} 
+                  animate={{ x: 0 }}      
+                  exit={{ x: "-100%" }}   
                   transition={{ duration: 0.6, ease: "easeInOut" }}
                   className="absolute inset-0 w-full h-full cursor-pointer group"
                   onClick={() => setSelectedProduct(filteredCarousel[carouselIndex])}
                 >
                   <img src={filteredCarousel[carouselIndex].image} alt={filteredCarousel[carouselIndex].name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                   
-                  {/* Overlay gradien gelap dari bawah biar teks bisa dibaca */}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#4A3022] via-[#4A3022]/60 to-transparent opacity-90"></div>
                   
-                  {/* Badge */}
                   {filteredCarousel[carouselIndex].badge && (
                     <div className="absolute top-6 left-6 md:top-8 md:left-8 z-20">
                       <span className="bg-[#D97736] border-2 border-[#4A3022] text-[#FAF5E9] px-4 py-2 rounded-full text-xs md:text-sm font-jakarta font-black tracking-widest shadow-[4px_4px_0px_#4A3022]">
@@ -177,7 +167,6 @@ export default function Katalog({ setCartCount }: KatalogProps) {
                     </div>
                   )}
 
-                  {/* Informasi Produk di bagian bawah slider */}
                   <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 z-20">
                     <p className="text-[#D97736] font-jakarta font-black text-sm md:text-base tracking-widest uppercase mb-2 drop-shadow-[2px_2px_0px_#4A3022]">
                       {filteredCarousel[carouselIndex].category}
@@ -196,7 +185,6 @@ export default function Katalog({ setCartCount }: KatalogProps) {
                 </motion.div>
               </AnimatePresence>
 
-              {/* Indikator Titik-Titik Carousel */}
               <div className="absolute bottom-8 right-8 z-30 flex gap-2">
                 {filteredCarousel.map((_, idx) => (
                   <button 
@@ -210,14 +198,12 @@ export default function Katalog({ setCartCount }: KatalogProps) {
           </div>
         )}
 
-        {/* SECTION: SEMUA PRODUK (Grid 5 Kolom) */}
         {filteredAll.length > 0 && (
           <div className="mb-16">
             <div className="flex items-center justify-between mb-8 border-t-4 border-[#4A3022] pt-8">
               <h3 className="text-3xl font-playfair font-black text-[#4A3022]">Semua Menu Kami</h3>
             </div>
             
-            {/* Pakai grid-cols-5 di layar besar supaya pas 15 item jadi 3 baris rapi */}
             <motion.div layout className="grid grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6">
               <AnimatePresence>
                 {filteredAll.map((product) => (
@@ -232,7 +218,18 @@ export default function Katalog({ setCartCount }: KatalogProps) {
                       <p className="text-[#829079] text-[10px] font-jakarta font-black uppercase tracking-wider mb-1">{product.category}</p>
                       <h4 className="font-playfair font-black text-[#4A3022] mb-1 line-clamp-2 leading-tight text-sm md:text-base">{product.name}</h4>
                       <span className="text-[#D97736] font-jakarta font-black text-sm mt-auto mb-3">Rp {product.price.toLocaleString('id-ID')}</span>
-                      <button className="w-full py-2 bg-[#FAF5E9] group-hover:bg-[#D97736] border-2 border-[#4A3022] text-[#4A3022] group-hover:text-white rounded-xl font-jakarta font-black text-xs transition-colors flex justify-center items-center gap-2 shadow-[2px_2px_0px_#4A3022] active:translate-y-0.5 active:shadow-none">
+                      
+                      {/* 3. EKSEKUSI addToCart DI TOMBOL TAMBAH GRID BAWAH */}
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation(); 
+                          if (addToCart) {
+                            addToCart({ id: product.id, name: product.name, price: product.price });
+                            alert(`${product.name} masuk keranjang!`);
+                          }
+                        }} 
+                        className="w-full py-2 bg-[#FAF5E9] group-hover:bg-[#D97736] border-2 border-[#4A3022] text-[#4A3022] group-hover:text-white rounded-xl font-jakarta font-black text-xs transition-colors flex justify-center items-center gap-2 shadow-[2px_2px_0px_#4A3022] active:translate-y-0.5 active:shadow-none"
+                      >
                         <Plus size={16} strokeWidth={3} /> Tambah
                       </button>
                     </div>
@@ -251,7 +248,6 @@ export default function Katalog({ setCartCount }: KatalogProps) {
           </div>
         )}
 
-        {/* MODAL POP UP PRODUCT (Tema Flat) */}
         <AnimatePresence>
           {selectedProduct && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#4A3022]/80 backdrop-blur-sm" onClick={() => setSelectedProduct(null)}>
@@ -275,7 +271,17 @@ export default function Katalog({ setCartCount }: KatalogProps) {
                     Rp {selectedProduct.price.toLocaleString('id-ID')}
                   </div>
                   
-                  <button onClick={() => { setCartCount(prev => prev + 1); setSelectedProduct(null); }} className="w-full bg-[#D97736] text-white border-4 border-[#4A3022] py-4 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-[#c46a2b] active:translate-y-1 transition-all shadow-[6px_6px_0px_#4A3022] active:shadow-none">
+                  {/* 4. EKSEKUSI addToCart DI TOMBOL MODAL INI */}
+                  <button 
+                    onClick={() => { 
+                      if (addToCart) {
+                        addToCart({ id: selectedProduct.id, name: selectedProduct.name, price: selectedProduct.price });
+                        alert(`${selectedProduct.name} masuk keranjang!`);
+                      }
+                      setSelectedProduct(null); 
+                    }} 
+                    className="w-full bg-[#D97736] text-white border-4 border-[#4A3022] py-4 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-[#c46a2b] active:translate-y-1 transition-all shadow-[6px_6px_0px_#4A3022] active:shadow-none"
+                  >
                     <ShoppingBag size={20} strokeWidth={3} /> Masukkan Keranjang
                   </button>
                 </div>

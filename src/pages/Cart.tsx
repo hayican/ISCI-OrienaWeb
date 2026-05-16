@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-// Tambahan: Import Trash2 dari lucide-react
-import { ShoppingBag, ArrowRight, MessageSquare, Printer, Trash2 } from 'lucide-react';
+import { ShoppingBag, ArrowRight, MessageSquare, Printer, Plus, Minus } from 'lucide-react';
 
-interface CartProps {
-  cartCount: number;
-  setCartCount: React.Dispatch<React.SetStateAction<number>>;
+interface CartItem {
+  id: string | number;
+  name: string;
+  price: number;
+  quantity: number;
 }
 
-export default function Cart({ cartCount, setCartCount }: CartProps) {
+interface CartProps {
+  cartItems: CartItem[];
+  updateCartItem: (id: string | number, newQuantity: number) => void;
+  setCurrentView: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function Cart({ cartItems, updateCartItem, setCurrentView }: CartProps) {
   const [formData, setFormData] = useState({ name: '', address: '', notes: '' });
+
+  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+  const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -19,31 +29,22 @@ export default function Cart({ cartCount, setCartCount }: CartProps) {
   const handleCheckoutWA = (e: React.FormEvent) => {
     e.preventDefault();
     const phoneNumber = "628126120165";
-    let text = `Halo Admin Oriena! 👋\nSaya mau checkout nih:\n\n`;
+    let text = `Halo Admin Oriena! 👋\nSaya mau checkout pesanan dari Website nih:\n\n`;
     text += `🧾 *STRUK PESANAN*\n`;
-    text += `Jumlah Item: ${cartCount} Produk\n`;
-    text += `_(Detail varian kue akan saya konfirmasi lewat chat)_\n\n`;
+    
+    cartItems.forEach(item => {
+        text += `- ${item.name} (${item.quantity}x) = Rp ${(item.price * item.quantity).toLocaleString('id-ID')}\n`;
+    });
+    
+    text += `\n*SUBTOTAL: Rp ${subtotal.toLocaleString('id-ID')}*\n\n`;
     text += `📍 *INFO PENGIRIMAN:*\n`;
     text += `Nama: ${formData.name}\n`;
     text += `Alamat: ${formData.address}\n`;
     text += `Catatan: ${formData.notes || '-'}\n\n`;
-    text += `Mohon info total harga dan ongkirnya ya!`;
+    text += `Mohon info total ongkir dan nomor rekening pembayarannya ya Kak!`;
 
     const encodedText = encodeURIComponent(text);
     window.open(`https://wa.me/${phoneNumber}?text=${encodedText}`, '_blank');
-  };
-
-  // Generate dummy receipt items based on cartCount
-  const receiptItems = Array.from({ length: cartCount }).map((_, i) => ({
-    id: i,
-    name: `Produk Artisan Oriena #${i + 1}`,
-    price: 85000 // Harga dummy rata-rata
-  }));
-  const subtotal = receiptItems.reduce((acc, curr) => acc + curr.price, 0);
-
-  // Fungsi untuk hapus item
-  const handleDeleteItem = () => {
-    setCartCount(prev => Math.max(0, prev - 1));
   };
 
   return (
@@ -62,27 +63,23 @@ export default function Cart({ cartCount, setCartCount }: CartProps) {
           </div>
           <h3 className="text-3xl font-playfair font-black text-[#4A3022] mb-2">Belum ada pesanan</h3>
           <p className="text-[#4A3022]/70 font-bold mb-8">Pilih kue favoritmu di Katalog atau Rakit Hampers dulu yuk.</p>
-          <button onClick={() => window.history.back()} className="bg-[#D97736] text-white px-8 py-4 border-4 border-[#4A3022] shadow-[6px_6px_0px_0px_#4A3022] rounded-xl font-black flex items-center gap-2 hover:-translate-y-1 active:translate-y-0 active:shadow-[2px_2px_0px_0px_#4A3022] transition-all">
-            Kembali Belanja <ArrowRight size={20} />
+          {/* Tombol kembali yang bener! */}
+          <button onClick={() => setCurrentView('katalog')} className="bg-[#D97736] text-white px-8 py-4 border-4 border-[#4A3022] shadow-[6px_6px_0px_0px_#4A3022] rounded-xl font-black flex items-center gap-2 hover:-translate-y-1 active:translate-y-0 active:shadow-[2px_2px_0px_0px_#4A3022] transition-all">
+            Ke Katalog Produk <ArrowRight size={20} />
           </button>
         </motion.div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
-          {/* BAGIAN KIRI: ANIMASI STRUK KASIR (THERMAL RECEIPT) */}
           <div className="lg:col-span-5 flex flex-col items-center overflow-hidden pt-4">
             <div className="w-full max-w-sm relative">
-              {/* Mesin Printer Dummy */}
               <div className="bg-[#4A3022] w-full h-16 rounded-t-3xl relative z-20 flex items-center justify-center border-b-4 border-black/40 shadow-xl">
                  <Printer className="text-white/50" size={24} />
                  <div className="absolute bottom-0 w-3/4 h-2 bg-black/50 rounded-t-lg"></div>
               </div>
               
-              {/* Kertas Struk Turun */}
               <motion.div 
-                initial={{ y: "-100%", opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ type: "spring", stiffness: 50, damping: 15, delay: 0.2 }}
+                initial={{ y: "-100%", opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ type: "spring", stiffness: 50, damping: 15, delay: 0.2 }}
                 className="bg-[#fdfbf7] w-11/12 mx-auto pb-12 pt-8 px-6 shadow-2xl relative z-10 font-mono text-[#333]"
                 style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 95% 98%, 90% 100%, 85% 98%, 80% 100%, 75% 98%, 70% 100%, 65% 98%, 60% 100%, 55% 98%, 50% 100%, 45% 98%, 40% 100%, 35% 98%, 30% 100%, 25% 98%, 20% 100%, 15% 98%, 10% 100%, 5% 98%, 0 100%)' }}
               >
@@ -93,23 +90,20 @@ export default function Cart({ cartCount, setCartCount }: CartProps) {
                   <div className="border-b-2 border-dashed border-gray-400 mt-4"></div>
                 </div>
 
-                <div className="space-y-3 mb-6 text-sm">
-                  {receiptItems.map((item) => (
-                    <div key={item.id} className="flex justify-between items-start group">
-                      <div className="flex-1 pr-4">
-                        <p className="uppercase">{item.name}</p>
-                        <p className="text-xs text-gray-500">1x @85.000</p>
+                <div className="space-y-4 mb-6 text-sm">
+                  {cartItems.map((item) => (
+                    <div key={item.id} className="flex flex-col gap-1 border-b border-gray-200 pb-2">
+                      <div className="flex justify-between items-start">
+                        <p className="uppercase font-bold line-clamp-1 flex-1 pr-2">{item.name}</p>
+                        <p className="font-bold">Rp {(item.price * item.quantity).toLocaleString('id-ID')}</p>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <p>85.000</p>
-                        {/* FITUR DELETE DITAMBAHKAN DI SINI */}
-                        <button 
-                          onClick={handleDeleteItem}
-                          className="text-gray-400 hover:text-red-500 transition-colors"
-                          title="Hapus produk"
-                        >
-                          <Trash2 size={16} />
-                        </button>
+                      <div className="flex justify-between items-center text-xs">
+                         <span className="text-gray-500">@ Rp {item.price.toLocaleString('id-ID')}</span>
+                         <div className="flex items-center gap-3 bg-gray-100 rounded-md px-2 py-1">
+                            <button onClick={() => updateCartItem(item.id, item.quantity - 1)} className="hover:text-red-500"><Minus size={14} /></button>
+                            <span className="font-bold w-4 text-center">{item.quantity}</span>
+                            <button onClick={() => updateCartItem(item.id, item.quantity + 1)} className="hover:text-green-500"><Plus size={14} /></button>
+                         </div>
                       </div>
                     </div>
                   ))}
@@ -128,15 +122,13 @@ export default function Cart({ cartCount, setCartCount }: CartProps) {
 
                 <div className="border-t-2 border-black mt-6 pt-4 text-center">
                   <p className="text-xs font-bold">TERIMA KASIH</p>
-                  <p className="text-[10px] mt-1">Simpan struk ini sebagai referensi.</p>
-                  {/* Barcode Dummy */}
+                  <p className="text-[10px] mt-1">Struk ini akan dikirim otomatis ke WA.</p>
                   <div className="h-10 w-full bg-[repeating-linear-gradient(90deg,#333_0,#333_2px,transparent_2px,transparent_4px,#333_4px,#333_5px,transparent_5px,transparent_8px)] mt-4 opacity-70"></div>
                 </div>
               </motion.div>
             </div>
           </div>
 
-          {/* BAGIAN KANAN: FORM CHECKOUT GAYA NEO-BRUTALISM */}
           <motion.form initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.5 }} onSubmit={handleCheckoutWA} className="lg:col-span-7 bg-[#FAF5E9] border-4 border-[#4A3022] shadow-[12px_12px_0px_0px_#4A3022] rounded-[2rem] p-8 md:p-10 relative">
             <h3 className="text-3xl font-playfair font-black text-[#4A3022] mb-8 uppercase tracking-wide border-b-4 border-[#4A3022] pb-4">Info Pengiriman</h3>
             
@@ -156,7 +148,7 @@ export default function Cart({ cartCount, setCartCount }: CartProps) {
             </div>
 
             <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.95 }} type="submit" className="w-full bg-[#D97736] text-white py-4 rounded-xl border-4 border-[#4A3022] shadow-[6px_6px_0px_0px_#4A3022] hover:bg-[#c46a2b] font-black text-lg flex items-center justify-center gap-3 transition-colors">
-              <MessageSquare size={24} /> Bawa ke Kasir WhatsApp
+              <MessageSquare size={24} /> Konfirmasi Pesanan via WA
             </motion.button>
           </motion.form>
         </div>

@@ -18,14 +18,6 @@ const FacebookIcon = ({ size = 20 }: { size?: number }) => (
   </svg>
 );
 
-function HeartIcon() {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#D97736] mx-1 animate-pulse">
-      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
-    </svg>
-  );
-}
-
 // ==========================================
 // INTERFACE & COMPONENT
 // ==========================================
@@ -96,12 +88,12 @@ export default function Footer({ setCurrentView }: FooterProps) {
               <li className="flex items-start gap-3 group cursor-pointer">
                 <MapPin size={18} className="shrink-0 text-[#D97736] group-hover:animate-bounce mt-1" />
                 <span className="group-hover:text-white transition-colors leading-relaxed">
-                  Jl. Artisan Bakery No. 12, Sidoarjo, Jawa Timur
+                Dsn. Penambangan RT.16 RW.04 No.4B Ds. Krembangan Kec. Taman, Sidoarjo, Jawa Timur, Indonesia 61257
                 </span>
               </li>
               <li className="flex items-center gap-3 group cursor-pointer">
                 <Phone size={18} className="shrink-0 text-[#D97736] group-hover:animate-bounce" />
-                <span className="group-hover:text-white transition-colors">+62 812-3456-7890</span>
+                <span className="group-hover:text-white transition-colors">+62 812-6120-165</span>
               </li>
             </ul>
           </div>
@@ -111,9 +103,6 @@ export default function Footer({ setCurrentView }: FooterProps) {
         {/* Bottom Bar: Copyright */}
         <div className="pt-8 border-t border-[#FAF5E9]/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[#FAF5E9]/50 text-xs sm:text-sm">
           <p>© 2026 Oriena Artisan Bakery. All rights reserved.</p>
-          <p className="flex items-center gap-1 hover:text-white transition-colors cursor-default">
-            Dibuat dengan <HeartIcon /> untuk WCC 2026
-          </p>
         </div>
       </div>
     </footer>
