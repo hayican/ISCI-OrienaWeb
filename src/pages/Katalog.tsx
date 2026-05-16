@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, ShoppingBag, X, Star, Plus } from 'lucide-react';
+import { Search, ShoppingBag, X, Star, Plus, Tag, Cookie, Coffee } from 'lucide-react';
 
 interface KatalogProps {
   setCartCount: React.Dispatch<React.SetStateAction<number>>;
@@ -21,29 +21,37 @@ export default function Katalog({ setCartCount }: KatalogProps) {
   const [activeFilter, setActiveFilter] = useState('Semua');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  
+  // State untuk Carousel
+  const [carouselIndex, setCarouselIndex] = useState(0);
 
-  // KATEGORI UDAH DIUPDATE SESUAI G-FORM
-  const filters = ['Semua', 'Cookies', 'Bakery', 'Snack', 'Hampers'];
+  // KATEGORI
+  const filters = ['Semua', 'Cookies', 'Bakery', 'Snack'];
 
-  // DATA HIGHLIGHT (BENTO GRID) - BEST SELLER DARI G-FORM
-  const bentoProducts: Product[] = [
-    { id: 1, name: "Nastar Original", category: "Cookies", price: 85000, desc: "Cookies nastar lumer dengan isian nanas asli buatan sendiri. Best seller nomor 1 Oriena!", gridClass: "md:col-span-2 md:row-span-2 h-[300px] md:h-[624px]", badge: "BEST SELLER", image: "https://images.unsplash.com/photo-1590080874088-eec64895e423?auto=format&fit=crop&q=80&w=800" },
-    { id: 2, name: "Roti Sisir Mentega", category: "Bakery", price: 15000, desc: "Roti sisir klasik yang super lembut dengan olesan mentega manis yang pas di lidah.", gridClass: "md:col-span-1 md:row-span-1 h-[300px]", badge: "BEST SELLER", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=600" },
-    { id: 3, name: "Sustik (Sus Kering)", category: "Snack", price: 20000, desc: "Cemilan sus kering gurih yang renyah banget. Pas buat nemenin nugas atau ngantor.", gridClass: "md:col-span-1 md:row-span-1 h-[300px]", badge: "BEST SELLER", image: "https://images.unsplash.com/photo-1600431562968-ef337c8733ed?auto=format&fit=crop&q=80&w=600" },
-    { id: 4, name: "Bolen Lilit", category: "Bakery", price: 35000, desc: "Kulit bolen yang flaky dengan isian pisang manis dan cokelat lumer di dalam.", gridClass: "md:col-span-2 md:row-span-1 h-[300px]", image: "https://images.unsplash.com/photo-1555507036-ab1f40ce88cb?auto=format&fit=crop&q=80&w=800" },
-   // GANTI DATA ID 6 DI DALAM bentoProducts JADI GINI:
-    { id: 6, name: "Hampers Seasonal (Lebaran & Natal)", category: "Hampers", price: 115000, desc: "Paket eksklusif edisi hari raya. Sempurna untuk hantaran Lebaran atau kado manis saat Natal.", gridClass: "md:col-span-1 md:row-span-2 h-[300px] md:h-[624px]", badge: "SEASONAL", image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&q=80&w=600" },
-    { id: 7, name: "Kastengel Keju", category: "Cookies", price: 95000, desc: "Garing di luar, keju edam yang pecah dan lumer di gigitan pertama. Bikin nagih!", gridClass: "md:col-span-1 md:row-span-1 h-[300px]", image: "https://images.unsplash.com/photo-1605335135706-9076f827a1fc?auto=format&fit=crop&q=80&w=600" },
+  // DATA HIGHLIGHT (CAROUSEL) - CUMA 3 ITEM
+  const carouselProducts: Product[] = [
+    { id: 1, name: "Nastar Original", category: "Cookies", price: 85000, desc: "Cookies nastar lumer dengan isian nanas asli buatan sendiri. Best seller nomor 1 Oriena!", badge: "BEST SELLER", image: "https://images.unsplash.com/photo-1590080874088-eec64895e423?auto=format&fit=crop&q=80&w=1200" },
+    { id: 2, name: "Roti Sisir Mentega", category: "Bakery", price: 15000, desc: "Roti sisir klasik yang super lembut dengan olesan mentega manis yang pas di lidah.", badge: "FAVORIT", image: "https://github.com/user-attachments/assets/f075d205-bb78-42c1-8466-ef803038a700" },
+    { id: 3, name: "Sustik (Sus Kering)", category: "Snack", price: 25000, desc: "Cemilan sus kering gurih yang renyah banget. Pas buat nemenin nugas atau ngantor.", badge: "RENYAH", image: "https://github.com/user-attachments/assets/b8e267a8-d73f-401d-8ddc-bef625f21d9d" },
   ];
 
-  // DATA SEMUA PRODUK 
+  // DATA SEMUA PRODUK - 15 ITEM
   const allProducts: Product[] = [
-    ...bentoProducts.slice(0, 6), 
-    { id: 11, name: "Lidah Kucing", category: "Cookies", price: 65000, desc: "Tipis, renyah, dan manisnya pas. Cocok banget disandingkan dengan teh hangat.", image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&q=80&w=400" },
-    { id: 14, name: "Pastry Stick", category: "Snack", price: 25000, desc: "Snack pastry panjang renyah dengan taburan keju parmesan yang gurih.", image: "https://images.unsplash.com/photo-1555507036-ab1f40ce88cb?auto=format&fit=crop&q=80&w=400" },
-    { id: 16, name: "Hampers Mini", category: "Hampers", price: 75000, desc: "Paket ekonomis isi 2 toples kecil. Harga ramah di kantong.", image: "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&q=80&w=400" },
-    { id: 17, name: "Nastar Toples Kecil", category: "Cookies", price: 45000, desc: "Versi ekonomis dari nastar original kami.", image: "https://images.unsplash.com/photo-1600431562217-1563e41c4a04?auto=format&fit=crop&q=80&w=400" },
-    { id: 20, name: "Mini Roti Sisir", category: "Bakery", price: 5000, desc: "Roti sisir versi sekali lahap. Harga paling murah!", image: "https://images.unsplash.com/photo-1606822819825-f370ee1c1b18?auto=format&fit=crop&q=80&w=400" },
+    { id: 1, name: "Sosis Boom", category: "Bakery", price: 15000, desc: "Roti empuk dengan isian sosis gurih dan saus spesial yang meledak di mulut.", image: "https://github.com/user-attachments/assets/04256e46-d329-42f5-9367-bb0b3774b718" },
+    { id: 2, name: "Mini Pizza", category: "Bakery", price: 12000, desc: "Pizza ukuran personal dengan topping keju, sosis, dan saus tomat lezat.", image: "https://github.com/user-attachments/assets/993b0a3d-2b50-4b4a-a360-2429736c53ad" },
+    { id: 3, name: "Royal Twist", category: "Bakery", price: 18000, desc: "Roti kepang lembut dengan paduan rasa manis yang mewah di setiap gigitan.", image: "https://github.com/user-attachments/assets/744a5f2f-3b6a-4d81-b74f-dde9cb8684fa" },
+    { id: 4, name: "Mexican Bun", category: "Bakery", price: 15000, desc: "Roti kopi khas meksiko dengan wangi mentega dan kopi yang menggoda.", image: "https://github.com/user-attachments/assets/825a0fbd-c5e5-4c8e-9a01-6a4df4ecac17" },
+    { id: 5, name: "Choco Banana", category: "Bakery", price: 16000, desc: "Paduan klasik pisang manis dan cokelat lumer berbalut roti lembut.", image: "https://github.com/user-attachments/assets/63dea38a-c8ea-45a7-a9be-0b93d7c7d79e" },
+    { id: 6, name: "Donat", category: "Bakery", price: 10000, desc: "Donat empuk menul-menul dengan pilihan topping manis favoritmu.", image: "https://github.com/user-attachments/assets/70da76b6-51f0-4339-9375-3c61293c4231" },
+    { id: 7, name: "Japanese Milk Buns", category: "Bakery", price: 25000, desc: "Roti sobek ala jepang super fluffy, lumer di mulut bagai kapas.", image: "https://github.com/user-attachments/assets/e3556d1d-af8a-4050-aca1-4be3ea887df4" },
+    { id: 8, name: "Roti Sisir Mentega", category: "Bakery", price: 15000, desc: "Roti sisir klasik yang super lembut dengan olesan mentega manis.", image: "https://github.com/user-attachments/assets/f075d205-bb78-42c1-8466-ef803038a700" },
+    { id: 9, name: "Cheese Smoked Beef", category: "Bakery", price: 35000, desc: "Pastry gurih berlapis dengan isian smoked beef premium dan keju lumer.", image: "https://github.com/user-attachments/assets/9747ffa5-b711-4bb7-9441-a29a1f40eb9d" },
+    { id: 10, name: "Almond London", category: "Cookies", price: 75000, desc: "Cookies renyah berbalut cokelat premium dan taburan almond panggang.", image: "https://github.com/user-attachments/assets/dee6937a-0347-4292-b520-363cb271eedb" },
+    { id: 11, name: "Choco Hazelnut", category: "Cookies", price: 85000, desc: "Cookies cokelat pekat dengan isian selai hazelnut yang meleleh.", image: "https://github.com/user-attachments/assets/25ffd389-5403-492b-b581-180cdf375cfa" },
+    { id: 12, name: "Sagu Keju", category: "Cookies", price: 75000, desc: "Tekstur ngeprul yang ngangenin, lumer begitu masuk mulut.", image: "https://github.com/user-attachments/assets/d64f146e-d4c9-4b4b-853d-232a51367c23" },
+    { id: 13, name: "Kastangel", category: "Cookies", price: 95000, desc: "Garing di luar, keju edam yang pecah dan lumer di gigitan pertama.", image: "https://github.com/user-attachments/assets/84bd3842-e1aa-4b09-9acf-16a08c500d56" },
+    { id: 14, name: "Brownies Keping", category: "Snack", price: 45000, desc: "Keripik brownies tipis renyah dengan rasa cokelat yang intens.", image: "https://github.com/user-attachments/assets/9e9d1e01-3962-4c12-bbca-d01ede31e3ef" },
+    { id: 15, name: "Sus Kering Keju", category: "Snack", price: 25000, desc: "Varian sus kering dengan tambahan keju edam gurih di dalam adonannya.", image: "https://github.com/user-attachments/assets/b8e267a8-d73f-401d-8ddc-bef625f21d9d" },
   ];
 
   const filterLogic = (product: Product) => {
@@ -52,8 +60,19 @@ export default function Katalog({ setCartCount }: KatalogProps) {
     return matchCategory && matchSearch;
   };
 
-  const filteredBento = bentoProducts.filter(filterLogic);
+  const filteredCarousel = carouselProducts.filter(filterLogic);
   const filteredAll = allProducts.filter(filterLogic);
+
+  // AUTO SCROLL CAROUSEL (3 Detik)
+  useEffect(() => {
+    if (filteredCarousel.length <= 1) return;
+    
+    const timer = setInterval(() => {
+      setCarouselIndex((prevIndex) => (prevIndex + 1) % filteredCarousel.length);
+    }, 3000); // 3000 ms = 3 detik
+
+    return () => clearInterval(timer);
+  }, [filteredCarousel.length]);
 
   const heroImage = "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=2000";
 
@@ -89,14 +108,14 @@ export default function Katalog({ setCartCount }: KatalogProps) {
 
           <div className="flex flex-wrap justify-center gap-3">
             {filters.map(filter => (
-              <button key={filter} onClick={() => setActiveFilter(filter)} className={`px-6 py-2.5 rounded-xl font-jakarta font-black text-sm transition-all duration-300 border-4 ${activeFilter === filter ? 'bg-[#4A3022] text-[#FAF5E9] border-[#4A3022] shadow-[4px_4px_0px_#D97736] translate-y-1' : 'bg-white text-[#4A3022] border-[#4A3022] hover:bg-[#FAF5E9] shadow-[4px_4px_0px_#4A3022] hover:-translate-y-1'}`}>
+              <button key={filter} onClick={() => { setActiveFilter(filter); setCarouselIndex(0); }} className={`px-6 py-2.5 rounded-xl font-jakarta font-black text-sm transition-all duration-300 border-4 ${activeFilter === filter ? 'bg-[#4A3022] text-[#FAF5E9] border-[#4A3022] shadow-[4px_4px_0px_#D97736] translate-y-1' : 'bg-white text-[#4A3022] border-[#4A3022] hover:bg-[#FAF5E9] shadow-[4px_4px_0px_#4A3022] hover:-translate-y-1'}`}>
                 {filter}
               </button>
             ))}
           </div>
         </motion.div>
 
-        {/* PROMO CARDS - Static & Flat
+        {/* PROMO CARDS - TANPA MOTION/GERAK (Static & Flat) */}
         <div className="mb-24">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-12 h-12 bg-[#4A3022] border-2 border-[#4A3022] rounded-xl flex items-center justify-center text-[#FAF5E9] shadow-[4px_4px_0px_#D97736]"><Tag size={24} /></div>
@@ -104,66 +123,101 @@ export default function Katalog({ setCartCount }: KatalogProps) {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Promo 1 */}
             <div className="bg-[#D97736] rounded-[2rem] p-8 text-white relative border-4 border-[#4A3022] shadow-[12px_12px_0px_#4A3022] overflow-hidden">
               <div className="absolute -right-8 -top-8 opacity-20 text-[#4A3022]"><Cookie size={200} /></div>
               <div className="relative z-10 flex flex-col justify-center h-full">
                 <span className="bg-white text-[#4A3022] border-2 border-[#4A3022] px-4 py-1.5 rounded-full text-xs font-jakarta font-black tracking-wider mb-4 w-max shadow-[2px_2px_0px_#4A3022]">BUNDLE SPESIAL</span>
-                <h3 className="text-3xl font-playfair font-black mb-4 leading-tight">Beli 3 Toples Cookies,<br/>Gratis Ongkir!</h3>
+                <h3 className="text-3xl font-playfair font-black mb-4 leading-tight">Beli 3 Toples Kering,<br/>Gratis Ongkir!</h3>
                 <button className="bg-white text-[#D97736] border-4 border-[#4A3022] px-8 py-3.5 rounded-xl font-jakarta font-black text-sm hover:bg-[#FAF5E9] transition-colors shadow-[4px_4px_0px_#4A3022] w-max mt-4 active:translate-y-1 active:shadow-none">Klaim Promo</button>
               </div>
             </div>
 
+            {/* Promo 2 */}
             <div className="bg-[#E0D0BB] rounded-[2rem] p-8 text-[#4A3022] relative border-4 border-[#4A3022] shadow-[12px_12px_0px_#4A3022] overflow-hidden">
               <div className="absolute -right-8 -top-8 opacity-10"><Coffee size={200} /></div>
               <div className="relative z-10 flex flex-col justify-center h-full">
                 <span className="bg-[#4A3022] text-[#FAF5E9] border-2 border-[#4A3022] px-4 py-1.5 rounded-full text-xs font-jakarta font-black tracking-wider mb-4 w-max shadow-[2px_2px_0px_#D97736]">PAKET NGOPI</span>
-                <h3 className="text-3xl font-playfair font-black mb-4 leading-tight">2 Roti Bebas Pilih <br/>+ 1 Kopi Oriena</h3>
+                <h3 className="text-3xl font-playfair font-black mb-4 leading-tight">2 Pastry Bebas Pilih <br/>+ 1 Kopi Oriena</h3>
                 <button className="bg-[#D97736] text-white border-4 border-[#4A3022] px-8 py-3.5 rounded-xl font-jakarta font-black text-sm hover:bg-[#c46a2b] transition-colors shadow-[4px_4px_0px_#4A3022] w-max mt-4 active:translate-y-1 active:shadow-none">Lihat Paket</button>
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
 
-        {/* SECTION: BENTO GRID (Koleksi Unggulan) */}
-        {filteredBento.length > 0 && (
+        {/* SECTION: CAROUSEL HIGHLIGHT (3 Item Unggulan) */}
+        {filteredCarousel.length > 0 && (
           <div className="mb-24">
-             <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center gap-3 mb-6">
               <h2 className="text-3xl font-playfair font-black text-[#4A3022]">Koleksi Unggulan</h2>
             </div>
-            <motion.div layout className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-              <AnimatePresence>
-                {filteredBento.map((product) => (
-                  <motion.div
-                    layout initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} transition={{ duration: 0.3 }} key={`bento-${product.id}`} onClick={() => setSelectedProduct(product)}
-                    className={`group cursor-pointer relative rounded-[2rem] overflow-hidden bg-white border-4 border-[#4A3022] shadow-[8px_8px_0px_#4A3022] hover:shadow-[4px_4px_0px_#4A3022] hover:translate-y-1 transition-all flex flex-col ${product.gridClass}`}
-                  >
-                    <div className="flex-1 relative overflow-hidden bg-gray-100">
-                      <img src={product.image} alt={product.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out" />
-                      {product.badge && <div className="absolute top-4 left-4 z-20"><span className="bg-[#D97736] border-2 border-[#4A3022] text-[#FAF5E9] px-3 py-1.5 rounded-full text-xs font-jakarta font-black tracking-widest shadow-[2px_2px_0px_#4A3022]">{product.badge}</span></div>}
+            
+            <div className="relative w-full h-[450px] md:h-[550px] rounded-[2rem] border-4 border-[#4A3022] shadow-[12px_12px_0px_#4A3022] overflow-hidden bg-[#E0D0BB]">
+              <AnimatePresence initial={false}>
+                <motion.div
+                  key={carouselIndex}
+                  initial={{ x: "100%" }} // Datang dari kanan
+                  animate={{ x: 0 }}      // Ke tengah
+                  exit={{ x: "-100%" }}   // Keluar ke kiri
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
+                  className="absolute inset-0 w-full h-full cursor-pointer group"
+                  onClick={() => setSelectedProduct(filteredCarousel[carouselIndex])}
+                >
+                  <img src={filteredCarousel[carouselIndex].image} alt={filteredCarousel[carouselIndex].name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  
+                  {/* Overlay gradien gelap dari bawah biar teks bisa dibaca */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#4A3022] via-[#4A3022]/60 to-transparent opacity-90"></div>
+                  
+                  {/* Badge */}
+                  {filteredCarousel[carouselIndex].badge && (
+                    <div className="absolute top-6 left-6 md:top-8 md:left-8 z-20">
+                      <span className="bg-[#D97736] border-2 border-[#4A3022] text-[#FAF5E9] px-4 py-2 rounded-full text-xs md:text-sm font-jakarta font-black tracking-widest shadow-[4px_4px_0px_#4A3022]">
+                        {filteredCarousel[carouselIndex].badge}
+                      </span>
                     </div>
-                    <div className="p-5 bg-white border-t-4 border-[#4A3022] flex flex-col justify-between h-32 md:h-40">
-                      <div>
-                        <p className="text-[#829079] font-jakarta font-black text-xs tracking-wider uppercase mb-1">{product.category}</p>
-                        <h3 className="text-xl md:text-2xl font-playfair font-black text-[#4A3022] leading-tight line-clamp-2">{product.name}</h3>
-                      </div>
-                      <div className="flex justify-between items-end mt-2">
-                         <span className="text-lg font-jakarta font-black text-[#D97736]">Rp {product.price.toLocaleString('id-ID')}</span>
-                      </div>
+                  )}
+
+                  {/* Informasi Produk di bagian bawah slider */}
+                  <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 z-20">
+                    <p className="text-[#D97736] font-jakarta font-black text-sm md:text-base tracking-widest uppercase mb-2 drop-shadow-[2px_2px_0px_#4A3022]">
+                      {filteredCarousel[carouselIndex].category}
+                    </p>
+                    <h3 className="text-4xl md:text-6xl font-playfair font-black text-[#FAF5E9] mb-4 drop-shadow-[4px_4px_0px_#4A3022] leading-tight">
+                      {filteredCarousel[carouselIndex].name}
+                    </h3>
+                    <p className="text-white/90 font-jakarta font-bold text-base md:text-lg max-w-2xl line-clamp-2 md:line-clamp-none mb-6">
+                      {filteredCarousel[carouselIndex].desc}
+                    </p>
+                    
+                    <div className="inline-flex items-center bg-[#FAF5E9] border-4 border-[#4A3022] text-[#D97736] px-6 py-3 rounded-2xl font-jakarta font-black text-xl shadow-[6px_6px_0px_#4A3022] group-hover:bg-[#D97736] group-hover:text-[#FAF5E9] transition-colors">
+                      Rp {filteredCarousel[carouselIndex].price.toLocaleString('id-ID')}
                     </div>
-                  </motion.div>
-                ))}
+                  </div>
+                </motion.div>
               </AnimatePresence>
-            </motion.div>
+
+              {/* Indikator Titik-Titik Carousel */}
+              <div className="absolute bottom-8 right-8 z-30 flex gap-2">
+                {filteredCarousel.map((_, idx) => (
+                  <button 
+                    key={idx}
+                    onClick={() => setCarouselIndex(idx)}
+                    className={`h-3 rounded-full border-2 border-[#4A3022] shadow-[2px_2px_0px_#4A3022] transition-all duration-300 ${carouselIndex === idx ? 'w-10 bg-[#D97736]' : 'w-3 bg-[#FAF5E9]'}`}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
         )}
 
-        {/* SECTION: SEMUA PRODUK */}
+        {/* SECTION: SEMUA PRODUK (Grid 5 Kolom) */}
         {filteredAll.length > 0 && (
           <div className="mb-16">
             <div className="flex items-center justify-between mb-8 border-t-4 border-[#4A3022] pt-8">
               <h3 className="text-3xl font-playfair font-black text-[#4A3022]">Semua Menu Kami</h3>
             </div>
             
+            {/* Pakai grid-cols-5 di layar besar supaya pas 15 item jadi 3 baris rapi */}
             <motion.div layout className="grid grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6">
               <AnimatePresence>
                 {filteredAll.map((product) => (
@@ -189,7 +243,15 @@ export default function Katalog({ setCartCount }: KatalogProps) {
           </div>
         )}
 
-        {/* MODAL POP UP PRODUCT */}
+        {filteredCarousel.length === 0 && filteredAll.length === 0 && (
+          <div className="text-center py-24 bg-white border-4 border-[#4A3022] rounded-3xl shadow-[8px_8px_0px_#4A3022]">
+            <Cookie size={64} className="mx-auto text-[#4A3022]/30 mb-4" />
+            <h3 className="text-2xl font-playfair font-black text-[#4A3022] mb-2">Waduh, kuenya nggak ketemu!</h3>
+            <p className="text-[#4A3022]/60 font-jakarta font-bold">Coba cari pakai kata kunci lain atau reset filter.</p>
+          </div>
+        )}
+
+        {/* MODAL POP UP PRODUCT (Tema Flat) */}
         <AnimatePresence>
           {selectedProduct && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#4A3022]/80 backdrop-blur-sm" onClick={() => setSelectedProduct(null)}>

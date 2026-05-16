@@ -111,19 +111,16 @@ export default function Tentang() {
             </div>
             
             <div className="w-full md:w-2/3 border-l-0 md:border-l-4 border-[#4A3022] md:pl-8 pt-4 md:pt-0 space-y-4">
-              {/* BROSUR: PASTE JAWABAN G-FORM KAK SARAH DI SINI 👇 */}
+
   
               <p className="text-[#4A3022]/90 font-jakarta font-bold text-lg leading-relaxed">
-                "Sebelum dikenal dengan nama Oriena, kami memulai langkah dengan nama PasPastry. Filosofinya sederhana: menyajikan produk dengan cita rasa yang 'Pas' dan harga yang juga pas di kantong."
+                Bermula sebagai PasPastry, kini kami berevolusi menjadi <span className="font-black text-[#D97736]">Oriena</span> (<span className="font-black">Original & Enak</span>). 
               </p>
               <p className="text-[#4A3022]/90 font-jakarta font-bold text-lg leading-relaxed">
-                "Seiring berjalannya waktu, kami melakukan rebranding menjadi Oriena yang bermakna 'Original' dan 'Enak'. Semua kreasi kami adalah produk original buatan tangan kami sendiri dengan kualitas rasa yang sudah pasti enak."
-              </p>
-              <p className="text-[#4A3022]/90 font-jakarta font-bold text-lg leading-relaxed">
-                "Banyak yang bertanya apa senjata rahasia kami. Jawabannya ada pada komposisi rasa yang pas dan tidak berlebihan, dipadukan dengan harga yang tetap terjangkau. Agar kehangatan oven kami bisa dinikmati oleh siapa saja."
+                Rahasia kami tak pernah berubah, kreasi 100% <span className="italic">handmade</span> dengan takaran rasa yang pas dan harga terjangkau. Semuanya didedikasikan agar kehangatan oven kami bisa dinikmati oleh semua kalangan.
               </p>
            
-              {/* BROSUR: PASTE JAWABAN G-FORM KAK SARAH DI SINI 👆 */}
+
             </div>
           </div>
         </motion.div>
