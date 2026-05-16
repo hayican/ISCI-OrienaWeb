@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, ShoppingBag, Cookie, Tag, Coffee, X, Star, Plus } from 'lucide-react';
+import { Search, ShoppingBag, X, Star, Plus } from 'lucide-react';
 
 interface KatalogProps {
   setCartCount: React.Dispatch<React.SetStateAction<number>>;
