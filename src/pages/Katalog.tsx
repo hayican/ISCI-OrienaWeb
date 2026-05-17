@@ -27,7 +27,7 @@ export default function Katalog({  addToCart }: KatalogProps) {
   
   const [carouselIndex, setCarouselIndex] = useState(0);
 
-  const filters = ['Semua', 'Cookies', 'Bakery', 'Snack'];
+  const filters = ['Semua', 'Cookies', 'Bakery', 'Snack', 'Lain-lain'];
 
   const carouselProducts: Product[] = [
     { id: 1, name: "Nastar Original", category: "Cookies", price: 70000, desc: "Cookies nastar lumer dengan isian nanas asli buatan sendiri. Best seller nomor 1 Oriena!", badge: "BEST SELLER", image: "https://images.unsplash.com/photo-1590080874088-eec64895e423?auto=format&fit=crop&q=80&w=1200" },
