@@ -68,7 +68,6 @@ export default function Kolaborasi() {
 
   const handleSendWA = (e: React.FormEvent) => {
     e.preventDefault();
-    // Nomor WA asli Kak Sarah
     const phoneNumber = "628126120165";
     let text = `Halo Tetangga Oriena! 👋\n\n`;
 

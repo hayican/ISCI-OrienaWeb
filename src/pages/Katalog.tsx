@@ -30,27 +30,27 @@ export default function Katalog({  addToCart }: KatalogProps) {
   const filters = ['Semua', 'Cookies', 'Bakery', 'Snack'];
 
   const carouselProducts: Product[] = [
-    { id: 1, name: "Nastar Original", category: "Cookies", price: 85000, desc: "Cookies nastar lumer dengan isian nanas asli buatan sendiri. Best seller nomor 1 Oriena!", badge: "BEST SELLER", image: "https://images.unsplash.com/photo-1590080874088-eec64895e423?auto=format&fit=crop&q=80&w=1200" },
-    { id: 2, name: "Roti Sisir Mentega", category: "Bakery", price: 15000, desc: "Roti sisir klasik yang super lembut dengan olesan mentega manis yang pas di lidah.", badge: "FAVORIT", image: "https://github.com/user-attachments/assets/f075d205-bb78-42c1-8466-ef803038a700" },
-    { id: 3, name: "Sustik (Sus Kering)", category: "Snack", price: 25000, desc: "Cemilan sus kering gurih yang renyah banget. Pas buat nemenin nugas atau ngantor.", badge: "RENYAH", image: "https://github.com/user-attachments/assets/b8e267a8-d73f-401d-8ddc-bef625f21d9d" },
+    { id: 1, name: "Nastar Original", category: "Cookies", price: 70000, desc: "Cookies nastar lumer dengan isian nanas asli buatan sendiri. Best seller nomor 1 Oriena!", badge: "BEST SELLER", image: "https://images.unsplash.com/photo-1590080874088-eec64895e423?auto=format&fit=crop&q=80&w=1200" },
+    { id: 2, name: "Roti Sisir Mentega", category: "Bakery", price: 45000, desc: "Roti sisir klasik yang super lembut dengan olesan mentega manis yang pas di lidah.", badge: "FAVORIT", image: "https://github.com/user-attachments/assets/f075d205-bb78-42c1-8466-ef803038a700" },
+    { id: 3, name: "Sustik (Sus Kering)", category: "Snack", price: 15000, desc: "Cemilan sus kering gurih yang renyah banget. Pas buat nemenin nugas atau ngantor.", badge: "RENYAH", image: "https://github.com/user-attachments/assets/b8e267a8-d73f-401d-8ddc-bef625f21d9d" },
   ];
 
   const allProducts: Product[] = [
-    { id: 1, name: "Sosis Boom", category: "Bakery", price: 15000, desc: "Roti empuk dengan isian sosis gurih dan saus spesial yang meledak di mulut.", image: "https://github.com/user-attachments/assets/04256e46-d329-42f5-9367-bb0b3774b718" },
-    { id: 2, name: "Mini Pizza", category: "Bakery", price: 12000, desc: "Pizza ukuran personal dengan topping keju, sosis, dan saus tomat lezat.", image: "https://github.com/user-attachments/assets/993b0a3d-2b50-4b4a-a360-2429736c53ad" },
-    { id: 3, name: "Royal Twist", category: "Bakery", price: 18000, desc: "Roti kepang lembut dengan paduan rasa manis yang mewah di setiap gigitan.", image: "https://github.com/user-attachments/assets/744a5f2f-3b6a-4d81-b74f-dde9cb8684fa" },
-    { id: 4, name: "Mexican Bun", category: "Bakery", price: 15000, desc: "Roti kopi khas meksiko dengan wangi mentega dan kopi yang menggoda.", image: "https://github.com/user-attachments/assets/825a0fbd-c5e5-4c8e-9a01-6a4df4ecac17" },
-    { id: 5, name: "Choco Banana", category: "Bakery", price: 16000, desc: "Paduan klasik pisang manis dan cokelat lumer berbalut roti lembut.", image: "https://github.com/user-attachments/assets/63dea38a-c8ea-45a7-a9be-0b93d7c7d79e" },
-    { id: 6, name: "Donat", category: "Bakery", price: 10000, desc: "Donat empuk menul-menul dengan pilihan topping manis favoritmu.", image: "https://github.com/user-attachments/assets/70da76b6-51f0-4339-9375-3c61293c4231" },
-    { id: 7, name: "Japanese Milk Buns", category: "Bakery", price: 25000, desc: "Roti sobek ala jepang super fluffy, lumer di mulut bagai kapas.", image: "https://github.com/user-attachments/assets/e3556d1d-af8a-4050-aca1-4be3ea887df4" },
-    { id: 8, name: "Roti Sisir Mentega", category: "Bakery", price: 15000, desc: "Roti sisir klasik yang super lembut dengan olesan mentega manis.", image: "https://github.com/user-attachments/assets/f075d205-bb78-42c1-8466-ef803038a700" },
-    { id: 9, name: "Cheese Smoked Beef", category: "Bakery", price: 35000, desc: "Pastry gurih berlapis dengan isian smoked beef premium dan keju lumer.", image: "https://github.com/user-attachments/assets/9747ffa5-b711-4bb7-9441-a29a1f40eb9d" },
-    { id: 10, name: "Almond London", category: "Cookies", price: 75000, desc: "Cookies renyah berbalut cokelat premium dan taburan almond panggang.", image: "https://github.com/user-attachments/assets/dee6937a-0347-4292-b520-363cb271eedb" },
-    { id: 11, name: "Choco Hazelnut", category: "Cookies", price: 85000, desc: "Cookies cokelat pekat dengan isian selai hazelnut yang meleleh.", image: "https://github.com/user-attachments/assets/25ffd389-5403-492b-b581-180cdf375cfa" },
-    { id: 12, name: "Sagu Keju", category: "Cookies", price: 75000, desc: "Tekstur ngeprul yang ngangenin, lumer begitu masuk mulut.", image: "https://github.com/user-attachments/assets/d64f146e-d4c9-4b4b-853d-232a51367c23" },
-    { id: 13, name: "Kastangel", category: "Cookies", price: 95000, desc: "Garing di luar, keju edam yang pecah dan lumer di gigitan pertama.", image: "https://github.com/user-attachments/assets/84bd3842-e1aa-4b09-9acf-16a08c500d56" },
-    { id: 14, name: "Brownies Keping", category: "Snack", price: 45000, desc: "Keripik brownies tipis renyah dengan rasa cokelat yang intens.", image: "https://github.com/user-attachments/assets/9e9d1e01-3962-4c12-bbca-d01ede31e3ef" },
-    { id: 15, name: "Sus Kering Keju", category: "Snack", price: 25000, desc: "Varian sus kering dengan tambahan keju edam gurih di dalam adonannya.", image: "https://github.com/user-attachments/assets/b8e267a8-d73f-401d-8ddc-bef625f21d9d" },
+    { id: 1, name: "Sosis Boom", category: "Bakery", price: 6000, desc: "Roti empuk dengan isian sosis gurih dan saus spesial yang meledak di mulut.", image: "https://github.com/user-attachments/assets/04256e46-d329-42f5-9367-bb0b3774b718" },
+    { id: 2, name: "Mini Pizza", category: "Bakery", price: 5000, desc: "Pizza ukuran personal dengan topping keju, sosis, dan saus tomat lezat.", image: "https://github.com/user-attachments/assets/993b0a3d-2b50-4b4a-a360-2429736c53ad" },
+    { id: 3, name: "Royal Twist", category: "Bakery", price: 5000, desc: "Roti kepang lembut dengan paduan rasa manis yang mewah di setiap gigitan.", image: "https://github.com/user-attachments/assets/744a5f2f-3b6a-4d81-b74f-dde9cb8684fa" },
+    { id: 4, name: "Mexican Bun", category: "Bakery", price: 6500, desc: "Roti kopi khas meksiko dengan wangi mentega dan kopi yang menggoda.", image: "https://github.com/user-attachments/assets/825a0fbd-c5e5-4c8e-9a01-6a4df4ecac17" },
+    { id: 5, name: "Choco Banana", category: "Bakery", price: 6500, desc: "Paduan klasik pisang manis dan cokelat lumer berbalut roti lembut.", image: "https://github.com/user-attachments/assets/63dea38a-c8ea-45a7-a9be-0b93d7c7d79e" },
+    { id: 6, name: "Donat", category: "Bakery", price: 40000, desc: "Donat empuk menul-menul dengan pilihan topping manis favoritmu.", image: "https://github.com/user-attachments/assets/70da76b6-51f0-4339-9375-3c61293c4231" },
+    { id: 7, name: "Japanese Milk Buns", category: "Bakery", price: 40000, desc: "Roti sobek ala jepang super fluffy, lumer di mulut bagai kapas.", image: "https://github.com/user-attachments/assets/e3556d1d-af8a-4050-aca1-4be3ea887df4" },
+    { id: 8, name: "Roti Sisir Mentega", category: "Bakery", price: 45000, desc: "Roti sisir klasik yang super lembut dengan olesan mentega manis.", image: "https://github.com/user-attachments/assets/f075d205-bb78-42c1-8466-ef803038a700" },
+    { id: 9, name: "Cheese Smoked Beef", category: "Bakery", price: 60000, desc: "Pastry gurih berlapis dengan isian smoked beef premium dan keju lumer.", image: "https://github.com/user-attachments/assets/9747ffa5-b711-4bb7-9441-a29a1f40eb9d" },
+    { id: 10, name: "Almond London", category: "Cookies", price: 70000, desc: "Cookies renyah berbalut cokelat premium dan taburan almond panggang.", image: "https://github.com/user-attachments/assets/dee6937a-0347-4292-b520-363cb271eedb" },
+    { id: 11, name: "Choco Hazelnut", category: "Cookies", price: 70000, desc: "Cookies cokelat pekat dengan isian selai hazelnut yang meleleh.", image: "https://github.com/user-attachments/assets/25ffd389-5403-492b-b581-180cdf375cfa" },
+    { id: 12, name: "Sagu Keju", category: "Cookies", price: 70000, desc: "Tekstur ngeprul yang ngangenin, lumer begitu masuk mulut.", image: "https://github.com/user-attachments/assets/d64f146e-d4c9-4b4b-853d-232a51367c23" },
+    { id: 13, name: "Kastangel", category: "Cookies", price: 80000, desc: "Garing di luar, keju edam yang pecah dan lumer di gigitan pertama.", image: "https://github.com/user-attachments/assets/84bd3842-e1aa-4b09-9acf-16a08c500d56" },
+    { id: 14, name: "Brownies Keping", category: "Snack", price: 35000, desc: "Keripik brownies tipis renyah dengan rasa cokelat yang intens.", image: "https://github.com/user-attachments/assets/9e9d1e01-3962-4c12-bbca-d01ede31e3ef" },
+    { id: 15, name: "Sus Kering Keju", category: "Snack", price: 35000, desc: "Varian sus kering dengan tambahan keju edam gurih di dalam adonannya.", image: "https://github.com/user-attachments/assets/b8e267a8-d73f-401d-8ddc-bef625f21d9d" },
   ];
 
   const filterLogic = (product: Product) => {

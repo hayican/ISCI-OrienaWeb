@@ -152,7 +152,7 @@ export default function Tentang() {
             </motion.div>
             
             <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
-              <h2 className="text-4xl md:text-6xl font-playfair font-black text-[#4A3022] mb-2">Sarah Oriena</h2>
+              <h2 className="text-4xl md:text-6xl font-playfair font-black text-[#4A3022] mb-2">Endah Pujiastuti</h2>
               <p className="text-[#D97736] font-jakarta font-black tracking-widest uppercase text-sm">Founder & Head Baker</p>
             </motion.div>
             
