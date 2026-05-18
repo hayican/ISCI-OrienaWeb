@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingBag, Package, CheckCircle, Trash2, Plus, Gift, PenLine, Truck, ArrowRight, Cookie, MessageSquare } from 'lucide-react';
-
+import FotoNastar from '../assets/nastar.png'
 interface CookieItem {
   id: string;
   name: string;
@@ -32,7 +32,7 @@ export default function HampersBuilder({ addToCart }: HampersBuilderProps) {
   const [draggedItem, setDraggedItem] = useState<CookieItem | null>(null);
 
   const availableCookies: CookieItem[] = [
-    { id: 'h1', name: "Nastar Original", price: 70000, color: "#D97736", image: "https://images.unsplash.com/photo-1590080874088-eec64895e423?auto=format&fit=crop&q=80&w=400" },
+    { id: 'h1', name: "Nastar Original", price: 70000, color: "#D97736", image: FotoNastar },
     { id: 'h2', name: "Kastangel", price: 80000, color: "#eab308", image: "https://github.com/user-attachments/assets/84bd3842-e1aa-4b09-9acf-16a08c500d56" },
     { id: 'h3', name: "Sagu Keju", price: 70000, color: "#829079", image: "https://github.com/user-attachments/assets/d64f146e-d4c9-4b4b-853d-232a51367c23" },
     { id: 'h4', name: "Almond London", price: 70000, color: "#D97736", image: "https://github.com/user-attachments/assets/dee6937a-0347-4292-b520-363cb271eedb" },

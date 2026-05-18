@@ -2,19 +2,13 @@ import { motion } from 'framer-motion';
 import { MapPin, Phone, MessageSquare } from 'lucide-react';
 
 // ==========================================
-// CUSTOM ICONS (Karena Lucide hapus icon sosmed)
+// CUSTOM ICONS (Facebook Dihapus)
 // ==========================================
 const InstagramIcon = ({ size = 20 }: { size?: number }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
     <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
     <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
-  </svg>
-);
-
-const FacebookIcon = ({ size = 20 }: { size?: number }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
   </svg>
 );
 
@@ -30,6 +24,10 @@ export default function Footer({ setCurrentView }: FooterProps) {
     setCurrentView(view);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  // Nomor WA Owner
+  const waNumber = "628126120165";
+  const waLink = `https://wa.me/${waNumber}?text=Halo%20Admin%20Oriena,%20saya%20mau%20tanya-tanya%20dong!`;
 
   return (
     <footer className="bg-[#4A3022] text-[#FAF5E9] pt-16 pb-8 rounded-t-[3rem] mt-12 relative overflow-hidden font-jakarta">
@@ -52,15 +50,27 @@ export default function Footer({ setCurrentView }: FooterProps) {
               Memadukan resep artisan klasik dengan pengalaman digital modern. Setiap toples adalah cerita hangat dari oven kami untuk Anda.
             </p>
             <div className="flex space-x-4 pt-2">
-              <button className="w-10 h-10 rounded-full bg-[#FAF5E9]/10 flex items-center justify-center hover:bg-[#D97736] hover:text-white transition-all hover:scale-110 shadow-lg">
+              
+              {/* LINK INSTAGRAM - Ganti href-nya ya broskie! */}
+              <a 
+                href="https://www.instagram.com/pastrystick.official?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-[#FAF5E9]/10 flex items-center justify-center hover:bg-[#D97736] hover:text-white transition-all hover:scale-110 shadow-lg"
+              >
                 <InstagramIcon />
-              </button>
-              <button className="w-10 h-10 rounded-full bg-[#FAF5E9]/10 flex items-center justify-center hover:bg-[#D97736] hover:text-white transition-all hover:scale-110 shadow-lg">
-                <FacebookIcon />
-              </button>
-              <button className="w-10 h-10 rounded-full bg-[#FAF5E9]/10 flex items-center justify-center hover:bg-[#D97736] hover:text-white transition-all hover:scale-110 shadow-lg">
+              </a>
+              
+              {/* LINK WHATSAPP */}
+              <a 
+                href={waLink}
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-[#FAF5E9]/10 flex items-center justify-center hover:bg-[#D97736] hover:text-white transition-all hover:scale-110 shadow-lg"
+              >
                 <MessageSquare size={20} />
-              </button>
+              </a>
+
             </div>
           </div>
 
@@ -91,10 +101,18 @@ export default function Footer({ setCurrentView }: FooterProps) {
                 Dsn. Penambangan RT.16 RW.04 No.4B Ds. Krembangan Kec. Taman, Sidoarjo, Jawa Timur, Indonesia 61257
                 </span>
               </li>
-              <li className="flex items-center gap-3 group cursor-pointer">
+              
+              {/* TEKS NOMOR JUGA BISA DIKLIK LANGSUNG KE WA */}
+              <a 
+                href={waLink}
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="flex items-center gap-3 group cursor-pointer"
+              >
                 <Phone size={18} className="shrink-0 text-[#D97736] group-hover:animate-bounce" />
                 <span className="group-hover:text-white transition-colors">+62 812-6120-165</span>
-              </li>
+              </a>
+
             </ul>
           </div>
 

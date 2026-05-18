@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, ShoppingBag, X, Star, Plus, Cookie, Heart, Coffee, Gift } from 'lucide-react';
+import FotoNastar from '../assets/nastar.png'
 
 interface KatalogProps {
   setCartCount: React.Dispatch<React.SetStateAction<number>>;
@@ -28,7 +29,7 @@ export default function Katalog({ addToCart }: KatalogProps) {
   const filters = ['Semua', 'Cookies', 'Bakery', 'Snack', 'Lain-lain'];
 
   const carouselProducts: Product[] = [
-    { id: 1, name: "Nastar Original", category: "Cookies", price: 70000, desc: "Cookies nastar lumer dengan isian nanas asli buatan sendiri. Best seller nomor 1 Oriena!", badge: "BEST SELLER", image: "https://images.unsplash.com/photo-1590080874088-eec64895e423?auto=format&fit=crop&q=80&w=1200" },
+    { id: 1, name: "Nastar Original", category: "Cookies", price: 70000, desc: "Cookies nastar lumer dengan isian nanas asli buatan sendiri. Best seller nomor 1 Oriena!", badge: "BEST SELLER", image: FotoNastar },
     { id: 2, name: "Roti Sisir Mentega", category: "Bakery", price: 45000, desc: "Roti sisir klasik yang super lembut dengan olesan mentega manis yang pas di lidah.", badge: "FAVORIT", image: "https://github.com/user-attachments/assets/f075d205-bb78-42c1-8466-ef803038a700" },
     { id: 3, name: "Sustik (Sus Kering)", category: "Snack", price: 15000, desc: "Cemilan sus kering gurih yang renyah banget. Pas buat nemenin nugas atau ngantor.", badge: "RENYAH", image: "https://github.com/user-attachments/assets/b8e267a8-d73f-401d-8ddc-bef625f21d9d" },
   ];

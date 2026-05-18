@@ -31,11 +31,11 @@ export default function Cart({ cartItems, updateCartItem, setCurrentView }: Cart
     const phoneNumber = "628126120165";
     let text = `Halo Admin Oriena! 👋\nSaya mau checkout pesanan dari Website nih:\n\n`;
     text += `🧾 *STRUK PESANAN*\n`;
-    
+
     cartItems.forEach(item => {
-        text += `- ${item.name} (${item.quantity}x) = Rp ${(item.price * item.quantity).toLocaleString('id-ID')}\n`;
+      text += `- ${item.name} (${item.quantity}x) = Rp ${(item.price * item.quantity).toLocaleString('id-ID')}\n`;
     });
-    
+
     text += `\n*SUBTOTAL: Rp ${subtotal.toLocaleString('id-ID')}*\n\n`;
     text += `📍 *INFO PENGIRIMAN:*\n`;
     text += `Nama: ${formData.name}\n`;
@@ -70,15 +70,15 @@ export default function Cart({ cartItems, updateCartItem, setCurrentView }: Cart
         </motion.div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          
+
           <div className="lg:col-span-5 flex flex-col items-center overflow-hidden pt-4">
             <div className="w-full max-w-sm relative">
               <div className="bg-[#4A3022] w-full h-16 rounded-t-3xl relative z-20 flex items-center justify-center border-b-4 border-black/40 shadow-xl">
-                 <Printer className="text-white/50" size={24} />
-                 <div className="absolute bottom-0 w-3/4 h-2 bg-black/50 rounded-t-lg"></div>
+                <Printer className="text-white/50" size={24} />
+                <div className="absolute bottom-0 w-3/4 h-2 bg-black/50 rounded-t-lg"></div>
               </div>
-              
-              <motion.div 
+
+              <motion.div
                 initial={{ y: "-100%", opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ type: "spring", stiffness: 50, damping: 15, delay: 0.2 }}
                 className="bg-[#fdfbf7] w-11/12 mx-auto pb-12 pt-8 px-6 shadow-2xl relative z-10 font-mono text-[#333]"
                 style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 95% 98%, 90% 100%, 85% 98%, 80% 100%, 75% 98%, 70% 100%, 65% 98%, 60% 100%, 55% 98%, 50% 100%, 45% 98%, 40% 100%, 35% 98%, 30% 100%, 25% 98%, 20% 100%, 15% 98%, 10% 100%, 5% 98%, 0 100%)' }}
@@ -98,12 +98,12 @@ export default function Cart({ cartItems, updateCartItem, setCurrentView }: Cart
                         <p className="font-bold">Rp {(item.price * item.quantity).toLocaleString('id-ID')}</p>
                       </div>
                       <div className="flex justify-between items-center text-xs">
-                         <span className="text-gray-500">@ Rp {item.price.toLocaleString('id-ID')}</span>
-                         <div className="flex items-center gap-3 bg-gray-100 rounded-md px-2 py-1">
-                            <button onClick={() => updateCartItem(item.id, item.quantity - 1)} className="hover:text-red-500"><Minus size={14} /></button>
-                            <span className="font-bold w-4 text-center">{item.quantity}</span>
-                            <button onClick={() => updateCartItem(item.id, item.quantity + 1)} className="hover:text-green-500"><Plus size={14} /></button>
-                         </div>
+                        <span className="text-gray-500">@ Rp {item.price.toLocaleString('id-ID')}</span>
+                        <div className="flex items-center gap-3 bg-gray-100 rounded-md px-2 py-1">
+                          <button onClick={() => updateCartItem(item.id, item.quantity - 1)} className="hover:text-red-500"><Minus size={14} /></button>
+                          <span className="font-bold w-4 text-center">{item.quantity}</span>
+                          <button onClick={() => updateCartItem(item.id, item.quantity + 1)} className="hover:text-green-500"><Plus size={14} /></button>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -131,7 +131,7 @@ export default function Cart({ cartItems, updateCartItem, setCurrentView }: Cart
 
           <motion.form initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.5 }} onSubmit={handleCheckoutWA} className="lg:col-span-7 bg-[#FAF5E9] border-4 border-[#4A3022] shadow-[12px_12px_0px_0px_#4A3022] rounded-[2rem] p-8 md:p-10 relative">
             <h3 className="text-3xl font-playfair font-black text-[#4A3022] mb-8 uppercase tracking-wide border-b-4 border-[#4A3022] pb-4">Info Pengiriman</h3>
-            
+
             <div className="space-y-6 mb-10">
               <div className="space-y-2">
                 <label className="text-sm font-black text-[#4A3022] uppercase tracking-wider">Nama Penerima *</label>

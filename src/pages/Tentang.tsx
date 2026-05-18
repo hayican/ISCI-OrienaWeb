@@ -134,25 +134,27 @@ export default function Tentang() {
           initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8, type: "spring" }}
           className="bg-[#E0D0BB] rounded-[3rem] p-8 md:p-12 border-4 border-[#4A3022] shadow-[12px_12px_0px_#4A3022] flex flex-col md:flex-row items-center gap-12"
         >
-          <div className="aspect-[4/5] bg-[#FAF5E9] relative flex items-center justify-center overflow-hidden">
-              {/* Pattern Kopi Tuku (Stripes) di background */}
-              <div className="absolute inset-0 z-0 opacity-10" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #4A3022 25%, transparent 25%, transparent 75%, #4A3022 75%, #4A3022)', backgroundSize: '20px 20px' }}></div>
-              
-              {/* HAPUS IKON <User /> DAN GANTI JADI TAG <img /> INI */}
-              <img 
+         <div className="bg-[#FAF5E9] rounded-[2.5rem] p-6 border-4 border-[#4A3022] shadow-[8px_8px_0px_#4A3022] relative group">
+          <div className="aspect-[4/5] rounded-[1.5rem] border-4 border-[#4A3022] overflow-hidden relative flex items-center justify-center">
+            
+            {/* Pattern Kopi Tuku (Stripes) di background */}
+            <div className="absolute inset-0 z-0 opacity-10" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #4A3022 25%, transparent 25%, transparent 75%, #4A3022 75%, #4A3022)', backgroundSize: '20px 20px' }}></div>
+            
+            {/* Fotonya (otomatis menyesuaikan kotak parent) */}
+            <img 
               src={FotoOwner} // Inget jangan pake kutip, panggil variabel import lokalnya
               alt="Bu Endah Pujiastuti" 
               className="w-full h-full object-cover relative z-10 group-hover:scale-110 transition-transform duration-500" 
             />
-              
-              
-              <div className="absolute bottom-6 left-0 right-0 text-center z-20">
-                 <span className="font-jakarta font-black text-[#4A3022] text-sm bg-white border-4 border-[#4A3022] px-6 py-2 rounded-full shadow-[4px_4px_0px_#D97736]">
-                   Owner Oriena
-                 </span>
-              </div>
           </div>
-
+          
+          {/* Label di dalam kotak */}
+          <div className="mt-6 text-center">
+             <span className="font-jakarta font-black text-[#4A3022] text-sm bg-white border-4 border-[#4A3022] px-6 py-2.5 rounded-full shadow-[4px_4px_0px_#D97736] inline-block tracking-widest uppercase">
+               Owner Oriena
+             </span>
+          </div>
+        </div>
           <div className="w-full md:w-3/5 text-center md:text-left space-y-6">
             <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="inline-block px-4 py-1.5 bg-[#4A3022] text-[#FAF5E9] border-2 border-[#4A3022] rounded-full text-xs font-jakarta font-black tracking-widest uppercase shadow-[4px_4px_0px_#D97736]">
               SOSOK DI BALIK DAPUR
