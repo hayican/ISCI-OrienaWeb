@@ -63,11 +63,9 @@ export default function Katalog({ addToCart }: KatalogProps) {
 
   useEffect(() => {
     if (filteredCarousel.length <= 1) return;
-    
     const timer = setInterval(() => {
       setCarouselIndex((prevIndex) => (prevIndex + 1) % filteredCarousel.length);
     }, 3000); 
-
     return () => clearInterval(timer);
   }, [filteredCarousel.length]);
 
@@ -76,14 +74,13 @@ export default function Katalog({ addToCart }: KatalogProps) {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="pb-24 bg-[#F7F3EB] min-h-screen">
       
-      {/* HERO SECTION */}
       <div className="relative w-full h-[300px] md:h-[400px] mb-16 flex items-center justify-center overflow-hidden border-b-8 border-[#4A3022]">
         <div className="absolute inset-0 z-0">
           <img src={heroImage} alt="Katalog Oriena" className="w-full h-full object-cover opacity-90" />
           <div className="absolute inset-0 bg-[#4A3022]/60 mix-blend-multiply"></div>
         </div>
         <div className="relative z-10 text-center px-4 max-w-3xl mx-auto mt-16 md:mt-0">
-          <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="bg-[#FAF5E9] border-4 border-[#4A3022] px-8 py-6 rounded-3xl shadow-[8px_8px_0px_#4A3022]">
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }} className="bg-[#FAF5E9] border-4 border-[#4A3022] px-8 py-6 rounded-3xl shadow-[8px_8px_0px_#4A3022]">
             <h1 className="text-4xl md:text-6xl font-playfair font-black text-[#4A3022] mb-2">
               Koleksi <span className="text-[#D97736]">Rasa.</span>
             </h1>
@@ -96,8 +93,7 @@ export default function Katalog({ addToCart }: KatalogProps) {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* PENCARIAN & FILTER BUTTONS */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="flex flex-col items-center gap-6 mb-16">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6, ease: "easeOut" }} className="flex flex-col items-center gap-6 mb-16">
           <div className="relative w-full max-w-md">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#4A3022]" size={24} strokeWidth={3} />
             <input type="text" placeholder="Cari nastar, roti sisir..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full font-jakarta font-bold bg-white border-4 border-[#4A3022] focus:border-[#D97736] rounded-2xl py-4 pl-14 pr-4 outline-none text-[#4A3022] shadow-[6px_6px_0px_#4A3022] transition-colors placeholder:text-[#4A3022]/40" />
@@ -112,7 +108,6 @@ export default function Katalog({ addToCart }: KatalogProps) {
           </div>
         </motion.div>
 
-        {/* SECTION BARU: MOMEN / SOCIAL PROOF (PENGGANTI KATEGORI/PROMO) - ALA KOPI TUKU */}
         <div className="mb-24">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-12 h-12 bg-[#4A3022] border-2 border-[#4A3022] rounded-xl flex items-center justify-center text-[#FAF5E9] shadow-[4px_4px_0px_#D97736]"><Heart size={24} /></div>
@@ -120,22 +115,16 @@ export default function Katalog({ addToCart }: KatalogProps) {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Kartu Momen 1 (Ngopi) */}
-            <motion.div 
-              className="group relative h-[280px] md:h-[350px] rounded-[2rem] border-4 border-[#4A3022] shadow-[12px_12px_0px_#4A3022] overflow-hidden bg-[#E0D0BB] cursor-default"
-            >
-              {/* Gambar Background */}
+            <motion.div className="group relative h-[280px] md:h-[350px] rounded-[2rem] border-4 border-[#4A3022] shadow-[12px_12px_0px_#4A3022] overflow-hidden bg-[#E0D0BB] cursor-default">
               <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&q=80&w=800" alt="Ngopi bareng Oriena" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" />
               <div className="absolute inset-0 bg-[#4A3022]/20 group-hover:bg-[#4A3022]/40 transition-colors duration-500"></div>
               
-              {/* STIKER POP-UP ALA TUKU */}
               <div className="absolute top-6 right-6 md:top-8 md:right-8 z-20 opacity-0 group-hover:opacity-100 group-hover:rotate-6 transition-all duration-500 transform translate-y-8 group-hover:translate-y-0">
                 <div className="bg-[#D97736] text-white border-4 border-[#4A3022] px-4 py-2 rounded-2xl font-jakarta font-black text-sm shadow-[4px_4px_0px_#4A3022] flex items-center gap-2">
                   <Coffee size={18} strokeWidth={3} /> Nyore Santuy!
                 </div>
               </div>
 
-              {/* Kotak Cerita */}
               <div className="absolute bottom-6 left-6 right-6 md:bottom-8 md:left-8 md:right-8 z-10">
                 <motion.div className="bg-white/95 backdrop-blur-sm border-4 border-[#4A3022] p-5 md:p-6 rounded-3xl shadow-[6px_6px_0px_#4A3022] group-hover:-translate-y-2 transition-transform duration-500">
                   <h3 className="text-2xl font-playfair font-black text-[#4A3022] mb-1 md:mb-2">Teman Kopi Pagimu.</h3>
@@ -144,22 +133,16 @@ export default function Katalog({ addToCart }: KatalogProps) {
               </div>
             </motion.div>
 
-            {/* Kartu Momen 2 (Hampers) */}
-            <motion.div 
-              className="group relative h-[280px] md:h-[350px] rounded-[2rem] border-4 border-[#4A3022] shadow-[12px_12px_0px_#4A3022] overflow-hidden bg-[#FAF5E9] cursor-default"
-            >
-              {/* Gambar Background */}
+            <motion.div className="group relative h-[280px] md:h-[350px] rounded-[2rem] border-4 border-[#4A3022] shadow-[12px_12px_0px_#4A3022] overflow-hidden bg-[#FAF5E9] cursor-default">
               <img src="https://images.unsplash.com/photo-1512909006721-3d6018887383?auto=format&fit=crop&q=80&w=800" alt="Hampers Oriena" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" />
               <div className="absolute inset-0 bg-[#4A3022]/20 group-hover:bg-[#4A3022]/40 transition-colors duration-500"></div>
               
-              {/* STIKER POP-UP ALA TUKU */}
               <div className="absolute top-6 right-6 md:top-8 md:right-8 z-20 opacity-0 group-hover:opacity-100 group-hover:-rotate-6 transition-all duration-500 transform translate-y-8 group-hover:translate-y-0">
                 <div className="bg-[#829079] text-white border-4 border-[#4A3022] px-4 py-2 rounded-2xl font-jakarta font-black text-sm shadow-[4px_4px_0px_#4A3022] flex items-center gap-2">
                   <Gift size={18} strokeWidth={3} /> Buka Bareng!
                 </div>
               </div>
 
-              {/* Kotak Cerita */}
               <div className="absolute bottom-6 left-6 right-6 md:bottom-8 md:left-8 md:right-8 z-10">
                 <motion.div className="bg-white/95 backdrop-blur-sm border-4 border-[#4A3022] p-5 md:p-6 rounded-3xl shadow-[6px_6px_0px_#4A3022] group-hover:-translate-y-2 transition-transform duration-500">
                   <h3 className="text-2xl font-playfair font-black text-[#4A3022] mb-1 md:mb-2">Rayakan Bersama.</h3>
@@ -170,7 +153,6 @@ export default function Katalog({ addToCart }: KatalogProps) {
           </div>
         </div>
 
-        {/* CAROUSEL KOLEKSI UNGGULAN */}
         {filteredCarousel.length > 0 && (
           <div className="mb-24">
             <div className="flex items-center gap-3 mb-6">
@@ -181,15 +163,11 @@ export default function Katalog({ addToCart }: KatalogProps) {
               <AnimatePresence initial={false}>
                 <motion.div
                   key={carouselIndex}
-                  initial={{ x: "100%" }} 
-                  animate={{ x: 0 }}      
-                  exit={{ x: "-100%" }}   
-                  transition={{ duration: 0.6, ease: "easeInOut" }}
+                  initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "-100%" }} transition={{ duration: 0.6, ease: "easeInOut" }}
                   className="absolute inset-0 w-full h-full cursor-pointer group"
                   onClick={() => setSelectedProduct(filteredCarousel[carouselIndex])}
                 >
                   <img src={filteredCarousel[carouselIndex].image} alt={filteredCarousel[carouselIndex].name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                  
                   <div className="absolute inset-0 bg-gradient-to-t from-[#4A3022] via-[#4A3022]/60 to-transparent opacity-90"></div>
                   
                   {filteredCarousel[carouselIndex].badge && (
@@ -210,7 +188,6 @@ export default function Katalog({ addToCart }: KatalogProps) {
                     <p className="text-white/90 font-jakarta font-bold text-base md:text-lg max-w-2xl line-clamp-2 md:line-clamp-none mb-6">
                       {filteredCarousel[carouselIndex].desc}
                     </p>
-                    
                     <div className="inline-flex items-center bg-[#FAF5E9] border-4 border-[#4A3022] text-[#D97736] px-6 py-3 rounded-2xl font-jakarta font-black text-xl shadow-[6px_6px_0px_#4A3022] group-hover:bg-[#D97736] group-hover:text-[#FAF5E9] transition-colors">
                       Rp {filteredCarousel[carouselIndex].price.toLocaleString('id-ID')}
                     </div>
@@ -220,18 +197,13 @@ export default function Katalog({ addToCart }: KatalogProps) {
 
               <div className="absolute bottom-8 right-8 z-30 flex gap-2">
                 {filteredCarousel.map((_, idx) => (
-                  <button 
-                    key={idx}
-                    onClick={() => setCarouselIndex(idx)}
-                    className={`h-3 rounded-full border-2 border-[#4A3022] shadow-[2px_2px_0px_#4A3022] transition-all duration-300 ${carouselIndex === idx ? 'w-10 bg-[#D97736]' : 'w-3 bg-[#FAF5E9]'}`}
-                  />
+                  <button key={idx} onClick={() => setCarouselIndex(idx)} className={`h-3 rounded-full border-2 border-[#4A3022] shadow-[2px_2px_0px_#4A3022] transition-all duration-300 ${carouselIndex === idx ? 'w-10 bg-[#D97736]' : 'w-3 bg-[#FAF5E9]'}`} />
                 ))}
               </div>
             </div>
           </div>
         )}
 
-        {/* GRID SEMUA MENU */}
         {filteredAll.length > 0 && (
           <div className="mb-16">
             <div className="flex items-center justify-between mb-8 border-t-4 border-[#4A3022] pt-8">
@@ -241,10 +213,7 @@ export default function Katalog({ addToCart }: KatalogProps) {
             <motion.div layout className="grid grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6">
               <AnimatePresence>
                 {filteredAll.map((product) => (
-                  <motion.div
-                    layout initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.9 }} key={`all-${product.id}`} onClick={() => setSelectedProduct(product)}
-                    className="group cursor-pointer bg-white rounded-2xl p-3 border-4 border-[#4A3022] shadow-[6px_6px_0px_#4A3022] hover:-translate-y-1 hover:shadow-[8px_8px_0px_#D97736] transition-all duration-300 flex flex-col h-full"
-                  >
+                  <motion.div layout initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.9 }} key={`all-${product.id}`} onClick={() => setSelectedProduct(product)} className="group cursor-pointer bg-white rounded-2xl p-3 border-4 border-[#4A3022] shadow-[6px_6px_0px_#4A3022] hover:-translate-y-1 hover:shadow-[8px_8px_0px_#D97736] transition-all duration-300 flex flex-col h-full">
                     <div className="aspect-square bg-[#E0D0BB] rounded-xl mb-3 border-2 border-[#4A3022] relative overflow-hidden">
                       <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                     </div>
@@ -256,10 +225,7 @@ export default function Katalog({ addToCart }: KatalogProps) {
                       <button 
                         onClick={(e) => {
                           e.stopPropagation(); 
-                          if (addToCart) {
-                            addToCart({ id: product.id, name: product.name, price: product.price });
-                            alert(`${product.name} masuk keranjang!`);
-                          }
+                          if (addToCart) { addToCart({ id: product.id, name: product.name, price: product.price }); alert(`${product.name} masuk keranjang!`); }
                         }} 
                         className="w-full py-2 bg-[#FAF5E9] group-hover:bg-[#D97736] border-2 border-[#4A3022] text-[#4A3022] group-hover:text-white rounded-xl font-jakarta font-black text-xs transition-colors flex justify-center items-center gap-2 shadow-[2px_2px_0px_#4A3022] active:translate-y-0.5 active:shadow-none"
                       >
@@ -273,7 +239,6 @@ export default function Katalog({ addToCart }: KatalogProps) {
           </div>
         )}
 
-        {/* JIKA KOSONG */}
         {filteredCarousel.length === 0 && filteredAll.length === 0 && (
           <div className="text-center py-24 bg-white border-4 border-[#4A3022] rounded-3xl shadow-[8px_8px_0px_#4A3022]">
             <Cookie size={64} className="mx-auto text-[#4A3022]/30 mb-4" />
@@ -282,7 +247,6 @@ export default function Katalog({ addToCart }: KatalogProps) {
           </div>
         )}
 
-        {/* MODAL DETAIL PRODUK */}
         <AnimatePresence>
           {selectedProduct && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#4A3022]/80 backdrop-blur-sm" onClick={() => setSelectedProduct(null)}>

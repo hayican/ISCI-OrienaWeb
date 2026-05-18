@@ -18,6 +18,14 @@ interface HampersBuilderProps {
 
 export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
   const [boxItems, setBoxItems] = useState<(CookieItem | null)[]>([null, null, null]);
+  
+  const [hampersForm, setHampersForm] = useState({
+    senderName: '',
+    receiverName: '',
+    greeting: ''
+  });
+  
+  const [orderMode, setOrderMode] = useState<'kado' | 'sendiri'>('kado');
   const [isDone, setIsDone] = useState(false);
   const [draggedItem, setDraggedItem] = useState<CookieItem | null>(null);
 
@@ -105,16 +113,17 @@ export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
-            <motion.h1 initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} className="text-4xl md:text-6xl font-playfair font-black text-[#FAF5E9] [-webkit-text-stroke:1px_#4A3022] drop-shadow-[4px_4px_0px_#4A3022] mb-4">
+            <motion.h1 initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }} className="text-4xl md:text-6xl font-playfair font-black text-[#FAF5E9] [-webkit-text-stroke:1px_#4A3022] drop-shadow-[4px_4px_0px_#4A3022] mb-4">
               Rakit Hampersmu.
             </motion.h1>
-            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-lg font-jakarta text-[#FAF5E9]/90 max-w-2xl mx-auto font-bold">
+            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.6, ease: "easeOut" }} className="text-lg font-jakarta text-[#FAF5E9]/90 max-w-2xl mx-auto font-bold">
               Pilih varian kue, atau <span className="bg-[#D97736] text-white px-2 py-0.5 rounded-md border-2 border-[#4A3022]">Tarik & Lepas</span> toples langsung ke dalam box.
             </motion.p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-            <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, type: "spring" }} className="lg:col-span-7 flex flex-col items-center">
+            {/* Animasi Box Pengemasan Dikalemin */}
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }} className="lg:col-span-7 flex flex-col items-center">
               <div className="w-full max-w-lg flex justify-between items-center mb-6 px-2">
                 <h3 className="text-2xl font-playfair font-black text-[#4A3022] bg-[#FAF5E9] px-3 py-1 rounded-lg border-2 border-[#4A3022]">Box Pengemasan</h3>
                 <span className="bg-[#FAF5E9] text-[#4A3022] border-2 border-[#4A3022] px-4 py-1.5 rounded-full font-jakarta font-black text-sm tracking-wider shadow-[4px_4px_0px_#4A3022]">
@@ -133,7 +142,7 @@ export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
                     >
                       <AnimatePresence mode="wait">
                         {boxItems[slotIdx] ? (
-                          <motion.div key="filled" initial={{ scale: 0.5, opacity: 0, y: -50 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.5, opacity: 0 }} transition={{ type: "spring", stiffness: 300, damping: 20 }} className="w-full h-full relative group rounded-full overflow-hidden border-4 border-[#4A3022]">
+                          <motion.div key="filled" initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.8, opacity: 0 }} transition={{ duration: 0.3 }} className="w-full h-full relative group rounded-full overflow-hidden border-4 border-[#4A3022]">
                             <img src={boxItems[slotIdx]!.image} alt={boxItems[slotIdx]!.name} className="w-full h-full object-cover scale-110" />
                             <div className="absolute inset-0 bg-gradient-to-t from-[#4A3022] via-[#4A3022]/40 to-transparent flex flex-col justify-end p-2 md:p-4 opacity-90">
                               <span className="font-bold font-jakarta text-[#FAF5E9] text-[10px] md:text-sm text-center leading-tight">{boxItems[slotIdx]!.name}</span>
@@ -152,7 +161,7 @@ export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
 
                 <AnimatePresence>
                   {isDone && (
-                    <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-[#D97736] rounded-[2.5rem] border-4 border-[#4A3022] shadow-[8px_8px_0px_#4A3022]">
+                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }} className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-[#D97736] rounded-[2.5rem] border-4 border-[#4A3022] shadow-[8px_8px_0px_#4A3022]">
                       <motion.div initial={{ y: -10 }} animate={{ y: 0 }} transition={{ repeat: Infinity, duration: 1.5, repeatType: "reverse", ease: "easeInOut" }}>
                         <Package size={100} className="text-white mb-4" strokeWidth={2} />
                       </motion.div>
@@ -163,10 +172,11 @@ export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
               </div>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2, type: "spring" }} className="lg:col-span-5 space-y-6">
+            {/* Animasi Form Masuk Dikalemin */}
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }} className="lg:col-span-5 space-y-6">
               <AnimatePresence mode="wait">
                 {!isDone ? (
-                  <motion.div key="select-mode" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="bg-[#FAF5E9] rounded-[3rem] p-8 border-4 border-[#4A3022] shadow-[8px_8px_0px_rgba(74,48,34,1)]">
+                  <motion.div key="select-mode" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4 }} className="bg-[#FAF5E9] rounded-[3rem] p-8 border-4 border-[#4A3022] shadow-[8px_8px_0px_rgba(74,48,34,1)]">
                     <div className="mb-6">
                       <div className="flex items-center gap-3 mb-2">
                         <div className="w-10 h-10 bg-[#4A3022] text-white rounded-full flex items-center justify-center font-black text-xl">1</div>
@@ -200,7 +210,7 @@ export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
                     </div>
                   </motion.div>
                 ) : (
-                  <motion.div key="finish-mode" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="bg-[#FAF5E9] rounded-[3rem] p-8 border-4 border-[#4A3022] shadow-[8px_8px_0px_#4A3022] relative overflow-hidden">
+                  <motion.div key="finish-mode" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4 }} className="bg-[#FAF5E9] rounded-[3rem] p-8 border-4 border-[#4A3022] shadow-[8px_8px_0px_#4A3022] relative overflow-hidden">
                     <div className="mb-8 flex items-center gap-3 relative z-10">
                       <div className="w-12 h-12 bg-[#829079] border-2 border-[#4A3022] text-white rounded-full flex items-center justify-center shadow-[4px_4px_0px_#4A3022]"><CheckCircle size={28} /></div>
                       <div>
@@ -254,7 +264,7 @@ export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
               { title: "Hubungi Admin", desc: "Klik tombol pesan WA untuk mendiskusikan pilihan box dan kartu ucapan.", icon: <MessageSquare size={32} /> },
               { title: "Rakit & Kirim", desc: "Tim artisan kami akan merakit pesananmu dan mengirimkannya dengan aman.", icon: <Truck size={32} /> }
             ].map((step, idx) => (
-              <motion.div key={idx} initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.15 }} className="relative z-10 flex flex-col items-center text-center group">
+              <motion.div key={idx} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.15, duration: 0.5, ease: "easeOut" }} className="relative z-10 flex flex-col items-center text-center group">
                 <div className="w-20 h-20 bg-[#FAF5E9] border-4 border-[#4A3022] group-hover:bg-[#D97736] group-hover:text-white rounded-full flex items-center justify-center text-[#4A3022] mb-6 transition-colors duration-300 shadow-[4px_4px_0px_#4A3022]">
                   {step.icon}
                 </div>
