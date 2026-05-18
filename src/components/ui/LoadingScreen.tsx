@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface LoadingScreenProps {
   onComplete: () => void;
@@ -9,12 +9,17 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const [pct, setPct] = useState(0);
   const [phase, setPhase] = useState(0);
 
+  // ngatur urutan animasi
   useEffect(() => {
     const t1 = setTimeout(() => setPhase(1), 150);
     const t2 = setTimeout(() => setPhase(2), 700);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
+    return () => { 
+      clearTimeout(t1); 
+      clearTimeout(t2); 
+    };
   }, []);
 
+  // ngitung persenan loading
   useEffect(() => {
     const iv = setInterval(() => {
       setPct(p => {
@@ -36,6 +41,8 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
     'Menambahkan Mentega...',
     'Hampir Matang...',
   ];
+  
+  // ganti teks sesuai persen
   const msgIdx = pct < 30 ? 0 : pct < 55 ? 1 : pct < 80 ? 2 : 3;
 
   const floatingItems = ['🍪', '🧁', '🥐', '🎂', '🍩', '🧀', '🧈'];
@@ -49,7 +56,8 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         background: 'linear-gradient(135deg, #3E2318 0%, #4A3022 40%, #5C3D28 100%)',
       }}
     >
-      {/* Ambient orbs */}
+      
+      {/* background blur */}
       {[0, 1, 2, 3].map(i => (
         <motion.div
           key={i}
@@ -68,7 +76,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         />
       ))}
 
-      {/* Floating emojis */}
+      {/* emoji terbang */}
       {phase >= 1 &&
         floatingItems.map((emoji, i) => (
           <motion.div
@@ -92,9 +100,10 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           </motion.div>
         ))}
 
-      {/* Center content */}
+      {/* bagian tengah */}
       <div className="relative z-10 flex flex-col items-center gap-7">
-        {/* 3D spinning icon box */}
+        
+        {/* kotak icon */}
         <motion.div
           initial={{ scale: 0, rotateY: 0 }}
           animate={{ scale: 1, rotateY: 360 }}
@@ -109,7 +118,8 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           <span className="text-5xl" style={{ animation: 'floatA 6s ease-in-out infinite' }}>
             🍪
           </span>
-          {/* Steam particles */}
+          
+          {/* asep */}
           {[0, 1, 2].map(i => (
             <div
               key={i}
@@ -124,7 +134,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           ))}
         </motion.div>
 
-        {/* Logo */}
+        {/* tulisan logo */}
         <div className="overflow-hidden">
           <motion.div
             initial={{ y: 90, opacity: 0 }}
@@ -135,8 +145,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
               fontSize: 'clamp(3.5rem, 8vw, 6rem)',
               fontWeight: 900,
               letterSpacing: '-0.04em',
-              background:
-                'linear-gradient(90deg,#D97736,#FAF5E9,#eab308,#D97736,#FAF5E9)',
+              background: 'linear-gradient(90deg,#D97736,#FAF5E9,#eab308,#D97736,#FAF5E9)',
               backgroundSize: '300% auto',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
@@ -148,7 +157,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           </motion.div>
         </div>
 
-        {/* Tagline */}
+        {/* teks kecil */}
         <motion.p
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -158,7 +167,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           Artisan Bakery & Hampers
         </motion.p>
 
-        {/* Progress bar */}
+        {/* bar loading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -174,8 +183,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
               className="h-full rounded-full transition-all duration-100"
               style={{
                 width: `${pct}%`,
-                background:
-                  'linear-gradient(90deg, #D97736, #FAF5E9, #D97736)',
+                background: 'linear-gradient(90deg, #D97736, #FAF5E9, #D97736)',
                 backgroundSize: '200% auto',
                 animation: 'bg-pan 2s linear infinite',
               }}
@@ -184,7 +192,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         </motion.div>
       </div>
 
-      {/* Copyright */}
+      {/* copyright */}
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -194,7 +202,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         © 2026 Oriena Artisan Bakery
       </motion.p>
 
-      {/* Keyframe styles */}
+      {/* css animasi */}
       <style>{`
         @keyframes pulse-glow {
           0%, 100% { box-shadow: 0 0 0 0 rgba(217,119,54,0); }
