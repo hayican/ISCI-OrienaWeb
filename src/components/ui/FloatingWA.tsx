@@ -2,6 +2,8 @@ import { motion } from 'framer-motion';
 import { MessageCircle } from 'lucide-react';
 
 export default function FloatingWA() {
+  
+  /* Membuka tab baru ke WhatsApp Admin dengan pesan bawaan (pre-filled) */
   const handleChat = () => {
     const phoneNumber = "628126120165";
     const text = encodeURIComponent("Halo Kak Endah! Saya mau tanya-tanya soal produk Oriena nih.");
@@ -9,6 +11,7 @@ export default function FloatingWA() {
   };
 
   return (
+    /* Render tombol floating statis di pojok kanan bawah layar */
     <motion.button
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
