@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, ShoppingBag, X, Star, Plus, Tag, Cookie, Coffee } from 'lucide-react';
+import { Search, ShoppingBag, X, Star, Plus, Cookie, Heart, Coffee, Gift } from 'lucide-react';
 
-// 1. TAMBAHIN addToCart DI SINI BRSKIEE
 interface KatalogProps {
   setCartCount: React.Dispatch<React.SetStateAction<number>>;
   addToCart?: (product: { id: string | number; name: string; price: number }) => void;
@@ -19,8 +18,7 @@ interface Product {
   gridClass?: string;
 }
 
-// 2. TANGKAP addToCart
-export default function Katalog({  addToCart }: KatalogProps) {
+export default function Katalog({ addToCart }: KatalogProps) {
   const [activeFilter, setActiveFilter] = useState('Semua');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -77,6 +75,7 @@ export default function Katalog({  addToCart }: KatalogProps) {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="pb-24 bg-[#F7F3EB] min-h-screen">
       
+      {/* HERO SECTION */}
       <div className="relative w-full h-[300px] md:h-[400px] mb-16 flex items-center justify-center overflow-hidden border-b-8 border-[#4A3022]">
         <div className="absolute inset-0 z-0">
           <img src={heroImage} alt="Katalog Oriena" className="w-full h-full object-cover opacity-90" />
@@ -96,6 +95,7 @@ export default function Katalog({  addToCart }: KatalogProps) {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
+        {/* PENCARIAN & FILTER BUTTONS */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="flex flex-col items-center gap-6 mb-16">
           <div className="relative w-full max-w-md">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#4A3022]" size={24} strokeWidth={3} />
@@ -111,33 +111,65 @@ export default function Katalog({  addToCart }: KatalogProps) {
           </div>
         </motion.div>
 
+        {/* SECTION BARU: MOMEN / SOCIAL PROOF (PENGGANTI KATEGORI/PROMO) - ALA KOPI TUKU */}
         <div className="mb-24">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-[#4A3022] border-2 border-[#4A3022] rounded-xl flex items-center justify-center text-[#FAF5E9] shadow-[4px_4px_0px_#D97736]"><Tag size={24} /></div>
-            <h2 className="text-3xl font-playfair font-black text-[#4A3022]">Penawaran Terbatas</h2>
+            <div className="w-12 h-12 bg-[#4A3022] border-2 border-[#4A3022] rounded-xl flex items-center justify-center text-[#FAF5E9] shadow-[4px_4px_0px_#D97736]"><Heart size={24} /></div>
+            <h2 className="text-3xl font-playfair font-black text-[#4A3022]">Lebih Dari Sekadar Kue</h2>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-[#D97736] rounded-[2rem] p-8 text-white relative border-4 border-[#4A3022] shadow-[12px_12px_0px_#4A3022] overflow-hidden">
-              <div className="absolute -right-8 -top-8 opacity-20 text-[#4A3022]"><Cookie size={200} /></div>
-              <div className="relative z-10 flex flex-col justify-center h-full">
-                <span className="bg-white text-[#4A3022] border-2 border-[#4A3022] px-4 py-1.5 rounded-full text-xs font-jakarta font-black tracking-wider mb-4 w-max shadow-[2px_2px_0px_#4A3022]">BUNDLE SPESIAL</span>
-                <h3 className="text-3xl font-playfair font-black mb-4 leading-tight">Beli 3 Toples Kering,<br/>Gratis Ongkir!</h3>
-                <button className="bg-white text-[#D97736] border-4 border-[#4A3022] px-8 py-3.5 rounded-xl font-jakarta font-black text-sm hover:bg-[#FAF5E9] transition-colors shadow-[4px_4px_0px_#4A3022] w-max mt-4 active:translate-y-1 active:shadow-none">Klaim Promo</button>
+            {/* Kartu Momen 1 (Ngopi) */}
+            <motion.div 
+              className="group relative h-[280px] md:h-[350px] rounded-[2rem] border-4 border-[#4A3022] shadow-[12px_12px_0px_#4A3022] overflow-hidden bg-[#E0D0BB] cursor-default"
+            >
+              {/* Gambar Background */}
+              <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&q=80&w=800" alt="Ngopi bareng Oriena" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" />
+              <div className="absolute inset-0 bg-[#4A3022]/20 group-hover:bg-[#4A3022]/40 transition-colors duration-500"></div>
+              
+              {/* STIKER POP-UP ALA TUKU */}
+              <div className="absolute top-6 right-6 md:top-8 md:right-8 z-20 opacity-0 group-hover:opacity-100 group-hover:rotate-6 transition-all duration-500 transform translate-y-8 group-hover:translate-y-0">
+                <div className="bg-[#D97736] text-white border-4 border-[#4A3022] px-4 py-2 rounded-2xl font-jakarta font-black text-sm shadow-[4px_4px_0px_#4A3022] flex items-center gap-2">
+                  <Coffee size={18} strokeWidth={3} /> Nyore Santuy!
+                </div>
               </div>
-            </div>
 
-            <div className="bg-[#E0D0BB] rounded-[2rem] p-8 text-[#4A3022] relative border-4 border-[#4A3022] shadow-[12px_12px_0px_#4A3022] overflow-hidden">
-              <div className="absolute -right-8 -top-8 opacity-10"><Coffee size={200} /></div>
-              <div className="relative z-10 flex flex-col justify-center h-full">
-                <span className="bg-[#4A3022] text-[#FAF5E9] border-2 border-[#4A3022] px-4 py-1.5 rounded-full text-xs font-jakarta font-black tracking-wider mb-4 w-max shadow-[2px_2px_0px_#D97736]">PAKET NGOPI</span>
-                <h3 className="text-3xl font-playfair font-black mb-4 leading-tight">2 Pastry Bebas Pilih <br/>+ 1 Kopi Oriena</h3>
-                <button className="bg-[#D97736] text-white border-4 border-[#4A3022] px-8 py-3.5 rounded-xl font-jakarta font-black text-sm hover:bg-[#c46a2b] transition-colors shadow-[4px_4px_0px_#4A3022] w-max mt-4 active:translate-y-1 active:shadow-none">Lihat Paket</button>
+              {/* Kotak Cerita */}
+              <div className="absolute bottom-6 left-6 right-6 md:bottom-8 md:left-8 md:right-8 z-10">
+                <motion.div className="bg-white/95 backdrop-blur-sm border-4 border-[#4A3022] p-5 md:p-6 rounded-3xl shadow-[6px_6px_0px_#4A3022] group-hover:-translate-y-2 transition-transform duration-500">
+                  <h3 className="text-2xl font-playfair font-black text-[#4A3022] mb-1 md:mb-2">Teman Kopi Pagimu.</h3>
+                  <p className="text-[#4A3022]/80 font-jakarta font-bold text-xs md:text-sm">Manisnya roti sisir dan secangkir kopi hangat bikin beban kerja atau nugas numpuk jadi kerasa lebih ringan.</p>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
+
+            {/* Kartu Momen 2 (Hampers) */}
+            <motion.div 
+              className="group relative h-[280px] md:h-[350px] rounded-[2rem] border-4 border-[#4A3022] shadow-[12px_12px_0px_#4A3022] overflow-hidden bg-[#FAF5E9] cursor-default"
+            >
+              {/* Gambar Background */}
+              <img src="https://images.unsplash.com/photo-1512909006721-3d6018887383?auto=format&fit=crop&q=80&w=800" alt="Hampers Oriena" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" />
+              <div className="absolute inset-0 bg-[#4A3022]/20 group-hover:bg-[#4A3022]/40 transition-colors duration-500"></div>
+              
+              {/* STIKER POP-UP ALA TUKU */}
+              <div className="absolute top-6 right-6 md:top-8 md:right-8 z-20 opacity-0 group-hover:opacity-100 group-hover:-rotate-6 transition-all duration-500 transform translate-y-8 group-hover:translate-y-0">
+                <div className="bg-[#829079] text-white border-4 border-[#4A3022] px-4 py-2 rounded-2xl font-jakarta font-black text-sm shadow-[4px_4px_0px_#4A3022] flex items-center gap-2">
+                  <Gift size={18} strokeWidth={3} /> Buka Bareng!
+                </div>
+              </div>
+
+              {/* Kotak Cerita */}
+              <div className="absolute bottom-6 left-6 right-6 md:bottom-8 md:left-8 md:right-8 z-10">
+                <motion.div className="bg-white/95 backdrop-blur-sm border-4 border-[#4A3022] p-5 md:p-6 rounded-3xl shadow-[6px_6px_0px_#4A3022] group-hover:-translate-y-2 transition-transform duration-500">
+                  <h3 className="text-2xl font-playfair font-black text-[#4A3022] mb-1 md:mb-2">Rayakan Bersama.</h3>
+                  <p className="text-[#4A3022]/80 font-jakarta font-bold text-xs md:text-sm">Kirim kehangatan oven kami untuk orang tersayang. Pas banget buat rayain ulang tahun atau hari raya spesial.</p>
+                </motion.div>
+              </div>
+            </motion.div>
           </div>
         </div>
 
+        {/* CAROUSEL KOLEKSI UNGGULAN */}
         {filteredCarousel.length > 0 && (
           <div className="mb-24">
             <div className="flex items-center gap-3 mb-6">
@@ -198,6 +230,7 @@ export default function Katalog({  addToCart }: KatalogProps) {
           </div>
         )}
 
+        {/* GRID SEMUA MENU */}
         {filteredAll.length > 0 && (
           <div className="mb-16">
             <div className="flex items-center justify-between mb-8 border-t-4 border-[#4A3022] pt-8">
@@ -219,7 +252,6 @@ export default function Katalog({  addToCart }: KatalogProps) {
                       <h4 className="font-playfair font-black text-[#4A3022] mb-1 line-clamp-2 leading-tight text-sm md:text-base">{product.name}</h4>
                       <span className="text-[#D97736] font-jakarta font-black text-sm mt-auto mb-3">Rp {product.price.toLocaleString('id-ID')}</span>
                       
-                      {/* 3. EKSEKUSI addToCart DI TOMBOL TAMBAH GRID BAWAH */}
                       <button 
                         onClick={(e) => {
                           e.stopPropagation(); 
@@ -240,6 +272,7 @@ export default function Katalog({  addToCart }: KatalogProps) {
           </div>
         )}
 
+        {/* JIKA KOSONG */}
         {filteredCarousel.length === 0 && filteredAll.length === 0 && (
           <div className="text-center py-24 bg-white border-4 border-[#4A3022] rounded-3xl shadow-[8px_8px_0px_#4A3022]">
             <Cookie size={64} className="mx-auto text-[#4A3022]/30 mb-4" />
@@ -248,6 +281,7 @@ export default function Katalog({  addToCart }: KatalogProps) {
           </div>
         )}
 
+        {/* MODAL DETAIL PRODUK */}
         <AnimatePresence>
           {selectedProduct && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#4A3022]/80 backdrop-blur-sm" onClick={() => setSelectedProduct(null)}>
@@ -271,7 +305,6 @@ export default function Katalog({  addToCart }: KatalogProps) {
                     Rp {selectedProduct.price.toLocaleString('id-ID')}
                   </div>
                   
-                  {/* 4. EKSEKUSI addToCart DI TOMBOL MODAL INI */}
                   <button 
                     onClick={() => { 
                       if (addToCart) {

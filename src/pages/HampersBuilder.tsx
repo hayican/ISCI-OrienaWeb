@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, Package, CheckCircle, Trash2, Plus, Gift, PenLine, Truck, ArrowRight, Cookie } from 'lucide-react';
+import { ShoppingBag, Package, CheckCircle, Trash2, Plus, Gift, PenLine, Truck, ArrowRight, Cookie, MessageSquare } from 'lucide-react';
 
 interface CookieItem {
   id: string;
@@ -10,35 +10,44 @@ interface CookieItem {
   image: string;
 }
 
-// 1. TAMBAHIN INTERFACE addToCart
 interface HampersBuilderProps {
   setCartCount: React.Dispatch<React.SetStateAction<number>>;
   addToCart?: (product: { id: string | number; name: string; price: number }) => void;
 }
 
-// 2. TANGKAP addToCart
 export default function HampersBuilder({ addToCart }: HampersBuilderProps) {
   const [boxItems, setBoxItems] = useState<(CookieItem | null)[]>([null, null, null]);
-  const [greeting, setGreeting] = useState('');
+  
+  // State Form Custom Hampers
+  const [hampersForm, setHampersForm] = useState({
+    senderName: '',
+    receiverName: '',
+    greeting: ''
+  });
+  
+  // STATE BARU BUAT MODE ORDER (Kado vs Sendiri)
+  const [orderMode, setOrderMode] = useState<'kado' | 'sendiri'>('kado');
+  
   const [isDone, setIsDone] = useState(false);
   const [draggedItem, setDraggedItem] = useState<CookieItem | null>(null);
 
   const availableCookies: CookieItem[] = [
-    { id: 'h2', name: "Kastengel Royal", price: 95000, color: "#eab308", image: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&q=80&w=400" },
-    { id: 'h3', name: "Putri Salju", price: 80000, color: "#829079", image: "https://images.unsplash.com/photo-1509365465985-25d11c17e812?auto=format&fit=crop&q=80&w=400" },
-    { id: 'h4', name: "Sagu Keju", price: 75000, color: "#4A3022", image: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&q=80&w=400" },
-    { id: 'h5', name: "Almond Crispy", price: 65000, color: "#D97736", image: "https://images.unsplash.com/photo-1600431562968-ef337c8733ed?auto=format&fit=crop&q=80&w=400" },
-    { id: 'h6', name: "Lidah Kucing", price: 60000, color: "#eab308", image: "https://images.unsplash.com/photo-1557310717-d6bea9f36682?auto=format&fit=crop&q=80&w=400" },
+    { id: 'h1', name: "Nastar Original", price: 70000, color: "#D97736", image: "https://images.unsplash.com/photo-1590080874088-eec64895e423?auto=format&fit=crop&q=80&w=400" },
+    { id: 'h2', name: "Kastangel", price: 80000, color: "#eab308", image: "https://github.com/user-attachments/assets/84bd3842-e1aa-4b09-9acf-16a08c500d56" },
+    { id: 'h3', name: "Sagu Keju", price: 70000, color: "#829079", image: "https://github.com/user-attachments/assets/d64f146e-d4c9-4b4b-853d-232a51367c23" },
+    { id: 'h4', name: "Almond London", price: 70000, color: "#D97736", image: "https://github.com/user-attachments/assets/dee6937a-0347-4292-b520-363cb271eedb" },
+    { id: 'h5', name: "Choco Hazelnut", price: 70000, color: "#4A3022", image: "https://github.com/user-attachments/assets/25ffd389-5403-492b-b581-180cdf375cfa" },
+    { id: 'h6', name: "Brownies Keping", price: 35000, color: "#4A3022", image: "https://github.com/user-attachments/assets/9e9d1e01-3962-4c12-bbca-d01ede31e3ef" },
+    { id: 'h7', name: "Sus Kering Keju", price: 35000, color: "#eab308", image: "https://github.com/user-attachments/assets/b8e267a8-d73f-401d-8ddc-bef625f21d9d" },
   ];
 
-const recommendedHampers = [
+  const recommendedHampers = [
     { id: 'r1', name: "Hampers Seasonal (Lebaran & Natal)", desc: "Edisi spesial hari raya! Isi Kastengel, Lidah Kucing, Putri Salju. Termasuk box tematik eksklusif.", price: 370000, image: "https://i.pinimg.com/1200x/be/68/12/be6812585ccb5b55a88d3ebac26e5cb1.jpg" },
     { id: 'r2', name: "Sweet Treats Box", desc: "Almond Crispy, Kastengel, Lidah Kucing. Kado manis untuk sahabat.", price: 330000, image: "https://i.pinimg.com/736x/07/98/88/079888dae1e172b609b3ff8a47159ba0.jpg" },
     { id: 'r3', name: "Premium Artisan", desc: "Kastengel + Double Almond Crispy. Kombinasi juara yang nggak pernah salah.", price: 395000, image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&q=80&w=600" },
   ];
 
-  const baseBoxPrice = 15000;
-  const currentTotal = boxItems.reduce((total, item) => total + (item ? item.price : 0), baseBoxPrice);
+  const currentTotal = boxItems.reduce((total, item) => total + (item ? item.price : 0), 0);
   const filledCount = boxItems.filter(item => item !== null).length;
 
   const checkCompletion = (newBox: (CookieItem | null)[]) => {
@@ -82,20 +91,34 @@ const recommendedHampers = [
     }
   };
 
-  const handleFinish = () => {
-    // 3. EKSEKUSI addToCart BUAT HAMPERS CUSTOM
-    if (addToCart) {
-      addToCart({
-        id: `custom-hampers-${Math.floor(Math.random() * 10000)}`,
-        name: `Custom Box Hampers (${filledCount} Toples)`,
-        price: currentTotal
-      });
+  const handleHampersWA = (e: React.FormEvent) => {
+    e.preventDefault();
+    const phoneNumber = "628126120165";
+    let text = `Halo Admin Oriena! 👋\nSaya mau pesan *Custom Box Hampers* nih:\n\n`;
+    
+    text += `📦 *ISI HAMPERS (Isi ${filledCount}):*\n`;
+    boxItems.forEach((item, index) => {
+      if (item) text += `- Slot ${index + 1}: ${item.name} (Rp ${item.price.toLocaleString('id-ID')})\n`;
+    });
+    
+    text += `\n*TOTAL HARGA ISI: Rp ${currentTotal.toLocaleString('id-ID')}*\n`;
+    text += `_(Note: Belum termasuk harga box kemasan & ongkir)_\n\n`;
+    
+    // LOGIKA PERBEDAAN TEKS WA BERDASARKAN MODE
+    if (orderMode === 'kado') {
+      text += `🎁 *TIPE PESANAN: KADO / GIFT*\n`;
+      text += `Dari: ${hampersForm.senderName || '-'}\n`;
+      text += `Untuk: ${hampersForm.receiverName || '-'}\n`;
+      text += `Pesan Kartu: ${hampersForm.greeting || '-'}\n\n`;
+    } else {
+      text += `😋 *TIPE PESANAN: KONSUMSI PRIBADI*\n`;
+      text += `_(Tidak perlu kartu ucapan)_\n\n`;
     }
-    setBoxItems([null, null, null]);
-    setGreeting('');
-    setIsDone(false);
-    alert("Hampers custom berhasil dimasukkan ke keranjang!");
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    text += `Tolong dibantu hitung total keseluruhan pakai boxnya ya Kak!`;
+
+    const encodedText = encodeURIComponent(text);
+    window.open(`https://wa.me/${phoneNumber}?text=${encodedText}`, '_blank');
   };
 
   return (
@@ -159,7 +182,7 @@ const recommendedHampers = [
                       <motion.div initial={{ y: -10 }} animate={{ y: 0 }} transition={{ repeat: Infinity, duration: 1.5, repeatType: "reverse", ease: "easeInOut" }}>
                         <Package size={100} className="text-white mb-4" strokeWidth={2} />
                       </motion.div>
-                      <span className="text-white font-playfair font-black text-3xl tracking-widest uppercase">Box Tersegel</span>
+                      <span className="text-white font-playfair font-black text-3xl tracking-widest uppercase">Box Terisi Penuh</span>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -167,8 +190,8 @@ const recommendedHampers = [
 
               <div className="mt-10 w-full max-w-lg flex items-center justify-between bg-white border-4 border-[#4A3022] py-4 px-6 rounded-2xl shadow-[6px_6px_0px_#4A3022]">
                 <div>
-                  <p className="text-[#4A3022] font-jakarta font-black text-sm mb-1 uppercase tracking-wider">Total Estimasi</p>
-                  <p className="text-xs font-jakarta text-[#4A3022]/70 font-bold">*Tersedia box tematik edisi Lebaran & Natal (Rp15.000)</p>
+                  <p className="text-[#4A3022] font-jakarta font-black text-sm mb-1 uppercase tracking-wider">Total Harga Isi</p>
+                  <p className="text-xs font-jakarta text-[#4A3022]/70 font-bold">*Harga box kemasan akan dihitung terpisah oleh admin.</p>
                 </div>
                 <motion.p key={currentTotal} initial={{ scale: 1.2 }} animate={{ scale: 1 }} className="text-2xl md:text-3xl font-jakarta font-black text-[#D97736]">
                   Rp {currentTotal.toLocaleString('id-ID')}
@@ -218,23 +241,66 @@ const recommendedHampers = [
                       <div className="w-12 h-12 bg-[#829079] border-2 border-[#4A3022] text-white rounded-full flex items-center justify-center shadow-[4px_4px_0px_#4A3022]"><CheckCircle size={28} /></div>
                       <div>
                         <h3 className="text-3xl font-playfair font-black text-[#4A3022]">Sempurna!</h3>
-                        <p className="text-sm font-jakarta text-[#4A3022]/80 font-bold">Hampers custommu siap diproses.</p>
+                        <p className="text-sm font-jakarta text-[#4A3022]/80 font-bold">Pilih tipe pesananmu di bawah ini.</p>
                       </div>
                     </div>
 
-                    <div className="space-y-4 mb-8 relative z-10">
-                      <label className="block text-sm font-jakarta font-black text-[#4A3022]">Tulis Kartu Ucapan (Opsional):</label>
-                      <textarea rows={4} value={greeting} onChange={(e) => setGreeting(e.target.value)} placeholder="Contoh: Selamat Lebaran / Merry Christmas ya bro! Semoga sehat selalu..." className="w-full bg-white border-4 border-[#4A3022] focus:border-[#D97736] rounded-2xl p-5 outline-none font-jakarta text-[#4A3022] font-bold resize-none transition-colors"></textarea>
-                    </div>
+                    <form onSubmit={handleHampersWA} className="relative z-10">
+                      
+                      {/* TOGGLE MODE PESANAN */}
+                      <div className="flex gap-4 mb-6">
+                        <button 
+                          type="button" 
+                          onClick={() => setOrderMode('kado')} 
+                          className={`flex-1 py-3 border-4 border-[#4A3022] rounded-xl font-black transition-all ${orderMode === 'kado' ? 'bg-[#D97736] text-white shadow-[4px_4px_0px_#4A3022] -translate-y-1' : 'bg-white text-[#4A3022] hover:bg-[#FAF5E9]'}`}
+                        >
+                          🎁 Buat Kado
+                        </button>
+                        <button 
+                          type="button" 
+                          onClick={() => setOrderMode('sendiri')} 
+                          className={`flex-1 py-3 border-4 border-[#4A3022] rounded-xl font-black transition-all ${orderMode === 'sendiri' ? 'bg-[#829079] text-white shadow-[4px_4px_0px_#4A3022] -translate-y-1' : 'bg-white text-[#4A3022] hover:bg-[#FAF5E9]'}`}
+                        >
+                          😋 Beli Sendiri
+                        </button>
+                      </div>
 
-                    <div className="relative z-10 space-y-4">
-                      <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.95 }} onClick={handleFinish} className="w-full bg-[#D97736] text-white py-4 border-4 border-[#4A3022] rounded-2xl font-jakarta font-black text-lg flex items-center justify-center gap-2 shadow-[4px_4px_0px_#4A3022]">
-                        <ShoppingBag size={24} /> Masukkan Keranjang
-                      </motion.button>
-                      <button onClick={() => setIsDone(false)} className="w-full py-3 text-[#4A3022] font-jakarta font-black text-sm hover:text-[#D97736] hover:bg-white border-4 border-transparent hover:border-[#D97736] rounded-xl transition-all">
-                        Bongkar & Edit Isi Box
-                      </button>
-                    </div>
+                      {/* FORM KARTU UCAPAN (HANYA MUNCUL JIKA MODE KADO) */}
+                      <AnimatePresence>
+                        {orderMode === 'kado' && (
+                          <motion.div 
+                            initial={{ opacity: 0, height: 0 }} 
+                            animate={{ opacity: 1, height: 'auto' }} 
+                            exit={{ opacity: 0, height: 0 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                              <div className="space-y-2">
+                                <label className="block text-sm font-jakarta font-black text-[#4A3022]">Dari (Pengirim):</label>
+                                <input required type="text" value={hampersForm.senderName} onChange={(e) => setHampersForm({...hampersForm, senderName: e.target.value})} className="w-full bg-white border-4 border-[#4A3022] focus:border-[#D97736] rounded-xl p-3 outline-none font-jakarta text-[#4A3022] font-bold transition-colors" placeholder="Nama pengirim" />
+                              </div>
+                              <div className="space-y-2">
+                                <label className="block text-sm font-jakarta font-black text-[#4A3022]">Untuk (Penerima):</label>
+                                <input required type="text" value={hampersForm.receiverName} onChange={(e) => setHampersForm({...hampersForm, receiverName: e.target.value})} className="w-full bg-white border-4 border-[#4A3022] focus:border-[#D97736] rounded-xl p-3 outline-none font-jakarta text-[#4A3022] font-bold transition-colors" placeholder="Nama penerima" />
+                              </div>
+                            </div>
+                            <div className="space-y-2 mb-6">
+                              <label className="block text-sm font-jakarta font-black text-[#4A3022]">Pesan Kartu Ucapan:</label>
+                              <textarea required rows={3} value={hampersForm.greeting} onChange={(e) => setHampersForm({...hampersForm, greeting: e.target.value})} placeholder="Tulis ucapan selamat di sini..." className="w-full bg-white border-4 border-[#4A3022] focus:border-[#D97736] rounded-xl p-3 outline-none font-jakarta text-[#4A3022] font-bold resize-none transition-colors"></textarea>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+
+                      <div className="space-y-4 mt-2">
+                        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.95 }} type="submit" className={`w-full text-white py-4 border-4 border-[#4A3022] rounded-2xl font-jakarta font-black text-lg flex items-center justify-center gap-2 shadow-[4px_4px_0px_#4A3022] ${orderMode === 'kado' ? 'bg-[#D97736]' : 'bg-[#829079]'}`}>
+                          <MessageSquare size={24} /> Pesan {orderMode === 'kado' ? 'Custom' : 'Buat Sendiri'} via WA
+                        </motion.button>
+                        <button type="button" onClick={() => setIsDone(false)} className="w-full py-3 text-[#4A3022] font-jakarta font-black text-sm hover:text-[#D97736] hover:bg-white border-4 border-transparent hover:border-[#D97736] rounded-xl transition-all">
+                          Bongkar & Edit Isi Box
+                        </button>
+                      </div>
+                    </form>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -254,7 +320,7 @@ const recommendedHampers = [
             <div className="hidden md:block absolute top-10 left-0 w-full h-1 bg-[#4A3022] z-0"></div>
             {[
               { title: "Pilih Kue", desc: "Tarik 3 varian kue favoritmu ke dalam box pengemasan.", icon: <Cookie size={32} /> },
-              { title: "Tulis Pesan", desc: "Sematkan kartu ucapan gratis dengan pesan personalmu.", icon: <PenLine size={32} /> },
+              { title: "Pilih Mode", desc: "Mau buat diri sendiri atau dikirim sebagai kado? Bebas!", icon: <PenLine size={32} /> },
               { title: "Kami Rakit", desc: "Tim artisan kami akan menyusunnya dengan pita elegan.", icon: <Gift size={32} /> },
               { title: "Dikirim Aman", desc: "Packing berlapis bubble wrap menjamin kue sampai dengan utuh.", icon: <Truck size={32} /> }
             ].map((step, idx) => (
@@ -296,7 +362,6 @@ const recommendedHampers = [
                     <span className="text-xl font-jakarta font-black text-[#D97736]">Rp {hamper.price.toLocaleString('id-ID')}</span>
                     <button 
                       onClick={() => { 
-                        // 4. EKSEKUSI addToCart BUAT HAMPERS REKOMENDASI
                         if (addToCart) addToCart({ id: hamper.id, name: hamper.name, price: hamper.price });
                         alert(`${hamper.name} masuk keranjang!`); 
                       }} 
