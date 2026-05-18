@@ -15,6 +15,8 @@ import {
   Coffee
 } from 'lucide-react';
 
+import FotoOwner from "../assets/owner.jpeg";
+
 const InstagramIcon = ({ size = 24 }: { size?: number }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
     <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
@@ -132,18 +134,23 @@ export default function Tentang() {
           initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8, type: "spring" }}
           className="bg-[#E0D0BB] rounded-[3rem] p-8 md:p-12 border-4 border-[#4A3022] shadow-[12px_12px_0px_#4A3022] flex flex-col md:flex-row items-center gap-12"
         >
-          <div className="w-full md:w-2/5 overflow-hidden rounded-[2.5rem] border-4 border-[#4A3022] bg-white shadow-[6px_6px_0px_#4A3022] relative group">
-            <div className="aspect-[4/5] bg-[#FAF5E9] relative flex items-center justify-center overflow-hidden">
+          <div className="aspect-[4/5] bg-[#FAF5E9] relative flex items-center justify-center overflow-hidden">
               {/* Pattern Kopi Tuku (Stripes) di background */}
               <div className="absolute inset-0 z-0 opacity-10" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #4A3022 25%, transparent 25%, transparent 75%, #4A3022 75%, #4A3022)', backgroundSize: '20px 20px' }}></div>
-              <User size={140} className="text-[#D97736] relative z-10 group-hover:scale-110 transition-transform duration-500" strokeWidth={1.5} />
+              
+              {/* HAPUS IKON <User /> DAN GANTI JADI TAG <img /> INI */}
+              <img 
+              src={FotoOwner} // Inget jangan pake kutip, panggil variabel import lokalnya
+              alt="Bu Endah Pujiastuti" 
+              className="w-full h-full object-cover relative z-10 group-hover:scale-110 transition-transform duration-500" 
+            />
+              
               
               <div className="absolute bottom-6 left-0 right-0 text-center z-20">
                  <span className="font-jakarta font-black text-[#4A3022] text-sm bg-white border-4 border-[#4A3022] px-6 py-2 rounded-full shadow-[4px_4px_0px_#D97736]">
                    Owner Oriena
                  </span>
               </div>
-            </div>
           </div>
 
           <div className="w-full md:w-3/5 text-center md:text-left space-y-6">
@@ -189,7 +196,7 @@ export default function Tentang() {
             {[
               { icon: <Package size={32} strokeWidth={2.5} />, val: "50k+", label: "Toples Terjual" },
               { icon: <CakeSlice size={32} strokeWidth={2.5} />, val: "20+", label: "Resep Artisan" },
-              { icon: <Clock size={32} strokeWidth={2.5} />, val: "5Thn", label: "Pengalaman" },
+              { icon: <Clock size={32} strokeWidth={2.5} />, val: "18Thn", label: "Pengalaman" },
               { icon: <Award size={32} strokeWidth={2.5} />, val: "100%", label: "Bahan Premium" }
             ].map((stat, idx) => (
               <motion.div key={idx} variants={{ hidden: { opacity: 0, y: 50, scale: 0.8 }, visible: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", bounce: 0.5 } } }} className="bg-[#FAF5E9] border-4 border-[#4A3022] rounded-3xl p-6 shadow-[6px_6px_0px_#4A3022] text-center flex flex-col items-center justify-center">
