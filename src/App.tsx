@@ -60,20 +60,15 @@ export default function App() {
     }
   };
 
-  // Fungsi kosong sementara biar props di halaman lama ga error
-  const dummySetCartCount = () => {};
-
   const renderView = () => {
     switch(currentView) {
-      case 'beranda': return <Beranda key="beranda" setCurrentView={setCurrentView} setCartCount={dummySetCartCount} addToCart={addToCart} />;
+      case 'beranda': return <Beranda key="beranda" setCurrentView={setCurrentView} setCartCount={() => {}} addToCart={addToCart} />;
       case 'tentang': return <Tentang key="tentang" />;
-      case 'katalog': return <Katalog key="katalog" setCartCount={dummySetCartCount} addToCart={addToCart} />;
-      case 'hampers': return <HampersBuilder key="hampers" setCartCount={dummySetCartCount} addToCart={addToCart} />
+      case 'katalog': return <Katalog key="katalog" setCartCount={() => {}} />;
+      case 'hampers': return <HampersBuilder key="hampers" setCartCount={() => {}} />
       case 'kolaborasi': return <Kolaborasi key="kolaborasi" />;
-      // Oper state cart yang asli dan fungsi pindah halaman ke komponen Cart
       case 'cart': return <Cart key="cart" cartItems={cartItems} updateCartItem={updateCartItem} setCurrentView={setCurrentView} />;
-      
-      default: return <Beranda key="default" setCurrentView={setCurrentView} setCartCount={dummySetCartCount} addToCart={addToCart} />;
+      default: return <Beranda key="default" setCurrentView={setCurrentView} setCartCount={() => {}} addToCart={addToCart} />;
     }
   };
 
@@ -84,7 +79,6 @@ export default function App() {
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .perspective-1000 { perspective: 1000px; }
         .preserve-3d { transform-style: preserve-3d; }
-        
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #D97736; border-radius: 10px; }
@@ -103,8 +97,6 @@ export default function App() {
             </AnimatePresence>
           </main>
           <Footer setCurrentView={setCurrentView} />
-          
-          {/* DI SINI LETAK FLOATING WA-NYA BRSKIEE */}
           <FloatingWA /> 
         </>
       )}
