@@ -102,11 +102,9 @@ export default function Katalog({ addToCart }: KatalogProps) {
 
   useEffect(() => {
     if (filteredCarousel.length <= 1) return;
-    
     const timer = setInterval(() => {
       setCarouselIndex((prevIndex) => (prevIndex + 1) % filteredCarousel.length);
     }, 3000); 
-
     return () => clearInterval(timer);
   }, [filteredCarousel.length]);
 
@@ -281,10 +279,7 @@ export default function Katalog({ addToCart }: KatalogProps) {
               <AnimatePresence initial={false}>
                 <motion.div
                   key={carouselIndex}
-                  initial={{ x: "100%" }} 
-                  animate={{ x: 0 }}      
-                  exit={{ x: "-100%" }}   
-                  transition={{ duration: 0.6, ease: "easeInOut" }}
+                  initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "-100%" }} transition={{ duration: 0.6, ease: "easeInOut" }}
                   className="absolute inset-0 w-full h-full cursor-pointer group"
                   onClick={() => setSelectedProduct(filteredCarousel[carouselIndex])}
                 >
@@ -313,7 +308,6 @@ export default function Katalog({ addToCart }: KatalogProps) {
                     <p className="text-white/90 font-jakarta font-bold text-base md:text-lg max-w-2xl line-clamp-2 md:line-clamp-none mb-6">
                       {filteredCarousel[carouselIndex].desc}
                     </p>
-                    
                     <div className="inline-flex items-center bg-[#FAF5E9] border-4 border-[#4A3022] text-[#D97736] px-6 py-3 rounded-2xl font-jakarta font-black text-xl shadow-[6px_6px_0px_#4A3022] group-hover:bg-[#D97736] group-hover:text-[#FAF5E9] transition-colors">
                       Rp {filteredCarousel[carouselIndex].price.toLocaleString('id-ID')}
                     </div>
@@ -380,10 +374,7 @@ export default function Katalog({ addToCart }: KatalogProps) {
                       <button 
                         onClick={(e) => {
                           e.stopPropagation(); 
-                          if (addToCart) {
-                            addToCart({ id: product.id, name: product.name, price: product.price });
-                            alert(`${product.name} masuk keranjang!`);
-                          }
+                          if (addToCart) { addToCart({ id: product.id, name: product.name, price: product.price }); alert(`${product.name} masuk keranjang!`); }
                         }} 
                         className="w-full py-2 bg-[#FAF5E9] group-hover:bg-[#D97736] border-2 border-[#4A3022] text-[#4A3022] group-hover:text-white rounded-xl font-jakarta font-black text-xs transition-colors flex justify-center items-center gap-2 shadow-[2px_2px_0px_#4A3022] active:translate-y-0.5 active:shadow-none"
                       >
