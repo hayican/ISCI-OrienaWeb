@@ -1,21 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { 
-  ArrowRight, 
-  Coffee, 
-  MonitorPlay, 
-  Cookie, 
-  CakeSlice, 
-  CheckCircle, 
-  MessageSquare,
-  Package,
-  Quote,
-  Star
-} from 'lucide-react';
+import { ArrowRight, Coffee, MonitorPlay, Cookie, CakeSlice, CheckCircle, MessageSquare, Package, Quote, Star } from 'lucide-react';
 
-// ==========================================
-// TYPES & INTERFACES (Diupdate!)
-// ==========================================
 interface BerandaProps {
   setCurrentView: (view: string) => void;
   setCartCount: React.Dispatch<React.SetStateAction<number>>;
@@ -27,38 +13,14 @@ interface TasteMatcherProps {
   addToCart?: (product: { id: string | number; name: string; price: number }) => void;
 }
 
-// ==========================================
-// COMPONENT 1: TASTE MATCHER 
-// ==========================================
 function TasteMatcher({ addToCart }: TasteMatcherProps) {
   const [step, setStep] = useState<number>(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
 
   const questions = [
-    {
-      id: 'q1',
-      title: "Lagi pengen rasa yang kayak gimana nih?",
-      options: [
-        { label: "Manis Legit", value: "manis", icon: <CakeSlice size={28} /> },
-        { label: "Gurih Keju", value: "gurih", icon: <Cookie size={28} /> }
-      ]
-    },
-    {
-      id: 'q2',
-      title: "Biasanya buat temen apa?",
-      options: [
-        { label: "Ngopi Pagi", value: "ngopi", icon: <Coffee size={28} /> },
-        { label: "Nonton Netflix", value: "netflix", icon: <MonitorPlay size={28} /> }
-      ]
-    },
-    {
-      id: 'q3',
-      title: "Tekstur favorit kamu?",
-      options: [
-        { label: "Lumer di Mulut", value: "lumer", icon: <MessageSquare size={28} /> },
-        { label: "Garing Kress", value: "garing", icon: <CheckCircle size={28} /> }
-      ]
-    }
+    { id: 'q1', title: "Lagi pengen rasa yang kayak gimana nih?", options: [{ label: "Manis Legit", value: "manis", icon: <CakeSlice size={28} /> }, { label: "Gurih Keju", value: "gurih", icon: <Cookie size={28} /> }] },
+    { id: 'q2', title: "Biasanya buat temen apa?", options: [{ label: "Ngopi Pagi", value: "ngopi", icon: <Coffee size={28} /> }, { label: "Nonton Netflix", value: "netflix", icon: <MonitorPlay size={28} /> }] },
+    { id: 'q3', title: "Tekstur favorit kamu?", options: [{ label: "Lumer di Mulut", value: "lumer", icon: <MessageSquare size={28} /> }, { label: "Garing Kress", value: "garing", icon: <CheckCircle size={28} /> }] }
   ];
 
   const handleAnswer = (questionId: string, value: string) => {
@@ -74,9 +36,7 @@ function TasteMatcher({ addToCart }: TasteMatcherProps) {
 
   return (
     <motion.div 
-      initial={{ opacity: 0, scale: 0.9, rotateY: 15 }}
-      animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-      transition={{ duration: 1, type: "spring", bounce: 0.4 }}
+      initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: "easeOut" }}
       className="relative bg-[#FAF5E9] p-8 md:p-10 rounded-[2rem] border-4 border-[#4A3022] shadow-[12px_12px_0px_rgba(74,48,34,1)] overflow-hidden group"
     >
       <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#D97736]/20 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
@@ -84,7 +44,7 @@ function TasteMatcher({ addToCart }: TasteMatcherProps) {
       <AnimatePresence mode="wait">
         {step === 0 && (
           <motion.div 
-            key="intro" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -50 }}
+            key="intro" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4 }}
             className="flex flex-col items-center text-center space-y-6 relative z-10"
           >
             <motion.div 
@@ -106,7 +66,7 @@ function TasteMatcher({ addToCart }: TasteMatcherProps) {
 
         {step > 0 && step <= questions.length && (
           <motion.div 
-            key={`question-${step}`} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, x: -50 }} transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            key={`question-${step}`} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4, ease: "easeOut" }}
             className="space-y-8 relative z-10"
           >
             <div className="flex items-center gap-2 mb-6">
@@ -138,7 +98,7 @@ function TasteMatcher({ addToCart }: TasteMatcherProps) {
 
         {step > questions.length && (
           <motion.div 
-            key="result" initial={{ opacity: 0, scale: 0.5, rotate: -10 }} animate={{ opacity: 1, scale: 1, rotate: 0 }} transition={{ type: "spring", bounce: 0.5 }}
+            key="result" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, ease: "easeOut" }}
             className="text-center space-y-6 relative z-10"
           >
             <div className="inline-block px-4 py-1.5 bg-[#4A3022] text-[#FAF5E9] border-2 border-[#4A3022] rounded-full text-xs font-jakarta font-black mb-2 shadow-[2px_2px_0px_rgba(74,48,34,1)]">
@@ -151,17 +111,13 @@ function TasteMatcher({ addToCart }: TasteMatcherProps) {
                 <>
                   <h3 className="text-3xl font-playfair font-black text-[#4A3022]">{res.name}</h3>
                   <p className="text-[#4A3022]/80 font-jakarta font-bold">{res.desc}</p>
-                  <motion.div 
-                    initial={{ scale: 1.5, color: '#4A3022' }} animate={{ scale: 1, color: '#D97736' }} transition={{ delay: 0.5 }}
-                    className="text-3xl font-jakarta font-black"
-                  >
+                  <motion.div initial={{ scale: 1.2, color: '#4A3022' }} animate={{ scale: 1, color: '#D97736' }} transition={{ delay: 0.3 }} className="text-3xl font-jakarta font-black">
                     Rp {res.price.toLocaleString('id-ID')}
                   </motion.div>
                   
                   <div className="pt-4 flex flex-col gap-3">
                     <button 
                       onClick={() => {
-                        // EKSEKUSI addToCart DI SINI
                         if (addToCart) addToCart({ id: `kuis-${res.name}`, name: res.name, price: res.price });
                         setStep(0);
                         setAnswers({});
@@ -171,10 +127,7 @@ function TasteMatcher({ addToCart }: TasteMatcherProps) {
                     >
                       Langsung Bungkus!
                     </button>
-                    <button 
-                      onClick={() => { setStep(0); setAnswers({}); }}
-                      className="text-[#4A3022] font-jakarta font-black text-sm hover:underline mt-2"
-                    >
+                    <button onClick={() => { setStep(0); setAnswers({}); }} className="text-[#4A3022] font-jakarta font-black text-sm hover:underline mt-2">
                       Ulangi Kuis
                     </button>
                   </div>
@@ -188,9 +141,6 @@ function TasteMatcher({ addToCart }: TasteMatcherProps) {
   );
 }
 
-// ==========================================
-// COMPONENT UTAMA: BERANDA
-// ==========================================
 export default function Beranda({ setCurrentView, setCartCount, addToCart }: BerandaProps) {
   const { scrollYProgress } = useScroll();
   const yParallax1 = useTransform(scrollYProgress, [0, 1], [0, -150]);
@@ -203,12 +153,12 @@ export default function Beranda({ setCurrentView, setCartCount, addToCart }: Ber
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 md:pt-24 pb-20 flex flex-col-reverse md:flex-row items-center gap-12 overflow-hidden min-h-[85vh]">
         <div className="w-full md:w-1/2 space-y-8 relative z-10">
           <motion.h1 
-            initial="hidden" animate="visible" variants={{ hidden: { opacity: 1 }, visible: { transition: { staggerChildren: 0.15 } } }}
+            initial="hidden" animate="visible" variants={{ hidden: { opacity: 1 }, visible: { transition: { staggerChildren: 0.1 } } }}
             className="text-5xl md:text-7xl font-playfair font-black leading-[1.1] tracking-tight text-[#4A3022] flex flex-wrap gap-x-4"
           >
             {title.map((word, idx) => (
               <motion.span 
-                key={idx} variants={{ hidden: { opacity: 0, y: 50, rotateX: -90 }, visible: { opacity: 1, y: 0, rotateX: 0, transition: { type: "spring", damping: 12, stiffness: 200 } } }}
+                key={idx} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } } }}
                 className={word === "Oven" || word === "Kami" ? "text-[#D97736]" : ""}
               >
                 {word}
@@ -217,14 +167,14 @@ export default function Beranda({ setCurrentView, setCartCount, addToCart }: Ber
           </motion.h1>
 
           <motion.p 
-            initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
             className="text-lg md:text-xl font-jakarta text-[#4A3022]/80 font-bold max-w-lg leading-relaxed"
           >
             Nastar lumer, kastengel garing, dan berbagai kreasi pastry yang dibuat dengan tangan untuk menyempurnakan momen Anda.
           </motion.p>
 
           <motion.div 
-            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1, ease: "easeOut" }}
+            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
             className="flex flex-col sm:flex-row gap-4 pt-4"
           >
             <motion.button 
@@ -250,7 +200,7 @@ export default function Beranda({ setCurrentView, setCartCount, addToCart }: Ber
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 overflow-hidden">
         <div className="text-center mb-12">
           <motion.h2 
-            initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, margin: "-100px" }} transition={{ type: "spring", bounce: 0.5 }}
+            initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6, ease: "easeOut" }}
             className="text-4xl md:text-5xl font-playfair font-black text-[#4A3022] mb-4"
           >
             Langsung dari Oven.
@@ -259,12 +209,11 @@ export default function Beranda({ setCurrentView, setCartCount, addToCart }: Ber
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <motion.div 
-            initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, type: "spring" }} whileHover={{ y: -8 }}
+            initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: "easeOut" }} whileHover={{ y: -8 }}
             className="group relative md:col-span-2 bg-[#E0D0BB] rounded-[2rem] p-8 border-4 border-[#4A3022] shadow-[8px_8px_0px_rgba(74,48,34,1)] overflow-hidden cursor-pointer flex flex-col justify-end min-h-[300px]"
             onClick={() => setCurrentView('katalog')}
           >
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#D97736] rounded-bl-[100%] group-hover:scale-110 transition-transform duration-700 ease-in-out border-b-4 border-l-4 border-[#4A3022]"></div>
-            
             <div className="relative z-10 w-full md:w-1/2 bg-white p-6 rounded-3xl border-4 border-[#4A3022] shadow-[6px_6px_0px_rgba(74,48,34,1)] mt-auto">
               <div className="inline-block px-3 py-1 bg-[#D97736] text-[#FAF5E9] rounded-full text-xs font-jakarta font-black mb-3 border-2 border-[#4A3022]">BEST SELLER</div>
               <h3 className="text-3xl font-playfair font-black text-[#4A3022] mb-2">Kastengel Royal</h3>
@@ -277,7 +226,7 @@ export default function Beranda({ setCurrentView, setCartCount, addToCart }: Ber
 
           <div className="flex flex-col gap-8">
             <motion.div 
-              initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2, type: "spring" }} whileHover={{ y: -6 }}
+              initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }} whileHover={{ y: -6 }}
               className="group relative flex-1 bg-[#D97736] text-white rounded-[2rem] p-6 border-4 border-[#4A3022] shadow-[6px_6px_0px_rgba(74,48,34,1)] overflow-hidden cursor-pointer flex flex-col justify-between"
               onClick={() => setCurrentView('hampers')}
             >
@@ -291,7 +240,7 @@ export default function Beranda({ setCurrentView, setCartCount, addToCart }: Ber
             </motion.div>
 
             <motion.div 
-              initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.4, type: "spring" }} whileHover={{ y: -6 }}
+              initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }} whileHover={{ y: -6 }}
               className="group relative flex-1 bg-[#FAF5E9] rounded-[2rem] p-6 border-4 border-[#4A3022] shadow-[6px_6px_0px_rgba(74,48,34,1)] overflow-hidden cursor-pointer"
               onClick={() => setCurrentView('katalog')}
             >
@@ -316,13 +265,13 @@ export default function Beranda({ setCurrentView, setCartCount, addToCart }: Ber
               CERITA DI BALIK DAPUR
             </motion.div>
             <motion.h2 
-              initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1, duration: 0.6 }}
+              initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1, duration: 0.6, ease: "easeOut" }}
               className="text-4xl md:text-6xl font-playfair font-black text-[#4A3022] leading-tight drop-shadow-[2px_2px_0px_#FAF5E9]"
             >
               Tanpa Pengawet.<br/><span className="text-[#D97736]">Penuh Perasaan.</span>
             </motion.h2>
             <motion.p 
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 1 }}
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
               className="text-[#4A3022]/90 font-jakarta font-bold text-lg max-w-md leading-relaxed"
             >
               Kami percaya bahwa rasa terbaik datang dari bahan yang jujur. Mentega pilihan, keju asli, dan proses panggangan artisan yang dijaga suhunya secara presisi.
@@ -358,13 +307,13 @@ export default function Beranda({ setCurrentView, setCartCount, addToCart }: Ber
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 mb-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <motion.h2 
-            initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: "easeOut" }}
             className="text-4xl md:text-5xl font-playfair font-black text-[#4A3022]"
           >
             Manisnya Kata Mereka.
           </motion.h2>
           <motion.div 
-            initial={{ opacity: 0, scale: 0 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ type: "spring" }}
+            initial={{ opacity: 0, scale: 0 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: "easeOut" }}
             className="flex gap-1"
           >
             {[1, 2, 3, 4, 5].map((i) => (
@@ -377,7 +326,7 @@ export default function Beranda({ setCurrentView, setCartCount, addToCart }: Ber
 
         <motion.div 
           initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
-          variants={{ visible: { transition: { staggerChildren: 0.2 } } }}
+          variants={{ visible: { transition: { staggerChildren: 0.15 } } }}
           className="grid grid-cols-1 md:grid-cols-3 gap-8"
         >
           {[
@@ -387,7 +336,7 @@ export default function Beranda({ setCurrentView, setCartCount, addToCart }: Ber
           ].map((review, idx) => (
             <motion.div 
               key={idx}
-              variants={{ hidden: { opacity: 0, y: 100 }, visible: { opacity: 1, y: 0, transition: { type: "spring", damping: 15 } } }}
+              variants={{ hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } } }}
               whileHover={{ y: -8 }}
               className="bg-white p-8 md:p-10 rounded-[2.5rem] border-4 border-[#4A3022] shadow-[8px_8px_0px_#4A3022] flex flex-col justify-between"
             >
@@ -409,7 +358,6 @@ export default function Beranda({ setCurrentView, setCartCount, addToCart }: Ber
           ))}
         </motion.div>
       </section>
-
     </motion.div>
   );
 }
