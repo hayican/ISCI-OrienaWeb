@@ -1,73 +1,43 @@
-# React + TypeScript + Vite
+# 🥐 Oriena Artisan Bakery - E-Commerce Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-black?style=for-the-badge&logo=framer&logoColor=blue)
 
-Currently, two official plugins are available:
+> **Membawa Hangatnya Oven Kami ke Meja Anda.**
+> 
+> OrienaWeb adalah proyek *frontend e-commerce* modern yang dirancang khusus untuk UMKM Oriena Artisan Bakery (sebelumnya PasPastry). Mengusung gaya desain **Neo-Brutalism** yang *bold*, estetis, dan interaktif. Proyek ini dibangun untuk memberikan pengalaman berbelanja kue kering yang unik, *playful*, dan profesional.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## ✨ Fitur Unggulan
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Proyek ini tidak hanya menampilkan katalog, tetapi juga memberikan pengalaman interaktif (*User Experience*) tingkat lanjut:
 
-## Expanding the ESLint configuration
+- 🎁 **Interactive Hampers Builder:** Fitur *drag-and-drop* (Tarik & Lepas) yang memungkinkan pengguna merakit *custom box hampers* mereka sendiri secara visual.
+- 🎯 **Taste Matcher Quiz:** Kuis interaktif untuk memberikan rekomendasi kue terbaik berdasarkan preferensi dan *mood* pengguna.
+- 📱 **Fully Responsive UI:** Tampilan yang mulus dan proporsional di semua ukuran layar (Desktop, Tablet, & Mobile).
+- 💬 **WhatsApp Smart Checkout:** Integrasi pesanan langsung ke WhatsApp admin dengan detail *invoice* dan *custom notes* yang ter- *generate* otomatis.
+- 🚀 **Smooth Micro-Interactions:** Animasi transisi yang elegan dan interaksi elemen berbasis `Framer Motion`.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🛠️ Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Framework:** React 18
+- **Build Tool:** Vite
+- **Styling:** Tailwind CSS
+- **Animation:** Framer Motion
+- **Icons:** Lucide React
+- **Deployment:** Vercel / Dewabiz (TBA)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🚀 Cara Menjalankan Proyek Secara Lokal
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Jika Anda ingin menjalankan atau mengembangkan proyek ini di komputer Anda, ikuti langkah-langkah berikut:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1. **Clone Repository**
+   ```bash
+   git clone [https://github.com/AryaKhaslana/ISCI-OrienaWeb.git](https://github.com/AryaKhaslana/ISCI-OrienaWeb.git)
