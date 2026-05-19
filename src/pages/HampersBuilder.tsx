@@ -248,10 +248,10 @@ export default function HampersBuilder({ addToCart }: HampersBuilderProps) {
                       
                       <div className="flex gap-4 mb-6">
                         <button type="button" onClick={() => setOrderMode('kado')} className={`flex-1 py-3 border-4 border-[#4A3022] rounded-xl font-black transition-all ${orderMode === 'kado' ? 'bg-[#D97736] text-white shadow-[4px_4px_0px_#4A3022] -translate-y-1' : 'bg-white text-[#4A3022] hover:bg-[#FAF5E9]'}`}>
-                          🎁 Buat Kado
+                          Buat Kado
                         </button>
                         <button type="button" onClick={() => setOrderMode('sendiri')} className={`flex-1 py-3 border-4 border-[#4A3022] rounded-xl font-black transition-all ${orderMode === 'sendiri' ? 'bg-[#829079] text-white shadow-[4px_4px_0px_#4A3022] -translate-y-1' : 'bg-white text-[#4A3022] hover:bg-[#FAF5E9]'}`}>
-                          😋 Beli Sendiri
+                          Beli Sendiri
                         </button>
                       </div>
 
