@@ -17,8 +17,8 @@ import FotoNastar from '../assets/nastar.png';
 // TYPES & INTERFACES
 // ==========================================
 interface KatalogProps {
-  setCartCount: React.Dispatch<React.SetStateAction<number>>;
-  addToCart?: (product: { id: string | number; name: string; price: number }) => void;
+  setCartCount: any; // Dibikin 'any' sementara biar App.tsx nggak error
+  addToCart: (product: { id: string | number; name: string; price: number }) => void;
 }
 
 interface Product {
@@ -35,7 +35,7 @@ interface Product {
 // ==========================================
 // COMPONENT MAIN: KATALOG
 // ==========================================
-export default function Katalog({ addToCart }: KatalogProps) {
+export default function Katalog({ setCartCount, addToCart }: KatalogProps) {
   const [activeFilter, setActiveFilter] = useState('Semua');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
