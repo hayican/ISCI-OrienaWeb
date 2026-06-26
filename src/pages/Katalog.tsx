@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+// REACT GW HAPUS BIAR GAK ERROR LAGI:
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Search, 
@@ -13,37 +14,21 @@ import {
 } from 'lucide-react';
 import FotoNastar from '../assets/nastar.png';
 
-// ==========================================
-// TYPES & INTERFACES
-// ==========================================
 interface KatalogProps {
-  setCartCount: any; // Dibikin 'any' sementara biar App.tsx nggak error
+  setCartCount: any; 
   addToCart: (product: { id: string | number; name: string; price: number }) => void;
 }
 
-interface Product {
-  id: number;
-  name: string;
-  category: string;
-  price: number;
-  desc: string;
-  image: string;
-  badge?: string;
-  gridClass?: string;
-}
-
-// ==========================================
-// COMPONENT MAIN: KATALOG
-// ==========================================
-export default function Katalog({ setCartCount, addToCart }: KatalogProps) {
+// SETCARTCOUNT GW HAPUS DARI SINI KARENA GA DIPAKE:
+export default function Katalog({ addToCart }: KatalogProps) {
   const [activeFilter, setActiveFilter] = useState('Semua');
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
   const [carouselIndex, setCarouselIndex] = useState(0);
 
   const filters = ['Semua', 'Cookies', 'Bakery', 'Snack', 'Lain-lain'];
 
-  const carouselProducts: Product[] = [
+  const carouselProducts: any[] = [
     { 
       id: 1, 
       name: "Nastar Original", 
@@ -73,7 +58,7 @@ export default function Katalog({ setCartCount, addToCart }: KatalogProps) {
     },
   ];
 
-  const allProducts: Product[] = [
+  const allProducts: any[] = [
     { id: 1, name: "Sosis Boom", category: "Bakery", price: 6000, desc: "Roti empuk dengan isian sosis gurih dan saus spesial yang meledak di mulut.", image: "https://github.com/user-attachments/assets/04256e46-d329-42f5-9367-bb0b3774b718" },
     { id: 2, name: "Mini Pizza", category: "Bakery", price: 5000, desc: "Pizza ukuran personal dengan topping keju, sosis, dan saus tomat lezat.", image: "https://github.com/user-attachments/assets/993b0a3d-2b50-4b4a-a360-2429736c53ad" },
     { id: 3, name: "Royal Twist", category: "Bakery", price: 5000, desc: "Roti kepang lembut dengan paduan rasa manis yang mewah di setiap gigitan.", image: "https://github.com/user-attachments/assets/744a5f2f-3b6a-4d81-b74f-dde9cb8684fa" },
@@ -91,7 +76,7 @@ export default function Katalog({ setCartCount, addToCart }: KatalogProps) {
     { id: 15, name: "Sus Kering Keju", category: "Snack", price: 35000, desc: "Varian sus kering dengan tambahan keju edam gurih di dalam adonannya.", image: "https://github.com/user-attachments/assets/b8e267a8-d73f-401d-8ddc-bef625f21d9d" },
   ];
 
-  const filterLogic = (product: Product) => {
+  const filterLogic = (product: any) => {
     const matchCategory = activeFilter === 'Semua' || product.category === activeFilter;
     const matchSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
     return matchCategory && matchSearch;

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Package, CheckCircle, Trash2, Plus, PenLine, Truck, Cookie, MessageSquare } from 'lucide-react';
+// ICON YANG GAK KEPAKE UDAH GW HAPUS DI SINI:
+import { Package, CheckCircle, Trash2, Plus, MessageSquare } from 'lucide-react';
 import FotoNastar from '../assets/nastar.png';
 
 interface CookieItem {
@@ -11,13 +12,13 @@ interface CookieItem {
   image: string;
 }
 
-// INI YANG BIKIN ERROR DI APP.TSX HILANG BROSKIE
 interface HampersBuilderProps {
   setCartCount: (count: number | ((prev: number) => number)) => void;
   addToCart: (product: { id: string | number; name: string; price: number }) => void;
 }
 
-export default function HampersBuilder({ setCartCount, addToCart }: HampersBuilderProps) {
+// ADDTOCART GW HAPUS DARI SINI BIAR VERCEL GAK MARAH:
+export default function HampersBuilder({ setCartCount }: HampersBuilderProps) {
   const [boxItems, setBoxItems] = useState<(CookieItem | null)[]>([null, null, null]);
   const [isDone, setIsDone] = useState(false);
   const [draggedItem, setDraggedItem] = useState<CookieItem | null>(null);
