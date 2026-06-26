@@ -98,7 +98,7 @@ export default function Footer({ setCurrentView }: FooterProps) {
               <li className="flex items-start gap-3 group cursor-pointer">
                 <MapPin size={18} className="shrink-0 text-[#D97736] group-hover:animate-bounce mt-1" />
                 <span className="group-hover:text-white transition-colors leading-relaxed">
-                Dsn. Penambangan RT.16 RW.04 No.4B Ds. Krembangan Kec. Taman, Sidoarjo, Jawa Timur, Indonesia 61257
+                  16/04 no, Jl. Tanjungsari No.4B, Penambangan, Krembangan, Kec. Taman, Kabupaten Sidoarjo, Jawa Timur 61257
                 </span>
               </li>
               

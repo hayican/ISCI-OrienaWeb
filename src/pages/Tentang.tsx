@@ -10,6 +10,10 @@ import {
   Heart,
   Flame,
   Sparkles,
+  MapPin, 
+  Star,
+  MessageCircle,
+  ExternalLink
 } from 'lucide-react';
 import FotoOwner from "../assets/owner.jpeg";
 
@@ -79,6 +83,25 @@ export default function Tentang() {
     { id: 2, title: "Hasil Panggangan", desc: "Matang sempurna setiap saat.", image: "https://github.com/user-attachments/assets/352c2d55-6799-4921-bddb-8e631567fd1e" },
     { id: 3, title: "Kualitas Adonan", desc: "Bahan premium pilihan khas Oriena.", image: "https://github.com/user-attachments/assets/fbfa90cc-0861-4129-90b0-bbd0dbfbd927" },
     { id: 4, title: "Siap Disajikan", desc: "Fresh from the oven untuk keluarga Anda.", image: "https://github.com/user-attachments/assets/805b9772-0a3e-4f75-812c-118f70d4f00c" },
+  ];
+
+  // DATA 15 REVIEW GOOGLE MAPS STATIC
+  const customerReviews = [
+    { id: 1, name: "Rina Sari", text: "Kuenya enak banget, nastarnya lumer di mulut. Selalu repeat order tiap mau lebaran!", rating: 5, time: "2 bulan lalu" },
+    { id: 2, name: "Budi Santoso", text: "Langganan dari jaman namanya masih Paspastry. Kastengelnya juara tebel kejunya.", rating: 5, time: "3 bulan lalu" },
+    { id: 3, name: "Siti Aisyah", text: "Harganya terjangkau tapi rasanya premium. Cocok banget buat hampers atau ngemil sendiri.", rating: 5, time: "1 minggu lalu" },
+    { id: 4, name: "Andi Wijaya", text: "Brownies kepingnya nagih, ga bisa berhenti ngunyah. Packaging juga aman banget.", rating: 5, time: "1 bulan lalu" },
+    { id: 5, name: "Sarah Jessica", text: "Adminnya ramah, pengiriman aman sampai Jakarta. Kuenya utuh ga ada yang hancur.", rating: 5, time: "4 bulan lalu" },
+    { id: 6, name: "Joko Susilo", text: "Roti sisirnya lembut banget, menteganya wangi. Cocok buat temen ngopi pagi.", rating: 5, time: "2 minggu lalu" },
+    { id: 7, name: "Ayu Lestari", text: "Sagu kejunya beneran ngeprul. Terbaik di Sidoarjo pokoknya!", rating: 5, time: "5 bulan lalu" },
+    { id: 8, name: "Dedi Setiawan", text: "Selalu pesen di sini tiap ada acara keluarga, ga pernah mengecewakan. Tamu pada suka.", rating: 5, time: "1 bulan lalu" },
+    { id: 9, name: "Nisa Ramadhani", text: "Packaging aman dan rapi. Rasa bintang 5 harga kaki lima. Mantap Oriena!", rating: 5, time: "3 minggu lalu" },
+    { id: 10, name: "Dimas Pratama", text: "Almond London-nya enak parah, coklatnya ga bikin serik di tenggorokan.", rating: 5, time: "2 bulan lalu" },
+    { id: 11, name: "Eka Putri", text: "Sus keringnya gurih banget, kejunya kerasa. Anak-anak di rumah pada doyan.", rating: 5, time: "6 bulan lalu" },
+    { id: 12, name: "Fitri Handayani", text: "Sosis boom-nya anak saya suka banget, rotinya empuk isiannya padat.", rating: 5, time: "1 minggu lalu" },
+    { id: 13, name: "Gilang Dirga", text: "Pertama kali coba langsung jatuh cinta sama choco hazelnutnya. Lumer banget!", rating: 5, time: "2 bulan lalu" },
+    { id: 14, name: "Hani Amalia", text: "Udah langganan 3 tahun, konsisten banget rasanya. Sukses terus Oriena Bakery.", rating: 5, time: "4 bulan lalu" },
+    { id: 15, name: "Iwan Kurniawan", text: "Tempatnya gampang dicari pakai maps, kuenya selalu fresh from the oven pas ke sana.", rating: 5, time: "3 hari lalu" },
   ];
 
   const titleWords = "Cerita dari Dapur Kami.".split(" ");
@@ -367,7 +390,146 @@ export default function Tentang() {
         </div>
       </section>
 
-      {/* Section: Gallery */}
+      {/* ==========================================
+      // SECTION BARU: LOKASI & REVIEW GOOGLE MAPS + REDIRECT
+      // ========================================== */}
+      <section className="max-w-7xl mx-auto px-4 mb-32">
+        <div className="bg-[#E0D0BB] rounded-[3rem] pt-12 pb-16 border-4 border-[#4A3022] shadow-[12px_12px_0px_#4A3022] overflow-hidden">
+          
+          <div className="px-8 md:px-12 text-center mb-12">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.5 }} 
+              whileInView={{ opacity: 1, scale: 1 }} 
+              viewport={{ once: true }} 
+              className="inline-flex items-center gap-2 px-6 py-2 bg-white border-2 border-[#4A3022] rounded-full text-[#4A3022] font-black uppercase tracking-wider shadow-[4px_4px_0px_0px_#D97736] mb-6"
+            >
+              <MapPin size={20} className="text-[#D97736]" /> Titik Temu Rasa
+            </motion.div>
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }} 
+              whileInView={{ opacity: 1, y: 0 }} 
+              viewport={{ once: true }} 
+              className="text-4xl md:text-5xl font-playfair font-black text-[#4A3022]"
+            >
+              Kata Mereka Tentang Oriena
+            </motion.h2>
+          </div>
+
+          {/* Wrapper Google Maps Iframe */}
+          <div className="px-8 md:px-12 mb-12">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+              <motion.div 
+                initial={{ opacity: 0, x: -50 }} 
+                whileInView={{ opacity: 1, x: 0 }} 
+                viewport={{ once: true }} 
+                className="lg:col-span-2 w-full h-[350px] rounded-[2rem] border-4 border-[#4A3022] shadow-[8px_8px_0px_#4A3022] overflow-hidden relative bg-[#FAF5E9]"
+              >
+                {/* IFRAME YANG UDAH DI-FIX JADI REACT JSX */}
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.017414012944!2d112.66942945323046!3d-7.351940355189639!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7e32ad651b145%3A0xa215afe6733ecf47!2sORIENA%20(PasPastry)!5e0!3m2!1sid!2sid!4v1782451929338!5m2!1sid!2sid" 
+                  width="100%" 
+                  height="100%" 
+                  style={{ border: 0 }} 
+                  allowFullScreen={false} 
+                  loading="lazy" 
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  className="absolute inset-0 grayscale contrast-125 opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
+                ></iframe>
+              </motion.div>
+
+              <motion.div 
+                initial={{ opacity: 0, x: 50 }} 
+                whileInView={{ opacity: 1, x: 0 }} 
+                viewport={{ once: true }} 
+                className="lg:col-span-1 bg-white p-8 rounded-[2rem] border-4 border-[#4A3022] shadow-[8px_8px_0px_#4A3022] h-full flex flex-col justify-center"
+              >
+                <div className="text-center mb-6">
+                  <h3 className="text-6xl font-playfair font-black text-[#D97736] mb-2">4.8</h3>
+                  <div className="flex justify-center gap-1 text-[#eab308] mb-2">
+                    <Star fill="currentColor" size={28} />
+                    <Star fill="currentColor" size={28} />
+                    <Star fill="currentColor" size={28} />
+                    <Star fill="currentColor" size={28} />
+                    <Star fill="currentColor" size={28} />
+                  </div>
+                  <p className="text-[#4A3022] font-jakarta font-black uppercase text-sm">Rating Rata-rata</p>
+                </div>
+                <p className="text-[#4A3022]/80 font-jakarta font-bold text-center mb-6 text-sm leading-relaxed">
+                  Perumahan Taman Pondok Jati Raya Jl. Taman Pd. Jati No.2, Geluran, Kec. Taman, Kabupaten Sidoarjo.
+                </p>
+                <a 
+                  href="https://maps.app.goo.gl/oXTKd8x8dncXZ6eV8" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="bg-[#4A3022] text-[#FAF5E9] w-full py-4 rounded-xl border-2 border-[#4A3022] font-jakarta font-black flex items-center justify-center gap-2 hover:bg-[#D97736] hover:text-white hover:border-[#D97736] transition-colors shadow-[4px_4px_0px_#4A3022] active:translate-y-1 active:shadow-none"
+                >
+                  <MapPin size={20} /> Buka di Maps
+                </a>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Wrapper 15 Reviews Berjejer */}
+          <div className="pl-8 md:pl-12">
+            <div className="flex justify-between items-end pr-8 md:pr-12 mb-4">
+              <h3 className="font-jakarta font-black text-[#4A3022] uppercase tracking-wider text-sm flex items-center gap-2">
+                <MessageCircle size={18} className="text-[#D97736]" /> Sorotan Ulasan Pelanggan
+              </h3>
+            </div>
+            
+            <div className="flex gap-6 overflow-x-auto pb-8 pt-4 pr-8 custom-scrollbar snap-x">
+              {customerReviews.map((review) => (
+                <div 
+                  key={review.id} 
+                  className="min-w-[280px] md:min-w-[320px] bg-white border-4 border-[#4A3022] shadow-[6px_6px_0px_#D97736] rounded-3xl p-6 snap-start flex flex-col hover:-translate-y-2 transition-transform duration-300"
+                >
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <h4 className="font-playfair font-black text-[#4A3022] text-lg">{review.name}</h4>
+                      <p className="font-jakarta font-bold text-xs text-[#4A3022]/50">{review.time}</p>
+                    </div>
+                    <div className="flex gap-0.5 text-[#eab308]">
+                      {[...Array(review.rating)].map((_, i) => (
+                        <Star key={i} fill="currentColor" size={16} />
+                      ))}
+                    </div>
+                  </div>
+                  <p className="font-jakarta font-bold text-[#4A3022]/80 text-sm leading-relaxed mb-4 italic flex-grow">
+                    "{review.text}"
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* TOMBOL REDIRECT BACA SELURUH ULASAN */}
+            <div className="pr-8 md:pr-12 mt-4">
+               <a 
+                 href="https://maps.app.goo.gl/oXTKd8x8dncXZ6eV8" 
+                 target="_blank" 
+                 rel="noopener noreferrer"
+                 className="w-full bg-[#FAF5E9] border-4 border-[#4A3022] rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4 hover:bg-[#D97736] hover:text-white transition-all duration-300 group shadow-[8px_8px_0px_#4A3022] hover:-translate-y-1 hover:shadow-[12px_12px_0px_#4A3022]"
+               >
+                 <div className="flex items-center gap-4 text-left">
+                    <div className="w-12 h-12 bg-white border-2 border-[#4A3022] rounded-full flex items-center justify-center text-[#eab308]">
+                       <Star fill="currentColor" size={24} />
+                    </div>
+                    <div>
+                      <h4 className="font-playfair font-black text-xl text-[#4A3022] group-hover:text-white">Lebih dari 50+ Pelanggan Telah Membuktikan</h4>
+                      <p className="font-jakarta font-bold text-sm text-[#4A3022]/70 group-hover:text-white/90">Baca seluruh ulasan jujur mereka di Google Maps.</p>
+                    </div>
+                 </div>
+                 <div className="bg-[#4A3022] text-white px-6 py-3 rounded-xl border-2 border-[#4A3022] font-jakarta font-black flex items-center gap-2 group-hover:bg-white group-hover:text-[#D97736]">
+                   Lihat Semua Ulasan <ExternalLink size={20} />
+                 </div>
+               </a>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* SECTION: GALLERY */}
       <section className="max-w-full mx-auto pt-24 pb-12 overflow-hidden bg-[#E0D0BB] border-y-8 border-[#4A3022]">
         <div className="text-center mb-12 px-4">
           <motion.h2 
