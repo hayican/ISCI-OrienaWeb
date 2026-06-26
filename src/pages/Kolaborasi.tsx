@@ -32,8 +32,8 @@ export default function Kolaborasi() {
     },
     { 
       id: 'cafe', 
-      title: 'Suplai Temen Ngopi (B2B)', 
-      desc: 'Punya cafe atau toko? Kita siap suplai pastry fresh buat nemenin menu kopimu secara rutin.', 
+      title: 'Temen WFC Mu', 
+      desc: 'Punya cafe atau toko? Kita siap suplai cemilan buat nemenin menu kopimu secara rutin.', 
       icon: <Coffee size={40} strokeWidth={1.5} />,
       color: "bg-[#829079]"
     },
@@ -141,7 +141,7 @@ export default function Kolaborasi() {
             </span>
           </motion.h1>
           <p className="text-xl text-[#4A3022]/80 font-medium max-w-2xl mx-auto leading-relaxed">
-            Dari suplai kopi pagi sampai hampers korporat gede-gedean. Kita buka pintu selebar-lebarnya buat tumbuh bareng.
+            Dari suplai kopi pagi sampai hampers besar-besar an. Kita buka pintu selebar-lebarnya buat tumbuh bareng.
           </p>
         </div>
 
@@ -216,7 +216,7 @@ export default function Kolaborasi() {
                     📝 Form {collabOptions.find(o => o.id === selectedType)?.title}
                   </h3>
                   <p className="text-[#4A3022]/70 font-bold">
-                    Isi detailnya, biar kita bisa ngobrol lebih enak.
+                    Isi detailnya, agar kita bisa ngobrol lebih enak.
                   </p>
                 </div>
 

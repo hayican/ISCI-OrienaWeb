@@ -249,7 +249,7 @@ export default function Tentang() {
           >
             {[
               { icon: <Package size={32} strokeWidth={2.5} />, val: "50k+", label: "Toples Terjual" },
-              { icon: <CakeSlice size={32} strokeWidth={2.5} />, val: "20+", label: "Resep Artisan" },
+              { icon: <CakeSlice size={32} strokeWidth={2.5} />, val: "20+", label: "Produk" },
               { icon: <Clock size={32} strokeWidth={2.5} />, val: "18Thn", label: "Pengalaman" },
               { icon: <Award size={32} strokeWidth={2.5} />, val: "100%", label: "Bahan Premium" }
             ].map((stat, idx) => (
