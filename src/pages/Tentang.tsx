@@ -88,19 +88,19 @@ export default function Tentang() {
       initial={{ opacity: 0 }} 
       animate={{ opacity: 1 }} 
       exit={{ opacity: 0 }}
-      className="bg-[#F7F3EB] min-h-screen pt-12 pb-24 overflow-hidden relative"
+      className="bg-[#FBF5DF] min-h-screen pt-12 pb-24 overflow-hidden relative"
     >
       
       {/* Section: Hero */}
       <section className="max-w-4xl mx-auto px-4 text-center space-y-6 pt-12 mb-24">
-        <h1 className="text-5xl md:text-7xl font-playfair font-black text-[#4A3022] tracking-tight flex flex-wrap justify-center gap-x-4 overflow-hidden">
+        <h1 className="text-5xl md:text-7xl font-jakarta font-black text-[#BE1A1A] tracking-tight flex flex-wrap justify-center gap-x-4 overflow-hidden">
           {titleWords.map((word, idx) => (
             <motion.span
               key={idx}
               initial={{ y: "100%", opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: idx * 0.1, duration: 0.8, ease: [0.2, 0.65, 0.3, 0.9] }}
-              className={`inline-block ${word === 'Dapur' ? 'text-[#D97736]' : ''}`}
+              className={`inline-block ${word === 'Dapur' ? 'text-[#D0311E]' : ''}`}
             >
               {word}
             </motion.span>
@@ -110,7 +110,7 @@ export default function Tentang() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.8 }}
-          className="text-xl md:text-2xl font-jakarta font-bold text-[#4A3022]/80 leading-relaxed max-w-2xl mx-auto"
+          className="text-xl md:text-2xl font-jakarta font-bold text-[#BE1A1A]/80 leading-relaxed max-w-2xl mx-auto"
         >
           Lebih dari sekadar bahan baku premium, Oriena adalah tentang merawat tradisi dan menciptakan momen manis di setiap gigitan.
         </motion.p>
@@ -123,27 +123,27 @@ export default function Tentang() {
           whileInView={{ opacity: 1, y: 0 }} 
           viewport={{ once: true, margin: "-100px" }} 
           transition={{ duration: 0.6, type: "spring" }}
-          className="bg-white border-4 border-[#4A3022] shadow-[12px_12px_0px_#D97736] rounded-[2rem] p-8 md:p-12 relative"
+          className="bg-[#D0311E] shadow-lg border border-[#BE1A1A]/30 rounded-[2rem] p-8 md:p-12 relative"
         >
-          <div className="absolute -top-6 -right-6 w-16 h-16 bg-[#F7F3EB] border-4 border-[#4A3022] rounded-full flex items-center justify-center shadow-[4px_4px_0px_#4A3022] z-10 rotate-12">
-            <span className="text-2xl"></span>
+          <div className="absolute -top-6 -right-6 w-16 h-16 bg-[#FBF5DF] rounded-full flex items-center justify-center shadow-md border border-[#F7D87F]/30 z-10 rotate-12">
+            <span className="text-2xl">✨</span>
           </div>
 
           <div className="flex flex-col md:flex-row gap-8 items-start">
             <div className="w-full md:w-1/3">
-              <div className="inline-block px-4 py-1.5 bg-[#D97736] text-[#FAF5E9] border-2 border-[#4A3022] rounded-full text-xs font-jakarta font-black tracking-widest uppercase shadow-[4px_4px_0px_#4A3022] mb-4">
+              <div className="inline-block px-4 py-1.5 bg-[#BE1A1A] text-[#F7D87F] rounded-full text-xs font-jakarta font-black tracking-widest uppercase shadow-sm mb-4">
                 AWAL MULA
               </div>
-              <h2 className="text-3xl md:text-4xl font-playfair font-black text-[#4A3022] leading-tight">
+              <h2 className="text-3xl md:text-4xl font-jakarta font-black text-[#F7D87F] leading-tight">
                 Bagaimana <br/>Dapur Ini <br/>Bermula.
               </h2>
             </div>
             
-            <div className="w-full md:w-2/3 border-l-0 md:border-l-4 border-[#4A3022] md:pl-8 pt-4 md:pt-0 space-y-4">
-              <p className="text-[#4A3022]/90 font-jakarta font-bold text-lg leading-relaxed">
-                Bermula sebagai PasPastry, kini kami berevolusi menjadi <span className="font-black text-[#D97736]">Oriena</span> (<span className="font-black">Original & Enak</span>). 
+            <div className="w-full md:w-2/3 border-l-0 md:border-l-4 border-[#BE1A1A]/50 md:pl-8 pt-4 md:pt-0 space-y-4">
+              <p className="text-[#FAF4E1]/90 font-jakarta font-medium text-lg leading-relaxed">
+                Bermula sebagai PasPastry, kini kami berevolusi menjadi <span className="font-black text-[#F7D87F]">Oriena</span> (<span className="font-black">Original & Enak</span>). 
               </p>
-              <p className="text-[#4A3022]/90 font-jakarta font-bold text-lg leading-relaxed">
+              <p className="text-[#FAF4E1]/90 font-jakarta font-medium text-lg leading-relaxed">
                 Rahasia kami tak pernah berubah, kreasi 100% <span className="italic">handmade</span> dengan takaran rasa yang pas dan harga terjangkau. Semuanya didedikasikan agar kehangatan oven kami bisa dinikmati oleh semua kalangan.
               </p>
             </div>
@@ -158,17 +158,10 @@ export default function Tentang() {
           whileInView={{ opacity: 1, scale: 1 }} 
           viewport={{ once: true, margin: "-100px" }} 
           transition={{ duration: 0.8, type: "spring" }}
-          className="bg-[#E0D0BB] rounded-[3rem] p-8 md:p-12 border-4 border-[#4A3022] shadow-[12px_12px_0px_#4A3022] flex flex-col md:flex-row items-center gap-12"
+          className="bg-[#D0311E] rounded-[3rem] p-8 md:p-12 border border-[#BE1A1A]/30 shadow-lg flex flex-col md:flex-row items-center gap-12"
         >
-         <div className="bg-[#FAF5E9] rounded-[2.5rem] p-6 border-4 border-[#4A3022] shadow-[8px_8px_0px_#4A3022] relative group w-full md:w-2/5">
-          <div className="aspect-[4/5] rounded-[1.5rem] border-4 border-[#4A3022] overflow-hidden relative flex items-center justify-center">
-            <div 
-              className="absolute inset-0 z-0 opacity-10" 
-              style={{ 
-                backgroundImage: 'repeating-linear-gradient(45deg, #4A3022 25%, transparent 25%, transparent 75%, #4A3022 75%, #4A3022)', 
-                backgroundSize: '20px 20px' 
-              }}
-            ></div>
+         <div className="bg-[#FBF5DF] rounded-[2.5rem] p-6 shadow-md border border-[#F7D87F]/30 relative group w-full md:w-2/5">
+          <div className="aspect-[4/5] rounded-[1.5rem] overflow-hidden relative flex items-center justify-center">
             <img 
               src={FotoOwner} 
               alt="Bu Endah Pujiastuti" 
@@ -177,7 +170,7 @@ export default function Tentang() {
           </div>
           
           <div className="mt-6 text-center">
-             <span className="font-jakarta font-black text-[#4A3022] text-sm bg-white border-4 border-[#4A3022] px-6 py-2.5 rounded-full shadow-[4px_4px_0px_#D97736] inline-block tracking-widest uppercase">
+             <span className="font-jakarta font-black text-[#F7D87F] text-sm bg-[#BE1A1A] px-6 py-2.5 rounded-full shadow-sm inline-block tracking-widest uppercase">
                Owner Oriena
              </span>
           </div>
@@ -187,7 +180,7 @@ export default function Tentang() {
               initial={{ opacity: 0, x: 50 }} 
               whileInView={{ opacity: 1, x: 0 }} 
               viewport={{ once: true }} 
-              className="inline-block px-4 py-1.5 bg-[#4A3022] text-[#FAF5E9] border-2 border-[#4A3022] rounded-full text-xs font-jakarta font-black tracking-widest uppercase shadow-[4px_4px_0px_#D97736]"
+              className="inline-block px-4 py-1.5 bg-[#BE1A1A] text-[#FAF4E1] rounded-full text-xs font-jakarta font-black tracking-widest uppercase shadow-sm"
             >
               SOSOK DI BALIK DAPUR
             </motion.div>
@@ -198,8 +191,8 @@ export default function Tentang() {
               viewport={{ once: true }} 
               transition={{ delay: 0.1 }}
             >
-              <h2 className="text-4xl md:text-6xl font-playfair font-black text-[#4A3022] mb-2">Endah Pujiastuti</h2>
-              <p className="text-[#D97736] font-jakarta font-black tracking-widest uppercase text-sm">Founder & Head Baker</p>
+              <h2 className="text-4xl md:text-6xl font-jakarta font-black text-[#F7D87F] mb-2">Endah Pujiastuti</h2>
+              <p className="text-[#FAF4E1]/80 font-jakarta font-black tracking-widest uppercase text-sm">Founder & Head Baker</p>
             </motion.div>
             
             <motion.p 
@@ -207,7 +200,7 @@ export default function Tentang() {
               whileInView={{ opacity: 1, x: 0 }} 
               viewport={{ once: true }} 
               transition={{ delay: 0.2 }}
-              className="text-[#4A3022] leading-relaxed font-jakarta font-bold text-xl relative py-4"
+              className="text-[#FAF4E1] leading-relaxed font-jakarta font-medium text-xl relative py-4"
             >
               "Bagi saya, membuat kue bukan sekadar mengaduk bahan, tapi tentang membagikan kehangatan ke setiap rumah yang menikmatinya."
             </motion.p>
@@ -226,8 +219,8 @@ export default function Tentang() {
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ y: -4 }} 
-                  whileTap={{ y: 2, boxShadow: "0px 0px 0px #4A3022" }} 
-                  className="w-14 h-14 rounded-2xl bg-white border-4 border-[#4A3022] flex items-center justify-center text-[#4A3022] hover:bg-[#D97736] hover:text-white transition-colors shadow-[4px_4px_0px_#4A3022]"
+                  whileTap={{ y: 2 }} 
+                  className="w-14 h-14 rounded-2xl bg-[#BE1A1A] flex items-center justify-center text-[#F7D87F] hover:bg-[#F7D87F] hover:text-[#BE1A1A] transition-colors shadow-md"
                 >
                   <social.icon size={24} />
                 </motion.a>
@@ -239,7 +232,7 @@ export default function Tentang() {
 
       {/* Section: Statistik */}
       <section className="max-w-7xl mx-auto px-4 mb-32">
-        <div className="bg-[#D97736] rounded-[3rem] p-10 md:p-16 relative overflow-hidden border-4 border-[#4A3022] shadow-[12px_12px_0px_#4A3022]">
+        <div className="bg-[#D0311E] rounded-[3rem] p-10 md:p-16 relative overflow-hidden shadow-lg border border-[#BE1A1A]/30">
           <motion.div 
             initial="hidden" 
             whileInView="visible" 
@@ -249,7 +242,7 @@ export default function Tentang() {
           >
             {[
               { icon: <Package size={32} strokeWidth={2.5} />, val: "50k+", label: "Toples Terjual" },
-              { icon: <CakeSlice size={32} strokeWidth={2.5} />, val: "20+", label: "Produk" },
+              { icon: <CakeSlice size={32} strokeWidth={2.5} />, val: "20+", label: "Resep Artisan" },
               { icon: <Clock size={32} strokeWidth={2.5} />, val: "18Thn", label: "Pengalaman" },
               { icon: <Award size={32} strokeWidth={2.5} />, val: "100%", label: "Bahan Premium" }
             ].map((stat, idx) => (
@@ -259,13 +252,13 @@ export default function Tentang() {
                   hidden: { opacity: 0, y: 50, scale: 0.8 }, 
                   visible: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", bounce: 0.5 } } 
                 }} 
-                className="bg-[#FAF5E9] border-4 border-[#4A3022] rounded-3xl p-6 shadow-[6px_6px_0px_#4A3022] text-center flex flex-col items-center justify-center"
+                className="bg-[#BE1A1A] border border-[#F7D87F]/20 rounded-3xl p-6 shadow-md text-center flex flex-col items-center justify-center"
               >
-                <div className="w-16 h-16 bg-[#4A3022] text-white border-2 border-[#4A3022] rounded-full flex items-center justify-center mb-4">
+                <div className="w-16 h-16 bg-[#FBF5DF] text-[#D0311E] rounded-full flex items-center justify-center mb-4 shadow-sm">
                   {stat.icon}
                 </div>
-                <h3 className="text-3xl md:text-4xl font-playfair font-black text-[#4A3022] mb-1">{stat.val}</h3>
-                <p className="text-[#4A3022]/80 font-jakarta font-black text-xs md:text-sm tracking-wider uppercase">{stat.label}</p>
+                <h3 className="text-3xl md:text-4xl font-jakarta font-black text-[#F7D87F] mb-1">{stat.val}</h3>
+                <p className="text-[#FAF4E1]/80 font-jakarta font-bold text-xs md:text-sm tracking-wider uppercase">{stat.label}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -279,7 +272,7 @@ export default function Tentang() {
             initial={{ opacity: 0, scale: 0.8 }} 
             whileInView={{ opacity: 1, scale: 1 }} 
             viewport={{ once: true }} 
-            className="text-4xl md:text-5xl font-playfair font-black text-[#4A3022]"
+            className="text-4xl md:text-5xl font-jakarta font-black text-[#BE1A1A]"
           >
             Bukan Sekadar Kue Kering
           </motion.h2>
@@ -304,13 +297,13 @@ export default function Tentang() {
                 visible: { opacity: 1, y: 0, transition: { duration: 0.6, type: "spring" } } 
               }}
               whileHover={{ scale: 1.02, y: -8 }}
-              className="bg-white p-8 md:p-10 rounded-[2.5rem] border-4 border-[#4A3022] shadow-[8px_8px_0px_#4A3022] hover:shadow-[12px_12px_0px_#D97736] transition-all text-center cursor-pointer"
+              className="bg-[#D0311E] p-8 md:p-10 rounded-[2.5rem] shadow-lg border border-[#BE1A1A]/50 transition-all text-center cursor-pointer"
             >
-              <div className="w-20 h-20 bg-[#D97736] text-white border-4 border-[#4A3022] rounded-full flex items-center justify-center mx-auto mb-6 shadow-[4px_4px_0px_#4A3022]">
+              <div className="w-20 h-20 bg-[#BE1A1A] text-[#F7D87F] rounded-full flex items-center justify-center mx-auto mb-6 shadow-md border border-[#F7D87F]/30">
                 {item.icon}
               </div>
-              <h3 className="text-2xl font-playfair font-black text-[#4A3022] mb-4">{item.title}</h3>
-              <p className="text-[#4A3022]/80 font-jakarta font-bold leading-relaxed">{item.desc}</p>
+              <h3 className="text-2xl font-jakarta font-black text-[#F7D87F] mb-4">{item.title}</h3>
+              <p className="text-[#FAF4E1]/90 font-jakarta font-medium leading-relaxed">{item.desc}</p>
             </motion.div>
           ))}
         </motion.div>
@@ -323,14 +316,14 @@ export default function Tentang() {
             initial={{ opacity: 0, y: 20 }} 
             whileInView={{ opacity: 1, y: 0 }} 
             viewport={{ once: true }} 
-            className="text-4xl md:text-5xl font-playfair font-black text-[#4A3022]"
+            className="text-4xl md:text-5xl font-jakarta font-black text-[#BE1A1A]"
           >
             Perjalanan Waktu
           </motion.h2>
         </div>
 
         <div className="relative space-y-12 md:space-y-24 py-8">
-          <div className="absolute top-0 bottom-0 left-6 md:left-1/2 w-2 bg-[#4A3022] md:-translate-x-1/2 z-0"></div>
+          <div className="absolute top-0 bottom-0 left-6 md:left-1/2 w-2 bg-[#BE1A1A]/20 md:-translate-x-1/2 z-0"></div>
 
           {timeline.map((item, idx) => (
             <motion.div 
@@ -346,7 +339,7 @@ export default function Tentang() {
                 whileInView={{ scale: 1 }} 
                 viewport={{ once: true }} 
                 transition={{ delay: 0.3, type: "spring" }}
-                className="absolute left-6 md:left-1/2 -translate-x-1/2 w-16 h-16 bg-[#D97736] border-4 border-[#4A3022] rounded-full flex items-center justify-center text-white shadow-[4px_4px_0px_#4A3022] z-10"
+                className="absolute left-6 md:left-1/2 -translate-x-1/2 w-16 h-16 bg-[#BE1A1A] border-4 border-[#FBF5DF] rounded-full flex items-center justify-center text-[#F7D87F] shadow-md z-10"
               >
                 {item.icon}
               </motion.div>
@@ -354,12 +347,12 @@ export default function Tentang() {
               <div className="hidden md:block md:w-1/2"></div>
 
               <div className={`pl-20 md:pl-0 w-full md:w-1/2 ${idx % 2 === 0 ? 'md:pr-16 md:text-right' : 'md:pl-16'}`}>
-                <div className="bg-white p-8 rounded-[2rem] border-4 border-[#4A3022] shadow-[8px_8px_0px_#4A3022] hover:-translate-y-2 hover:shadow-[12px_12px_0px_#D97736] transition-all duration-300">
-                  <div className={`inline-block bg-[#FAF5E9] border-2 border-[#4A3022] text-[#D97736] px-4 py-1.5 rounded-xl font-jakarta font-black text-xl mb-4 shadow-[4px_4px_0px_#4A3022] ${idx % 2 === 0 ? 'ml-auto' : ''}`}>
+                <div className="bg-[#D0311E] p-8 rounded-[2rem] shadow-md hover:-translate-y-2 transition-all duration-300 border border-[#BE1A1A]/30">
+                  <div className={`inline-block bg-[#BE1A1A] text-[#F7D87F] px-4 py-1.5 rounded-full font-jakarta font-black text-sm mb-4 shadow-sm ${idx % 2 === 0 ? 'ml-auto' : ''}`}>
                     {item.year}
                   </div>
-                  <h3 className="text-2xl font-playfair font-black text-[#4A3022] mb-3">{item.title}</h3>
-                  <p className="text-[#4A3022]/80 font-jakarta font-bold leading-relaxed">{item.desc}</p>
+                  <h3 className="text-2xl font-jakarta font-black text-[#F7D87F] mb-3">{item.title}</h3>
+                  <p className="text-[#FAF4E1]/90 font-jakarta font-medium leading-relaxed">{item.desc}</p>
                 </div>
               </div>
             </motion.div>
@@ -368,13 +361,13 @@ export default function Tentang() {
       </section>
 
       {/* Section: Gallery */}
-      <section className="max-w-full mx-auto pt-24 pb-12 overflow-hidden bg-[#E0D0BB] border-y-8 border-[#4A3022]">
+      <section className="max-w-full mx-auto pt-24 pb-12 overflow-hidden bg-[#D0311E] shadow-inner">
         <div className="text-center mb-12 px-4">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }} 
             whileInView={{ opacity: 1, y: 0 }} 
             viewport={{ once: true }} 
-            className="text-4xl md:text-5xl font-playfair font-black text-[#4A3022] mb-4"
+            className="text-4xl md:text-5xl font-jakarta font-black text-[#F7D87F] mb-4"
           >
             Mengintip Dapur Oriena
           </motion.h2>
@@ -383,7 +376,7 @@ export default function Tentang() {
             whileInView={{ opacity: 1, y: 0 }} 
             viewport={{ once: true }} 
             transition={{ delay: 0.1 }} 
-            className="text-lg font-jakarta font-bold text-[#4A3022]/80 bg-[#FAF5E9] border-2 border-[#4A3022] inline-block px-6 py-2 rounded-full shadow-[4px_4px_0px_#D97736]"
+            className="text-sm md:text-base font-jakarta font-bold text-[#FAF4E1] bg-[#BE1A1A] border border-[#F7D87F]/30 inline-block px-6 py-2 rounded-full shadow-sm uppercase tracking-wider"
           >
             Geser atau Tahan untuk melihat
           </motion.p>
@@ -494,9 +487,9 @@ function AutoScrollGallery({ items }: { items: any[] }) {
         <motion.div
           key={idx}
           whileHover={{ y: -10, rotate: -2 }}
-          className="min-w-[280px] md:min-w-[340px] aspect-[3/4] bg-white border-4 border-[#4A3022] shadow-[8px_8px_0px_#4A3022] rounded-[2.5rem] overflow-hidden relative group flex-shrink-0 transition-transform flex flex-col"
+          className="min-w-[280px] md:min-w-[340px] aspect-[3/4] bg-[#FBF5DF] shadow-lg rounded-[2.5rem] overflow-hidden relative group flex-shrink-0 transition-transform flex flex-col border border-[#BE1A1A]/20"
         >
-          <div className="flex-1 border-b-4 border-[#4A3022] overflow-hidden relative pointer-events-none">
+          <div className="flex-1 overflow-hidden relative pointer-events-none">
             <img 
               src={item.image} 
               alt={item.title} 
@@ -504,9 +497,9 @@ function AutoScrollGallery({ items }: { items: any[] }) {
             />
           </div>
           
-          <div className="p-6 md:p-8 bg-[#FAF5E9] flex flex-col justify-center pointer-events-none">
-            <h3 className="text-2xl font-playfair font-black text-[#4A3022] mb-1 leading-tight">{item.title}</h3>
-            <p className="text-[#4A3022]/80 font-jakarta font-bold text-sm">{item.desc}</p>
+          <div className="p-6 md:p-8 bg-[#FBF5DF] flex flex-col justify-center pointer-events-none border-t border-[#BE1A1A]/10">
+            <h3 className="text-2xl font-jakarta font-black text-[#BE1A1A] mb-1 leading-tight">{item.title}</h3>
+            <p className="text-[#BE1A1A]/80 font-jakarta font-bold text-sm">{item.desc}</p>
           </div>
         </motion.div>
       ))}
