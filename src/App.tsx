@@ -11,7 +11,6 @@ import FloatingWA from './components/ui/FloatingWA';
 import Beranda from './pages/Beranda';
 import Tentang from './pages/Tentang';
 import Katalog from './pages/Katalog';
-import HampersBuilder from './pages/HampersBuilder';
 import Kolaborasi from './pages/Kolaborasi';
 import Cart from './pages/Cart';
 import AdminLogin from './pages/AdminLogin';
@@ -27,8 +26,8 @@ export interface CartItem {
 
 export default function App() {
   const [currentView, setCurrentView] = useState<string>(
-  window.location.search.includes('rahasia') ? 'kelola-oriena' : 'beranda'
-);
+    window.location.search.includes('rahasia') ? 'kelola-oriena' : 'beranda'
+  );
   
   // State untuk menyimpan detail barang di keranjang
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -64,22 +63,18 @@ export default function App() {
     }
   };
 
-const renderView = () => {
+  const renderView = () => {
     switch(currentView) {
       case 'beranda': return <Beranda key="beranda" setCurrentView={setCurrentView} setCartCount={() => {}} addToCart={addToCart} />;
       case 'tentang': return <Tentang key="tentang" />;
-      
-      // INI GW BENERIN KERANJANGNYA BIAR JALAN BESOK:
       case 'katalog': return <Katalog key="katalog" setCartCount={() => {}} addToCart={addToCart} />;
-      case 'hampers': return <HampersBuilder key="hampers" setCartCount={() => {}} addToCart={addToCart} />;
-      
       case 'kolaborasi': return <Kolaborasi key="kolaborasi" />;
       case 'cart': return <Cart key="cart" cartItems={cartItems} updateCartItem={updateCartItem} setCurrentView={setCurrentView} />;
       
       // INI JALUR RAHASIA BUAT LOGIN BU ENDAH:
       case 'kelola-oriena': return <AdminLogin key="admin-login" setCurrentView={setCurrentView} />;
-      
       case 'dashboard-rahasia': return <AdminDashboard key="admin-dashboard" setCurrentView={setCurrentView} />;
+      
       default: return <Beranda key="default" setCurrentView={setCurrentView} setCartCount={() => {}} addToCart={addToCart} />;
     }
   };
