@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LogOut, Plus, Trash2, Package, RefreshCw, X, Cookie, BarChart2, Upload } from 'lucide-react';
+import { LogOut, Plus, Trash2, Package, RefreshCw, X, Cookie, BarChart2, Upload, Edit2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 interface AdminDashboardProps {
@@ -14,6 +14,7 @@ interface Product {
   price: number;
   desc: string;
   image: string;
+  badge: string; 
 }
 
 export default function AdminDashboard({ setCurrentView }: AdminDashboardProps) {
@@ -26,10 +27,13 @@ export default function AdminDashboard({ setCurrentView }: AdminDashboardProps) 
   const [newCategory, setNewCategory] = useState('Cookies');
   const [newPrice, setNewPrice] = useState('');
   const [newDesc, setNewDesc] = useState('');
-  
-  // State khusus buat nampung file gambar yang dipilih dari HP/Laptop
+  const [newBadge, setNewBadge] = useState(''); 
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
+
+  // STATE BARU BUAT EDIT
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [currentImage, setCurrentImage] = useState<string>(''); // Nyimpen URL foto lama kalau ga mau diganti
 
   const fetchProducts = async () => {
     setLoading(true);
@@ -42,43 +46,99 @@ export default function AdminDashboard({ setCurrentView }: AdminDashboardProps) 
     fetchProducts();
   }, []);
 
-  const handleAddProduct = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!imageFile) {
-      alert("Pilih foto kuenya dulu dong Bu!");
-      return;
-    }
+  // FUNGSI BUAT MBUKA MODAL DAN NGISI DATA LAMA KE DALAM FORM
+  const handleEditClick = (product: Product) => {
+    setEditingId(product.id);
+    setNewName(product.name);
+    setNewCategory(product.category);
+    setNewPrice(product.price.toString());
+    setNewDesc(product.desc);
+    setNewBadge(product.badge || '');
+    setCurrentImage(product.image); // Simpen URL lama
+    setImageFile(null); // Kosongin file inputnya
+    setIsModalOpen(true);
+  };
 
+  // FUNGSI BUAT RESET FORM
+  const resetForm = () => {
+    setNewName(''); setNewCategory('Cookies'); setNewPrice(''); 
+    setNewDesc(''); setNewBadge(''); setImageFile(null);
+    setEditingId(null); setCurrentImage('');
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    resetForm(); // Pastiin form bersih pas ditutup
+  };
+
+  // FUNGSI GABUNGAN: CREATE & UPDATE
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setUploading(true);
 
     try {
-      // 1. Upload Gambar ke Supabase Storage dulu
-      const fileExt = imageFile.name.split('.').pop();
-      const fileName = `${Date.now()}.${fileExt}`; // Bikin nama file unik pakai jam sekarang
-      
-      const { error: uploadError } = await supabase.storage
-        .from('product-images') // Pastikan nama bucket lu 'product-images'
-        .upload(fileName, imageFile);
+      let finalImageUrl = currentImage; // Defaultnya pake gambar lama kalau lagi mode EDIT dan ga milih gambar baru
 
-      if (uploadError) throw uploadError;
+      // KALAU ADA GAMBAR BARU YANG DIPILIH (Buat mode Tambah BARU, atau Edit ganti foto)
+      if (imageFile) {
+        const fileExt = imageFile.name.split('.').pop();
+        const fileName = `${Date.now()}.${fileExt}`; 
+        
+        const { error: uploadError } = await supabase.storage
+          .from('product-images') 
+          .upload(fileName, imageFile);
 
-      // 2. Ambil Link URL Asli dari gambar yang barusan diupload
-      const { data: publicUrlData } = supabase.storage
-        .from('product-images')
-        .getPublicUrl(fileName);
+        if (uploadError) throw uploadError;
 
-      const finalImageUrl = publicUrlData.publicUrl;
+        const { data: publicUrlData } = supabase.storage
+          .from('product-images')
+          .getPublicUrl(fileName);
 
-      // 3. Simpan data kue ke database tabel 'products'
-      const { error: insertError } = await supabase.from('products').insert([
-        { name: newName, category: newCategory, price: parseInt(newPrice), desc: newDesc, image: finalImageUrl }
-      ]);
+        finalImageUrl = publicUrlData.publicUrl;
 
-      if (insertError) throw insertError;
+        // Kalau lagi mode Edit dan ngupload foto baru, foto lamanya kita hapus dari Storage biar ga menuhin
+        if (editingId && currentImage) {
+           const oldFileName = currentImage.split('/').pop();
+           if (oldFileName) {
+             await supabase.storage.from('product-images').remove([oldFileName]);
+           }
+        }
+      } else if (!editingId) {
+        // Kalau mode Tambah Baru tapi gak ada gambar, tolak!
+        alert("Pilih foto kuenya dulu dong Bu!");
+        setUploading(false);
+        return;
+      }
 
-      alert('Mantap! Menu berhasil ditambah!');
-      setNewName(''); setNewPrice(''); setNewDesc(''); setImageFile(null);
-      setIsModalOpen(false);
+      const productData = { 
+        name: newName, 
+        category: newCategory, 
+        price: parseInt(newPrice), 
+        desc: newDesc, 
+        image: finalImageUrl,
+        badge: newBadge === '' ? null : newBadge 
+      };
+
+      if (editingId) {
+        // JALUR UPDATE (EDIT)
+        const { error: updateError } = await supabase
+          .from('products')
+          .update(productData)
+          .eq('id', editingId);
+
+        if (updateError) throw updateError;
+        alert('Mantap! Data kue berhasil diperbarui!');
+      } else {
+        // JALUR INSERT (TAMBAH BARU)
+        const { error: insertError } = await supabase
+          .from('products')
+          .insert([productData]);
+
+        if (insertError) throw insertError;
+        alert('Mantap! Menu berhasil ditambah!');
+      }
+
+      handleCloseModal();
       fetchProducts();
       
     } catch (error: any) {
@@ -91,10 +151,8 @@ export default function AdminDashboard({ setCurrentView }: AdminDashboardProps) 
   const handleDelete = async (id: number, imageUrl: string) => {
     if (window.confirm('Yakin mau hapus menu ini Bu?')) {
       setLoading(true);
-      // Hapus data dari tabel
       await supabase.from('products').delete().eq('id', id);
       
-      // Hapus gambar dari storage biar gak menuh-menuhin server
       const fileName = imageUrl.split('/').pop();
       if (fileName) {
         await supabase.storage.from('product-images').remove([fileName]);
@@ -125,7 +183,7 @@ export default function AdminDashboard({ setCurrentView }: AdminDashboardProps) 
           </button>
         </div>
 
-        {/* Kartu Statistik - UDAH DIROMBAK BIAR LEBIH KEREN */}
+        {/* Kartu Statistik */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-[#E0D0BB] border-4 border-[#4A3022] p-6 rounded-3xl shadow-[6px_6px_0px_#4A3022] flex items-center gap-4">
             <div className="p-4 bg-[#4A3022] text-white rounded-2xl border-2 border-[#4A3022]"><Package size={32} /></div>
@@ -185,14 +243,27 @@ export default function AdminDashboard({ setCurrentView }: AdminDashboardProps) 
                         <img src={p.image} alt={p.name} className="w-16 h-16 rounded-xl object-cover border-2 border-[#4A3022]" />
                       </td>
                       <td className="py-4 pr-4">
-                        <div className="font-black text-lg text-[#4A3022] mb-1">{p.name}</div>
+                        <div className="font-black text-lg text-[#4A3022] mb-1 flex items-center gap-2">
+                          {p.name}
+                          {p.badge && (
+                            <span className="bg-[#D97736] text-white text-[10px] px-2 py-0.5 rounded-md font-bold tracking-wider">
+                              {p.badge}
+                            </span>
+                          )}
+                        </div>
                         <div className="inline-block px-2 py-1 bg-white border-2 border-[#4A3022] text-xs text-[#D97736] font-black uppercase rounded-md">{p.category}</div>
                       </td>
                       <td className="py-4 font-black text-[#4A3022] text-lg">Rp {p.price.toLocaleString('id-ID')}</td>
                       <td className="py-4 text-right">
-                        <button onClick={() => handleDelete(p.id, p.image)} className="p-3 bg-white text-red-600 border-2 border-[#4A3022] rounded-xl hover:bg-red-600 hover:text-white transition-colors shadow-[2px_2px_0px_#4A3022] active:translate-y-1 active:shadow-none">
-                          <Trash2 size={20} />
-                        </button>
+                        <div className="flex justify-end gap-2">
+                          {/* TOMBOL EDIT BARU */}
+                          <button onClick={() => handleEditClick(p)} className="p-3 bg-white text-[#D97736] border-2 border-[#4A3022] rounded-xl hover:bg-[#D97736] hover:text-white transition-colors shadow-[2px_2px_0px_#4A3022] active:translate-y-1 active:shadow-none">
+                            <Edit2 size={20} />
+                          </button>
+                          <button onClick={() => handleDelete(p.id, p.image)} className="p-3 bg-white text-red-600 border-2 border-[#4A3022] rounded-xl hover:bg-red-600 hover:text-white transition-colors shadow-[2px_2px_0px_#4A3022] active:translate-y-1 active:shadow-none">
+                            <Trash2 size={20} />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -203,26 +274,27 @@ export default function AdminDashboard({ setCurrentView }: AdminDashboardProps) 
           )}
         </div>
 
-        {/* POPUP MODAL TAMBAH MENU */}
+        {/* POPUP MODAL TAMBAH/EDIT MENU */}
         <AnimatePresence>
           {isModalOpen && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#4A3022]/80 backdrop-blur-sm">
               <motion.div initial={{ scale: 0.9, y: 50 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 50 }} className="bg-white w-full max-w-lg rounded-[2rem] border-4 border-[#4A3022] shadow-[12px_12px_0px_#D97736] overflow-hidden">
                 <div className="bg-[#FAF5E9] border-b-4 border-[#4A3022] p-6 flex justify-between items-center">
                   <h2 className="text-2xl font-playfair font-black text-[#4A3022] flex items-center gap-2">
-                    <Cookie size={24} /> Masukkan Menu Baru
+                    <Cookie size={24} /> {editingId ? 'Edit Menu' : 'Masukkan Menu Baru'}
                   </h2>
-                  <button onClick={() => setIsModalOpen(false)} className="p-2 bg-white border-4 border-[#4A3022] rounded-xl hover:bg-red-500 hover:text-white transition-colors shadow-[4px_4px_0px_#4A3022] active:translate-y-1 active:shadow-none">
+                  <button onClick={handleCloseModal} className="p-2 bg-white border-4 border-[#4A3022] rounded-xl hover:bg-red-500 hover:text-white transition-colors shadow-[4px_4px_0px_#4A3022] active:translate-y-1 active:shadow-none">
                     <X size={20} strokeWidth={3} />
                   </button>
                 </div>
 
                 <div className="p-6 max-h-[70vh] overflow-y-auto custom-scrollbar">
-                  <form onSubmit={handleAddProduct} className="space-y-5">
+                  <form onSubmit={handleSubmit} className="space-y-5">
                     <div>
                       <label className="text-xs font-black text-[#4A3022] uppercase tracking-wider">Nama Kue</label>
                       <input type="text" required value={newName} onChange={e => setNewName(e.target.value)} className="w-full mt-1 bg-[#FAF5E9] border-4 border-[#4A3022] rounded-xl px-4 py-3 outline-none font-bold text-[#4A3022] focus:border-[#D97736] transition-colors" />
                     </div>
+                    
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <label className="text-xs font-black text-[#4A3022] uppercase tracking-wider">Kategori</label>
@@ -238,19 +310,36 @@ export default function AdminDashboard({ setCurrentView }: AdminDashboardProps) 
                         <input type="number" required value={newPrice} onChange={e => setNewPrice(e.target.value)} className="w-full mt-1 bg-[#FAF5E9] border-4 border-[#4A3022] rounded-xl px-4 py-3 outline-none font-bold text-[#4A3022] focus:border-[#D97736] transition-colors" />
                       </div>
                     </div>
-                    
-                    {/* INPUT FILE UPLOAD FOTO */}
+
                     <div>
-                      <label className="text-xs font-black text-[#4A3022] uppercase tracking-wider">Upload Foto Asli</label>
+                      <label className="text-xs font-black text-[#4A3022] uppercase tracking-wider">Label Spesial (Opsional)</label>
+                      <select value={newBadge} onChange={e => setNewBadge(e.target.value)} className="w-full mt-1 bg-[#FAF5E9] border-4 border-[#4A3022] rounded-xl px-4 py-3 outline-none font-bold text-[#4A3022] focus:border-[#D97736] transition-colors appearance-none">
+                        <option value="">-- Tidak Ada --</option>
+                        <option value="BEST SELLER">BEST SELLER</option>
+                      </select>
+                      <p className="text-[10px] text-[#4A3022]/60 mt-1 font-bold">Pilih "BEST SELLER" agar kue ini muncul di urutan paling atas Katalog Pembeli.</p>
+                    </div>
+                    
+                    <div>
+                      <label className="text-xs font-black text-[#4A3022] uppercase tracking-wider">
+                        {editingId ? 'Ganti Foto (Biarkan kosong jika tidak diganti)' : 'Upload Foto Asli'}
+                      </label>
                       <div className="mt-1 relative">
                         <input 
                           type="file" 
                           accept="image/*" 
-                          required 
+                          required={!editingId} // Wajib kalau mode tambah baru, nggak wajib kalau mode edit
                           onChange={e => setImageFile(e.target.files?.[0] || null)} 
                           className="w-full bg-[#FAF5E9] border-4 border-[#4A3022] rounded-xl px-4 py-3 outline-none font-bold text-[#4A3022] file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-2 file:border-[#4A3022] file:text-sm file:font-bold file:bg-[#D97736] file:text-white hover:file:bg-[#c46a2b] transition-colors" 
                         />
                       </div>
+                      {/* Kalau mode edit dan ga masukin foto baru, tampilin preview foto lama biar admin tenang */}
+                      {editingId && !imageFile && (
+                         <div className="mt-2 flex items-center gap-2">
+                           <span className="text-[10px] font-bold text-[#4A3022]/60">Foto saat ini:</span>
+                           <img src={currentImage} alt="Current" className="w-8 h-8 rounded border border-[#4A3022] object-cover" />
+                         </div>
+                      )}
                     </div>
 
                     <div>
@@ -259,7 +348,7 @@ export default function AdminDashboard({ setCurrentView }: AdminDashboardProps) 
                     </div>
                     <button type="submit" disabled={uploading} className="w-full bg-[#D97736] text-white border-4 border-[#4A3022] py-4 mt-2 rounded-xl font-black text-lg shadow-[6px_6px_0px_#4A3022] hover:bg-[#c46a2b] active:translate-y-1 active:shadow-none transition-all disabled:opacity-50 flex items-center justify-center gap-2">
                       {uploading ? <RefreshCw className="animate-spin" /> : <Upload />}
-                      {uploading ? 'Mengunggah & Menyimpan...' : 'Simpan ke Database'}
+                      {uploading ? 'Menyimpan...' : (editingId ? 'Simpan Perubahan' : 'Simpan ke Database')}
                     </button>
                   </form>
                 </div>
