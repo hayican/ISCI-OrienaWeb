@@ -11,9 +11,10 @@ import FloatingWA from './components/ui/FloatingWA';
 import Beranda from './pages/Beranda';
 import Tentang from './pages/Tentang';
 import Katalog from './pages/Katalog';
-import HampersBuilder from './pages/HampersBuilder';
 import Kolaborasi from './pages/Kolaborasi';
 import Cart from './pages/Cart';
+import AdminLogin from './pages/AdminLogin';
+import AdminDashboard from './pages/AdminDashboard';
 
 // Definisikan tipe untuk item di keranjang
 export interface CartItem {
@@ -24,7 +25,9 @@ export interface CartItem {
 }
 
 export default function App() {
-  const [currentView, setCurrentView] = useState<string>('beranda');
+  const [currentView, setCurrentView] = useState<string>(
+    window.location.search.includes('rahasia') ? 'kelola-oriena' : 'beranda'
+  );
   
   // State untuk menyimpan detail barang di keranjang
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -64,13 +67,19 @@ export default function App() {
     switch(currentView) {
       case 'beranda': return <Beranda key="beranda" setCurrentView={setCurrentView} setCartCount={() => {}} addToCart={addToCart} />;
       case 'tentang': return <Tentang key="tentang" />;
-      case 'katalog': return <Katalog key="katalog" setCartCount={() => {}} />;
-      case 'hampers': return <HampersBuilder key="hampers" setCartCount={() => {}} />
+      case 'katalog': return <Katalog key="katalog" setCartCount={() => {}} addToCart={addToCart} />;
       case 'kolaborasi': return <Kolaborasi key="kolaborasi" />;
       case 'cart': return <Cart key="cart" cartItems={cartItems} updateCartItem={updateCartItem} setCurrentView={setCurrentView} />;
+      
+      // INI JALUR RAHASIA BUAT LOGIN BU ENDAH:
+      case 'kelola-oriena': return <AdminLogin key="admin-login" setCurrentView={setCurrentView} />;
+      case 'dashboard-rahasia': return <AdminDashboard key="admin-dashboard" setCurrentView={setCurrentView} />;
+      
       default: return <Beranda key="default" setCurrentView={setCurrentView} setCartCount={() => {}} addToCart={addToCart} />;
     }
   };
+
+  const isAdminPage = currentView === 'kelola-oriena' || currentView === 'dashboard-rahasia';
 
   return (
     <div className="min-h-screen bg-[#FAF5E9] text-[#4A3022] font-jakarta selection:bg-[#D97736] selection:text-[#FAF5E9] overflow-x-hidden relative flex flex-col">
@@ -90,14 +99,19 @@ export default function App() {
 
       {!isLoading && (
         <>
-          <Navbar currentView={currentView} setCurrentView={setCurrentView} cartCount={cartCount} isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen} />
-          <main className="pt-20 flex-grow">
+          {/* Navbar disembunyiin kalau lagi di halaman admin */}
+          {!isAdminPage && <Navbar currentView={currentView} setCurrentView={setCurrentView} cartCount={cartCount} isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen} />}
+          
+          {/* Padding top dihilangin kalau lagi di halaman admin */}
+          <main className={`${isAdminPage ? '' : 'pt-20'} flex-grow`}>
             <AnimatePresence mode="wait">
               {renderView()}
             </AnimatePresence>
           </main>
-          <Footer setCurrentView={setCurrentView} />
-          <FloatingWA /> 
+
+          {/* Footer & WA disembunyiin kalau lagi di halaman admin */}
+          {!isAdminPage && <Footer setCurrentView={setCurrentView} />}
+          {!isAdminPage && <FloatingWA />} 
         </>
       )}
     </div>
